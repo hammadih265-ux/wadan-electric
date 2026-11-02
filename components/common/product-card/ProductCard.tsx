@@ -53,7 +53,10 @@ export default function ProductCard({
         </Link>
 
         {/* Product Image */}
-        <Link href={`/collection/${product.slug}`} className="block h-full w-full">
+        <Link
+          href={`/collection/${product.slug}`}
+          className="block h-full w-full"
+        >
           <Image
             src={product.image}
             alt={product.name}
@@ -84,9 +87,11 @@ export default function ProductCard({
         </div>
 
         {/* Price & Action Button */}
-        <div className="mt-4 pt-3 border-t border-neutral-100 flex items-center justify-between gap-2">
+        <div className="mt-4 pt-3 border-t border-neutral-100  block sm:flex  items-center justify-between gap-2">
           <div>
-            <div className="text-[10px] font-mono text-neutral-400 uppercase">Price</div>
+            <div className="text-[10px] font-mono text-neutral-400 uppercase">
+              Price
+            </div>
             <div className="flex items-baseline gap-1.5">
               <span className="text-base sm:text-lg font-extrabold text-neutral-950">
                 Rs {product.price.toLocaleString()}
