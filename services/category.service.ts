@@ -1,4 +1,5 @@
 import { createClient } from "@/lib/supabase/client";
+import { slugify } from "@/lib/utils";
 import type { Database } from "@/types/database.types";
 
 export type Category = Database["public"]["Tables"]["categories"]["Row"] & {
@@ -134,9 +135,14 @@ export async function getCategoryBySlug(slug: string) {
 // =================================
 export async function createCategory(category: CreateCategoryInput) {
   const supabase = createClient();
+  const slug =
+    category.slug && category.slug.trim()
+      ? category.slug.trim()
+      : slugify(category.name);
+
   const { data, error } = await supabase
     .from("categories")
-    .insert(category)
+    .insert({ ...category, slug })
     .select()
     .single();
 
@@ -150,9 +156,14 @@ export async function createCategory(category: CreateCategoryInput) {
 // =================================
 export async function updateCategory(id: string, updates: UpdateCategoryInput) {
   const supabase = createClient();
+  const payload = { ...updates };
+  if (payload.name && (!payload.slug || !payload.slug.trim())) {
+    payload.slug = slugify(payload.name);
+  }
+
   const { data, error } = await supabase
     .from("categories")
-    .update(updates)
+    .update(payload)
     .eq("id", id)
     .select()
     .single();

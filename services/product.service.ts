@@ -281,7 +281,26 @@ export async function getFilteredProducts(filters: {
     .eq("is_active", true);
 
   if (category_id) {
-    query = query.eq("category_id", category_id);
+    const isUuid =
+      /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(
+        category_id,
+      );
+    if (isUuid) {
+      query = query.eq("category_id", category_id);
+    } else {
+      // Look up category by slug or name for SEO-friendly URLs
+      const { data: cat } = await supabase
+        .from("categories")
+        .select("id")
+        .or(`slug.eq.${category_id},name.ilike.%${category_id.replace(/-/g, " ")}%`)
+        .maybeSingle();
+
+      if (cat?.id) {
+        query = query.eq("category_id", cat.id);
+      } else {
+        query = query.eq("category_id", category_id);
+      }
+    }
   }
 
   if (min_price !== undefined) {

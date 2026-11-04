@@ -1,6 +1,28 @@
 import { useMemo } from "react";
 import { useCategories } from "./useCategories";
 import type { MenuItem } from "@/components/headers/types";
+import { getCategorySlug } from "@/lib/utils";
+
+// Stable SEO-friendly defaults for Wadan Electrics
+// Ensures search engine bots and initial page loads always see crawlable links
+const DEFAULT_CATEGORIES: { title: string; slug: string }[] = [
+  {
+    title: "Electric Accessories",
+    slug: "electric-accessories",
+  },
+  {
+    title: "Solar Inverter",
+    slug: "solar-inverter",
+  },
+  {
+    title: "Lithium Battery",
+    slug: "lithium-battery",
+  },
+  {
+    title: "Fire Safety",
+    slug: "fire-safety",
+  },
+];
 
 export function useNavigationMenu(): MenuItem[] {
   const { data: categories } = useCategories();
@@ -14,33 +36,44 @@ export function useNavigationMenu(): MenuItem[] {
     ];
 
     if (categories && categories.length > 0) {
+      // Dynamic categories directly from Supabase
+      // Using slug for SEO readability, with ID as fallback
       categories.forEach((cat) => {
         shopChildren.push({
           title: cat.name,
-          href: `/collection?category=${cat.id}`,
+          href: `/collection?category=${getCategorySlug(cat)}`,
         });
       });
     } else {
-      // Fallback defaults for Wadan Electrics while loading or if DB categories are initializing
-      shopChildren.push(
-        {
-          title: "Electric Accessories",
-          href: "/collection?category=electric-accessories",
-        },
-        {
-          title: "Solar Inverter",
-          href: "/collection?category=solar-inverter",
-        },
-        {
-          title: "Lithium Battery",
-          href: "/collection?category=lithium-battery",
-        },
-        {
-          title: "Fire Safety",
-          href: "/collection?category=fire-safety",
-        },
-      );
+      // Stable fallbacks while Supabase is hydrating / during SSR
+      DEFAULT_CATEGORIES.forEach((cat) => {
+        shopChildren.push({
+          title: cat.title,
+          href: `/collection?category=${cat.slug}`,
+        });
+      });
     }
+
+    // Dynamically match primary highlight links to real Supabase categories if available
+    const solarCat = categories?.find(
+      (c) =>
+        c.slug?.includes("solar") ||
+        c.name?.toLowerCase().includes("solar"),
+    );
+
+    const fireCat = categories?.find(
+      (c) =>
+        c.slug?.includes("fire") ||
+        c.name?.toLowerCase().includes("fire"),
+    );
+
+    const solarHref = solarCat
+      ? `/collection?category=${getCategorySlug(solarCat)}`
+      : "/collection?category=solar-inverter";
+
+    const fireHref = fireCat
+      ? `/collection?category=${getCategorySlug(fireCat)}`
+      : "/collection?category=fire-safety";
 
     return [
       {
@@ -57,11 +90,11 @@ export function useNavigationMenu(): MenuItem[] {
       },
       {
         title: "Solar Solutions",
-        href: "/collection?category=solar-inverter",
+        href: solarHref,
       },
       {
         title: "Fire Safety",
-        href: "/collection?category=fire-safety",
+        href: fireHref,
       },
     ];
   }, [categories]);

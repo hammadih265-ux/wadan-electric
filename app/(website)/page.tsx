@@ -9,6 +9,7 @@ import FeaturedShowcase from "@/components/common/featured/FeaturedShowcase";
 import RecentlyViewedSection from "@/components/common/recently-viewed/RecentlyViewedSection";
 import PopupModal from "@/components/common/popup/PopupModal";
 import { getCategories } from "@/services/category.service";
+import { getCategorySlug } from "@/lib/utils";
 import {
   getLatestProducts,
   getFeaturedProducts,
@@ -77,7 +78,7 @@ export default async function Home() {
         id: cat.id,
         title: cat.name,
         image: cat.image_url ?? "/placeholder.jpg",
-        href: `/collection?category=${cat.id}`,
+        href: `/collection?category=${getCategorySlug(cat)}`,
       }));
     } else {
       // High-converting defaults matching user requested categories

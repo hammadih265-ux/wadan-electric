@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Zap, Phone, Mail, MapPin, ShieldCheck } from "lucide-react";
+import { Phone, Mail, MapPin, ShieldCheck } from "lucide-react";
 import Image from "next/image";
 
 const categoryLinks = [

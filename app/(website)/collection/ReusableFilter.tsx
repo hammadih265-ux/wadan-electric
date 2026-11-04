@@ -9,6 +9,7 @@ import {
   useTransition,
 } from "react";
 import { useCategories } from "@/hooks/useCategories";
+import { getCategorySlug } from "@/lib/utils";
 
 // ─── Debounce helper ──────────────────────────────────────────────────────────
 function useDebounce(fn: (value: string) => void, delay: number) {
