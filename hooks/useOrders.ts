@@ -226,7 +226,7 @@ async function createOrderDirect(input: CreateOrderDirectInput) {
     subtotal: input.subtotal,
     shipping: input.shipping,
     total: input.total,
-    payment_method: input.paymentMethod || "Cash On Delivery",
+    payment_method: input.paymentMethod || "Bank Transfer / WhatsApp Slip Verification",
     notes: input.notes ?? null,
   };
 

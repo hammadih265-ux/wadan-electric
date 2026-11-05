@@ -3,7 +3,7 @@ import { useCategories } from "./useCategories";
 import type { MenuItem } from "@/components/headers/types";
 import { getCategorySlug } from "@/lib/utils";
 
-// Stable SEO-friendly defaults for Wadan Electrics
+// Stable SEO-friendly defaults for Wadan Electric Store
 // Ensures search engine bots and initial page loads always see crawlable links
 const DEFAULT_CATEGORIES: { title: string; slug: string }[] = [
   {

@@ -3,13 +3,13 @@ import Link from "next/link";
 import { Zap, Sun, BatteryCharging, ShieldAlert, ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "About Us | Wadan Electrics",
+  title: "About Us | Wadan Electric Store",
   description:
-    "Learn about Wadan Electrics — Pakistan's premier provider of certified Electric Accessories, high-yield Solar Inverters, durable Lithium Batteries, and Fire Safety solutions.",
+    "Learn about Wadan Electric Store — Pakistan's premier provider of certified Electric Accessories, high-yield Solar Inverters, durable Lithium Batteries, and Fire Safety solutions.",
   alternates: { canonical: "/about" },
   openGraph: {
     url: "/about",
-    title: "About Us | Wadan Electrics",
+    title: "About Us | Wadan Electric Store",
     description:
       "Powering homes, businesses, and solar projects with certified electrical gear and fire safety solutions across Pakistan.",
   },
@@ -22,7 +22,7 @@ export default function AboutPage() {
       <section className="text-center mb-20">
         <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider bg-[#d4af37]/15 text-[#d4af37] border border-[#d4af37]/30 mb-4">
           <Zap className="w-3.5 h-3.5" />
-          <span>About Wadan Electrics</span>
+          <span>About Wadan Electric Store</span>
         </span>
         <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-neutral-900 mb-6">
           Powering Pakistan with{" "}
@@ -31,11 +31,11 @@ export default function AboutPage() {
           </span>
         </h1>
         <p className="max-w-3xl mx-auto text-base sm:text-lg text-neutral-600 leading-relaxed">
-          Wadan Electrics was founded with a singular commitment: delivering authentic, top-tier electrical accessories, next-generation solar inverters, long-lasting LiFePO4 lithium batteries, and certified fire safety systems engineered for utmost reliability and durability.
+          Wadan Electric Store was founded with a singular commitment: delivering authentic, top-tier electrical accessories, next-generation solar inverters, long-lasting LiFePO4 lithium batteries, and certified fire safety systems engineered for utmost reliability and durability.
         </p>
       </section>
 
-      {/* 4 Pillars of Wadan Electrics */}
+      {/* 4 Pillars of Wadan Electric Store */}
       <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
         {[
           {
@@ -91,7 +91,7 @@ export default function AboutPage() {
             &ldquo;We don&apos;t just supply electrical hardware. We safeguard homes, empower industries, and engineer sustainable energy.&rdquo;
           </blockquote>
           <p className="mt-6 text-[#d4af37] text-xs font-semibold tracking-widest uppercase">
-            — The Wadan Electrics Quality Standard
+            — The Wadan Electric Store Quality Standard
           </p>
         </div>
       </section>
@@ -113,7 +113,7 @@ export default function AboutPage() {
             <ArrowRight className="w-4 h-4" />
           </Link>
           <a
-            href="https://wa.me/923159686822"
+            href="https://wa.me/923139235476"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 border border-neutral-300 bg-white text-neutral-900 px-7 py-3.5 rounded-2xl font-semibold hover:bg-neutral-50 transition-all text-sm"

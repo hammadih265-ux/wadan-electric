@@ -26,7 +26,7 @@ export default function Features() {
             Engineered For Reliability.
           </h2>
           <p className="mt-2 text-sm sm:text-base text-neutral-500">
-            Why solar installers, contractors, and industrial facilities across Pakistan rely on Wadan Electrics.
+            Why solar installers, contractors, and industrial facilities across Pakistan rely on Wadan Electric Store.
           </p>
         </div>
 
@@ -189,17 +189,17 @@ export default function Features() {
             </div>
 
             <h3 className="font-heading text-2xl sm:text-3xl font-extrabold tracking-tight text-white mb-3">
-              Direct Engineering Consultation & Insured COD
+              Direct Engineering Consultation & Insured Delivery
             </h3>
 
             <p className="text-xs sm:text-sm text-neutral-400 leading-relaxed max-w-lg mb-6">
-              Get customized system sizing and product recommendations on WhatsApp. All orders packaged in heavy-duty crating and delivered via insured transport with Cash on Delivery nationwide.
+              Get customized system sizing and product recommendations on WhatsApp. All orders packaged in heavy-duty crating and dispatched nationwide upon payment slip verification.
             </p>
           </div>
 
           <div className="flex flex-wrap items-center gap-2 pt-4 border-t border-neutral-900">
             <span className="inline-flex items-center gap-1 text-[11px] font-mono font-medium px-2.5 py-1 rounded-lg bg-neutral-900 text-neutral-300 border border-neutral-800">
-              Cash On Delivery
+              Payment Slip Verification
             </span>
             <span className="inline-flex items-center gap-1 text-[11px] font-mono font-medium px-2.5 py-1 rounded-lg bg-neutral-900 text-neutral-300 border border-neutral-800">
               WhatsApp Technical Line

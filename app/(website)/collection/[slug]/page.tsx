@@ -27,7 +27,7 @@ function formatProduct(product: Product) {
       : [
           {
             id: "placeholder",
-            url: "/placeholder.jpg",
+            url: "/placeholder.svg",
             alt: product.name,
           },
         ];
@@ -72,7 +72,7 @@ async function fetchRelated(
         id: p.id,
         slug: p.slug,
         name: p.name,
-        image: sortedImgs[0]?.image_url || "/placeholder.jpg",
+        image: sortedImgs[0]?.image_url || "/placeholder.svg",
         price: p.price,
         oldPrice: p.compare_at_price || undefined,
         rating: 4.8,

@@ -13,17 +13,27 @@ import {
   ArrowLeft,
   ShoppingBag,
   Loader2,
+  FileCheck2,
+  MapPin,
+  Phone,
+  ShieldCheck,
+  Truck,
 } from "lucide-react";
 import {
   OrderSnapshotCard,
   OrderDetails,
 } from "@/components/checkout/OrderSnapshotCard";
-import { useCreateOrderDirect } from "@/hooks/useOrders"; // adjust import path to your hooks file
+import { useCreateOrderDirect } from "@/hooks/useOrders";
 import { validateForm, validatePhone } from "@/utils";
 import { useUser } from "@/hooks/useAuth";
 import { toast } from "sonner";
+import {
+  STORE_CONTACT,
+  FacebookIcon,
+  TikTokIcon,
+} from "@/components/common/SocialIcons";
 
-const STORE_WHATSAPP_NUMBER = "923159686822";
+const STORE_WHATSAPP_NUMBER = STORE_CONTACT.whatsappNumber; // 923139235476
 
 function getFormattedDate(): string {
   return new Date().toLocaleDateString("en-US", {
@@ -44,7 +54,6 @@ export default function CheckoutClient() {
     (sum, item) => sum + item.price * item.quantity,
     0,
   );
-  // const shipping = subtotal > 3000 ? 0 : 250;
   const shipping = 0;
   const total = subtotal + shipping;
 
@@ -54,9 +63,6 @@ export default function CheckoutClient() {
   const [whatsappUrl, setWhatsappUrl] = useState<string>("");
   const [isPlacingOrder, setIsPlacingOrder] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
-  const [orderMethod, setOrderMethod] = useState<"whatsapp" | "website">(
-    "whatsapp",
-  );
   const [accepted, setAccepted] = useState(false);
 
   // Auto-fill Province and Postal Code when a City is selected
@@ -79,8 +85,6 @@ export default function CheckoutClient() {
     }
     setValues(newValues);
   };
-
-  // Auto-populate form details when logged in / returning from Google or Facebook OAuth
 
   const isFormValid =
     values.billing_first_name &&
@@ -137,7 +141,7 @@ export default function CheckoutClient() {
     setIsPlacingOrder(true);
 
     try {
-      // 1. Save the order to Supabase FIRST — this is the source of truth
+      // 1. Save the order to Supabase
       const savedOrder = await createOrderMutation.mutateAsync({
         customer: { name, phone, email, address, city, state, postcode },
         items: orderItems,
@@ -145,7 +149,7 @@ export default function CheckoutClient() {
         shipping,
         total,
         shippingAddress: `${address}, ${city}, ${state} (${postcode})`,
-        paymentMethod: "Cash On Delivery",
+        paymentMethod: "Bank Transfer / WhatsApp Slip Verification",
         notes,
       });
 
@@ -160,7 +164,7 @@ export default function CheckoutClient() {
       }));
 
       const details: OrderDetails = {
-        orderId: savedOrder.order_number, // real, DB-generated order number
+        orderId: savedOrder.order_number,
         date: formattedDate,
         customer: {
           firstName,
@@ -177,7 +181,7 @@ export default function CheckoutClient() {
         subtotal,
         shipping,
         total,
-        paymentMethod: "Cash On Delivery",
+        paymentMethod: "Bank Transfer / Payment Slip Verification",
       };
 
       const itemLines = items
@@ -189,7 +193,7 @@ export default function CheckoutClient() {
         )
         .join("\n");
 
-      const message = `🛍️ *NEW ORDER CONFIRMATION* - Wadan Electronics
+      const message = `🛍️ *NEW ORDER FINALIZED* - Wadan Electric Store
 Order ID: #${savedOrder.order_number}
 Date: ${formattedDate}
 ------------------------------------------
@@ -206,9 +210,19 @@ ${itemLines}
 💵 *Subtotal:* Rs ${subtotal.toLocaleString()}
 🚚 *Shipping Fee:* FREE
 💰 *Total Amount:* Rs ${total.toLocaleString()}
-💳 *Payment Method:* Cash On Delivery
+💳 *Payment Method:* Bank Transfer / WhatsApp Slip Verification
 ------------------------------------------
+⚠️ *PAYMENT SLIP REQUIRED FOR DISPATCH:*
+Please send your payment slip / transfer screenshot here on WhatsApp.
+After finalizing the payment slip verification, we will dispatch your product immediately to your address:
+📍 ${address}, ${city}, ${state} (${postcode})
+
 📝 *Order Notes:* ${notes}
+
+🏬 *Store Address:* ${STORE_CONTACT.address}
+📞 *Helpline:* ${STORE_CONTACT.phoneFormatted}
+TikTok: ${STORE_CONTACT.tiktok}
+Facebook: ${STORE_CONTACT.facebook}
 
 Thank you for your order!`;
 
@@ -219,7 +233,7 @@ Thank you for your order!`;
       setWhatsappUrl(url);
       setIsSubmitted(true);
 
-      // Open WhatsApp directly for instant confirmation
+      // Open WhatsApp directly for instant payment slip submission
       window.open(url, "_blank");
       clearCart();
     } catch {
@@ -240,77 +254,92 @@ Thank you for your order!`;
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.4 }}
-            className="space-y-3"
+            className="space-y-4"
           >
-            <div className="w-14 h-14 sm:w-16 sm:h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto shadow-sm border border-emerald-200">
-              <CheckCircle className="w-7 h-7 sm:w-8 sm:h-8" />
+            <div className="w-14 h-14 sm:w-16 sm:h-16 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mx-auto shadow-sm border border-amber-200">
+              <FileCheck2 className="w-7 h-7 sm:w-8 sm:h-8" />
             </div>
 
             <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">
-              Order Successfully Placed
+              Order Registered! Please Send Payment Slip
             </h1>
-            <p className="text-gray-500 max-w-md mx-auto text-xs sm:text-sm px-2">
-              Thank you for shopping with us. Your official order snapshot receipt has been generated and opened on WhatsApp for instant confirmation.
-            </p>
 
-            {/* Order Summary */}
-            <div className="bg-white rounded-2xl border border-gray-200/80 p-4 sm:p-6 max-w-md mx-auto text-left space-y-3.5 sm:space-y-4 shadow-sm">
-              <div className="space-y-0.5 sm:space-y-1">
-                <p className="text-[11px] sm:text-xs text-gray-500 uppercase tracking-wide font-medium">
-                  Order Number
-                </p>
-                <p className="font-semibold text-sm sm:text-base text-gray-900">
-                  {orderDetails.orderId}
-                </p>
-              </div>
-
-              <div className="space-y-0.5 sm:space-y-1">
-                <p className="text-[11px] sm:text-xs text-gray-500 uppercase tracking-wide font-medium">
-                  Payment
-                </p>
-                <p className="font-semibold text-sm sm:text-base text-gray-900">
-                  {orderDetails.paymentMethod}
-                </p>
-              </div>
-
-              <div className="space-y-0.5 sm:space-y-1">
-                <p className="text-[11px] sm:text-xs text-gray-500 uppercase tracking-wide font-medium">
-                  Estimated Delivery
-                </p>
-                <p className="font-semibold text-sm sm:text-base text-gray-900">
-                  2–4 Working Days
-                </p>
-              </div>
-
-              <div className="space-y-0.5 sm:space-y-1">
-                <p className="text-[11px] sm:text-xs text-gray-500 uppercase tracking-wide font-medium">
-                  Customer
-                </p>
-                <p className="font-semibold text-sm sm:text-base text-gray-900">
-                  {orderDetails.customer.firstName}{" "}
-                  {orderDetails.customer.lastName}
-                </p>
-              </div>
-
-              <div className="space-y-0.5 sm:space-y-1">
-                <p className="text-[11px] sm:text-xs text-gray-500 uppercase tracking-wide font-medium">
-                  Phone
-                </p>
-                <p className="font-semibold text-sm sm:text-base text-gray-900">
-                  {orderDetails.customer.phone}
-                </p>
+            {/* Instruction Callout */}
+            <div className="bg-amber-50 border-2 border-amber-300/80 rounded-2xl p-4 sm:p-5 max-w-xl mx-auto text-left shadow-sm">
+              <div className="flex items-start gap-3">
+                <Truck className="w-5 h-5 text-amber-700 shrink-0 mt-0.5" />
+                <div className="text-xs sm:text-sm text-amber-950 space-y-1">
+                  <p className="font-bold text-amber-900">
+                    Next Step for Dispatch:
+                  </p>
+                  <p className="leading-relaxed">
+                    Please send your <strong>payment slip / screenshot</strong> on WhatsApp to finalize your order. Once received, we will immediately dispatch your product to:
+                  </p>
+                  <p className="font-semibold text-neutral-900 bg-white/70 px-2 py-1 rounded inline-block">
+                    📍 {orderDetails.customer.address}, {orderDetails.customer.city}, {orderDetails.customer.state}
+                  </p>
+                </div>
               </div>
             </div>
 
+            {/* Order Summary */}
+            <div className="bg-white rounded-2xl border border-gray-200/80 p-4 sm:p-6 max-w-md mx-auto text-left space-y-3 sm:space-y-3.5 shadow-sm">
+              <div className="flex justify-between items-center border-b pb-2">
+                <span className="text-[11px] sm:text-xs text-gray-500 uppercase tracking-wide font-medium">
+                  Order Number
+                </span>
+                <span className="font-mono font-bold text-sm sm:text-base text-gray-900">
+                  #{orderDetails.orderId}
+                </span>
+              </div>
+
+              <div className="flex justify-between items-center border-b pb-2">
+                <span className="text-[11px] sm:text-xs text-gray-500 uppercase tracking-wide font-medium">
+                  Payment Method
+                </span>
+                <span className="font-semibold text-xs sm:text-sm text-amber-700 bg-amber-50 px-2 py-0.5 rounded">
+                  Send Slip via WhatsApp
+                </span>
+              </div>
+
+              <div className="flex justify-between items-center border-b pb-2">
+                <span className="text-[11px] sm:text-xs text-gray-500 uppercase tracking-wide font-medium">
+                  Dispatch Status
+                </span>
+                <span className="font-semibold text-xs sm:text-sm text-gray-900">
+                  Pending Payment Slip
+                </span>
+              </div>
+
+              <div className="flex justify-between items-center border-b pb-2">
+                <span className="text-[11px] sm:text-xs text-gray-500 uppercase tracking-wide font-medium">
+                  Customer
+                </span>
+                <span className="font-semibold text-xs sm:text-sm text-gray-900">
+                  {orderDetails.customer.firstName} {orderDetails.customer.lastName}
+                </span>
+              </div>
+
+              <div className="flex justify-between items-center">
+                <span className="text-[11px] sm:text-xs text-gray-500 uppercase tracking-wide font-medium">
+                  Customer Phone
+                </span>
+                <span className="font-semibold text-xs sm:text-sm text-gray-900">
+                  {orderDetails.customer.phone}
+                </span>
+              </div>
+            </div>
+
+            {/* Primary Action Buttons */}
             <div className="flex flex-col sm:flex-row flex-wrap gap-2.5 sm:gap-3 justify-center pt-2 px-4 max-w-md sm:max-w-none mx-auto">
               <a
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-5 py-3 rounded-xl transition shadow-lg shadow-emerald-600/20 text-xs sm:text-sm"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-6 py-3 rounded-xl transition shadow-lg shadow-emerald-600/20 text-xs sm:text-sm"
               >
                 <MessageSquare className="w-4 h-4" />
-                Open WhatsApp (+92 315 9686822)
+                Send Payment Slip ({STORE_CONTACT.phoneFormatted})
               </a>
 
               {user && (
@@ -329,6 +358,41 @@ Thank you for your order!`;
                 <ShoppingBag className="w-4 h-4" />
                 Continue Shopping
               </Link>
+            </div>
+
+            {/* Official Store Channels & Physical Address */}
+            <div className="pt-4 max-w-xl mx-auto border-t border-gray-200">
+              <p className="text-xs text-gray-500 font-medium mb-2.5">
+                Connect with our Official Channels:
+              </p>
+              <div className="flex flex-wrap items-center justify-center gap-3">
+                <a
+                  href={STORE_CONTACT.tiktok}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-black text-white hover:bg-neutral-800 text-xs font-semibold transition"
+                >
+                  <TikTokIcon className="w-4 h-4" />
+                  <span>TikTok Channel</span>
+                </a>
+                <a
+                  href={STORE_CONTACT.facebook}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#1877F2] text-white hover:bg-[#166fe5] text-xs font-semibold transition shadow-sm"
+                >
+                  <FacebookIcon className="w-4 h-4" />
+                  <span>Facebook Page</span>
+                </a>
+              </div>
+
+              <div className="mt-3 text-neutral-500 text-[11px] flex items-center justify-center gap-1.5">
+                <MapPin className="w-3.5 h-3.5 text-[#d4af37]" />
+                <span>{STORE_CONTACT.address}</span>
+                <span className="text-neutral-300">•</span>
+                <Phone className="w-3.5 h-3.5 text-[#d4af37]" />
+                <span>{STORE_CONTACT.phone}</span>
+              </div>
             </div>
           </motion.div>
 
@@ -362,12 +426,25 @@ Thank you for your order!`;
             <ArrowLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> Back to
             Collection
           </Link>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 tracking-tight">
-            Checkout
-          </h1>
-          <p className="mt-1 sm:mt-2 text-xs sm:text-sm text-gray-500">
-            Complete your order details securely.
-          </p>
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+            <div>
+              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 tracking-tight">
+                Checkout
+              </h1>
+              <p className="mt-1 text-xs sm:text-sm text-gray-500">
+                Complete your delivery details. Send your payment slip on WhatsApp to finalize dispatch.
+              </p>
+            </div>
+
+            {/* Quick store info badge */}
+            <div className="flex items-center gap-2 text-xs text-neutral-600 bg-white border border-gray-200 rounded-xl px-3.5 py-2 w-fit">
+              <MapPin className="w-3.5 h-3.5 text-[#d4af37]" />
+              <span className="font-medium">{STORE_CONTACT.address}</span>
+              <span className="text-gray-300">|</span>
+              <Phone className="w-3.5 h-3.5 text-emerald-600" />
+              <span className="font-mono">{STORE_CONTACT.phone}</span>
+            </div>
+          </div>
         </motion.div>
 
         {items.length === 0 ? (
@@ -475,19 +552,44 @@ Thank you for your order!`;
                     </p>
                   )}
 
-                  {/* Exclusive WhatsApp Method Notice */}
-                  <div className="space-y-2 pt-2">
-                    <div className="flex items-center gap-3 p-3.5 sm:p-4 rounded-xl border border-emerald-500/30 bg-emerald-50/80">
-                      <div className="w-9 h-9 rounded-full bg-emerald-100 flex items-center justify-center shrink-0">
-                        <MessageSquare className="w-5 h-5 text-emerald-600" />
+                  {/* Payment Method & Slip Verification Notice */}
+                  <div className="space-y-3 pt-2">
+                    <div className="p-3.5 sm:p-4 rounded-xl border border-amber-300 bg-amber-50/90 text-left space-y-2">
+                      <div className="flex items-center gap-2 text-amber-900 font-bold text-xs sm:text-sm">
+                        <FileCheck2 className="w-4 h-4 text-amber-700 shrink-0" />
+                        <span>Payment Slip Verification</span>
                       </div>
-                      <div className="text-left">
-                        <p className="text-xs sm:text-sm font-semibold text-emerald-800">
-                          WhatsApp Order Confirmation
-                        </p>
-                        <p className="text-[11px] sm:text-xs text-emerald-600">
-                          Your order will be verified on WhatsApp (+92 315 9686822) & confirmed via email.
-                        </p>
+                      <p className="text-[11px] sm:text-xs text-amber-900/90 leading-relaxed">
+                        Please send your <strong>payment slip</strong> on WhatsApp after finalizing the order. We will dispatch your product to your address immediately after verification.
+                      </p>
+                      <div className="text-[11px] font-mono text-amber-800 bg-amber-100/70 px-2 py-1 rounded inline-flex items-center gap-1">
+                        <Phone className="w-3 h-3 text-amber-700" />
+                        <span>WhatsApp Helpline: {STORE_CONTACT.phoneFormatted}</span>
+                      </div>
+                    </div>
+
+                    {/* Official Social Links in Checkout */}
+                    <div className="flex items-center justify-between p-2.5 rounded-xl bg-gray-100/80 border border-gray-200 text-xs">
+                      <span className="text-gray-600 font-medium">Follow Us:</span>
+                      <div className="flex items-center gap-2">
+                        <a
+                          href={STORE_CONTACT.tiktok}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-black text-white text-[11px] font-medium hover:bg-neutral-800 transition"
+                        >
+                          <TikTokIcon className="w-3.5 h-3.5" />
+                          <span>TikTok</span>
+                        </a>
+                        <a
+                          href={STORE_CONTACT.facebook}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[#1877F2] text-white text-[11px] font-medium hover:bg-[#166fe5] transition"
+                        >
+                          <FacebookIcon className="w-3.5 h-3.5" />
+                          <span>Facebook</span>
+                        </a>
                       </div>
                     </div>
                   </div>
@@ -505,7 +607,7 @@ Thank you for your order!`;
                       htmlFor="confirm-info"
                       className="text-xs sm:text-sm text-gray-600 cursor-pointer select-none leading-tight"
                     >
-                      I confirm that my information is correct.
+                      I confirm my delivery details and agree to submit the payment slip on WhatsApp.
                     </label>
                   </div>
 
@@ -519,12 +621,12 @@ Thank you for your order!`;
                     {isPlacingOrder ? (
                       <>
                         <Loader2 className="animate-spin w-4 h-4 sm:w-5 sm:h-5 shrink-0" />
-                        <span>Placing Order...</span>
+                        <span>Finalizing Order...</span>
                       </>
                     ) : (
                       <>
                         <MessageSquare className="w-4 h-4 sm:w-5 sm:h-5 text-white shrink-0" />
-                        <span className="truncate">Place Order via WhatsApp</span>
+                        <span className="truncate">Finalize Order & Send Payment Slip</span>
                       </>
                     )}
                   </motion.button>
@@ -543,11 +645,16 @@ Thank you for your order!`;
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6 pb-4 border-b border-gray-100">
                   <div>
                     <h2 className="text-xl sm:text-2xl font-semibold text-gray-900">
-                      Billing Details
+                      Billing & Delivery Details
                     </h2>
                     <p className="text-xs text-gray-500 mt-0.5">
-                      Enter your shipping and contact information below.
+                      Enter your address where your products will be dispatched after payment slip confirmation.
                     </p>
+                  </div>
+
+                  <div className="flex items-center gap-1.5 text-xs text-neutral-500 bg-neutral-50 px-3 py-1.5 rounded-lg border border-neutral-200 self-start sm:self-auto">
+                    <ShieldCheck className="w-4 h-4 text-[#d4af37]" />
+                    <span>Safe Packaging & Direct Dispatch</span>
                   </div>
                 </div>
 

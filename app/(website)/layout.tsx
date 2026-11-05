@@ -6,7 +6,7 @@ import CartDrawerClient from "./CartDrawerClient";
 const announcements = [
   { id: "1", text: "🚚 Free Delivery Across Pakistan" },
   { id: "2", text: "💯 No Delivery Charges Nationwide" },
-  { id: "3", text: "💵 Cash on Delivery Available" },
+  { id: "3", text: "💳 Dispatch Upon WhatsApp Payment Slip Verification" },
 ];
 
 export default function WebsiteLayout({

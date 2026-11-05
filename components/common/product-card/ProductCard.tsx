@@ -16,6 +16,12 @@ export default function ProductCard({
   onAddToCart,
 }: ProductCardProps) {
   const [clicked, setClicked] = useState(false);
+  const [imgLoaded, setImgLoaded] = useState(false);
+  const initialImage =
+    product.image && product.image.trim() !== ""
+      ? product.image
+      : "/placeholder.svg";
+  const [imgSrc, setImgSrc] = useState(initialImage);
 
   const handleAdd = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -28,7 +34,7 @@ export default function ProductCard({
   return (
     <div className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-neutral-200/90 bg-white transition-all duration-300 hover:border-[#d4af37]/60 hover:shadow-xl hover:shadow-black/5">
       {/* ── Top Micro-Bar ── */}
-      <div className="relative aspect-square w-full overflow-hidden bg-neutral-100/70 p-3">
+      <div className="relative aspect-square w-full overflow-hidden bg-neutral-100 p-3">
         {/* Ambient Top Micro Badges */}
         <div className="absolute left-2.5 top-2.5 z-10 flex flex-col gap-1.5 items-start">
           {product.sale ? (
@@ -52,18 +58,32 @@ export default function ProductCard({
           <ArrowUpRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
         </Link>
 
-        {/* Product Image */}
+        {/* Product Image Container (relative is explicitly set on direct parent) */}
         <Link
           href={`/collection/${product.slug}`}
-          className="block h-full w-full"
+          className="relative block h-full w-full overflow-hidden rounded-xl bg-neutral-100"
         >
+          {/* Skeleton Placeholder while loading */}
+          {!imgLoaded && (
+            <div className="absolute inset-0 z-0 bg-neutral-200/80 animate-pulse rounded-xl flex items-center justify-center">
+              <span className="text-[10px] font-mono text-neutral-400">Loading...</span>
+            </div>
+          )}
+
           <Image
-            src={product.image}
-            alt={product.name}
+            src={imgSrc}
+            alt={product.name || "Product hardware"}
             fill
             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-            className="object-cover transition-transform duration-700 ease-out group-hover:scale-106"
+            className={`object-cover transition-all duration-500 ease-out group-hover:scale-106 ${
+              imgLoaded ? "opacity-100" : "opacity-0"
+            }`}
             loading="lazy"
+            onLoad={() => setImgLoaded(true)}
+            onError={() => {
+              setImgSrc("/placeholder.svg");
+              setImgLoaded(true);
+            }}
           />
         </Link>
       </div>
@@ -86,7 +106,7 @@ export default function ProductCard({
           </Link>
         </div>
 
-        {/* Price & Action Button (Responsive Stacked — Never Crops Button) */}
+        {/* Price & Action Button */}
         <div className="mt-3 pt-2.5 border-t border-neutral-100 flex flex-col gap-2">
           {/* Price Container */}
           <div className="min-w-0">
@@ -105,7 +125,7 @@ export default function ProductCard({
             </div>
           </div>
 
-          {/* Bespoke Tech Add Button — Full Width & Never Squeezed */}
+          {/* Action Button */}
           <button
             type="button"
             onClick={handleAdd}

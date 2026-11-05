@@ -6,6 +6,7 @@ import RelatedProducts, { RelatedProduct } from "./RelatedProducts";
 import { useEffect } from "react";
 import { useRecentlyViewedStore } from "@/store/recently-viewed-store";
 import { MessageCircle, ShieldCheck, Cpu, ArrowUpRight } from "lucide-react";
+import { STORE_CONTACT } from "@/components/common/SocialIcons";
 
 interface ProductDetailsPageProps {
   product: {
@@ -40,42 +41,43 @@ export default function ProductDetailsPage({
         slug: product.slug || product.id,
         name: product.name,
         price: product.price,
-        oldPrice: product.oldPrice,
-        image: product.images?.[0]?.url || "/placeholder.jpg",
-        sale: product.oldPrice ? product.oldPrice > product.price : false,
+        image: product.images?.[0]?.url || "/placeholder.svg",
       });
     }
   }, [product, addItem]);
 
   return (
-    <main className="mx-auto w-full max-w-7xl px-4 py-10 md:px-8 lg:py-16">
-      <section className="grid gap-10 lg:grid-cols-2 lg:gap-16">
-        {/* Product Images */}
-        <div className="lg:sticky lg:top-24 h-fit animate-in fade-in slide-in-from-left-5 duration-700">
+    <main className="container mx-auto max-w-7xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
+      {/* Product Hero */}
+      <div className="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-14">
+        {/* Gallery */}
+        <div className="w-full">
           <ProductGallery images={product.images} productName={product.name} />
         </div>
 
-        {/* Product Information */}
-        <ProductInfo
-          product={{
-            id: product.id,
-            name: product.name,
-            price: product.price,
-            oldPrice: product.oldPrice,
-            description: product.description,
-            rating: product.rating,
-            reviews: product.reviews,
-            stock: product.stock,
-            image: product.images[0]?.url,
-          }}
-        />
-      </section>
+        {/* Info */}
+        <div className="w-full">
+          <ProductInfo
+            product={{
+              id: product.id,
+              name: product.name,
+              price: product.price,
+              oldPrice: product.oldPrice,
+              description: product.description,
+              rating: product.rating,
+              reviews: product.reviews,
+              stock: product.stock,
+              image: product.images?.[0]?.url,
+            }}
+          />
+        </div>
+      </div>
 
-      {/* Engineering Consultation Callout (Bespoke Tech Bar) */}
-      <section className="mt-16 rounded-3xl border border-neutral-800 bg-neutral-950 p-6 sm:p-8 lg:p-10 text-white shadow-2xl relative overflow-hidden">
-        <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-gradient-to-br from-[#d4af37]/20 via-amber-600/10 to-transparent blur-3xl pointer-events-none" />
+      {/* Engineering Consultation Strip */}
+      <section className="mt-16 sm:mt-24 rounded-3xl bg-neutral-950 p-6 sm:p-10 border border-neutral-800 text-white relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-[radial-gradient(ellipse_at_top_right,rgba(212,175,55,0.12)_0%,transparent_70%)] pointer-events-none" />
 
-        <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+        <div className="relative z-10 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
           <div className="max-w-2xl">
             <div className="inline-flex items-center gap-2 rounded-full border border-[#d4af37]/30 bg-[#d4af37]/10 px-3 py-1 text-xs font-mono font-semibold uppercase tracking-wider text-[#d4af37] mb-3">
               <Cpu className="w-3.5 h-3.5" />
@@ -91,8 +93,8 @@ export default function ProductDetailsPage({
 
           <div className="flex flex-wrap items-center gap-3">
             <a
-              href={`https://wa.me/923159686822?text=${encodeURIComponent(
-                `Hi Wadan Electrics! I would like to consult an engineer regarding ${product.name} and system compatibility.`
+              href={`https://wa.me/${STORE_CONTACT.whatsappNumber}?text=${encodeURIComponent(
+                `Hi Wadan Electric Store! I would like to consult an engineer regarding ${product.name} and system compatibility.`
               )}`}
               target="_blank"
               rel="noopener noreferrer"

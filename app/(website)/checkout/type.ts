@@ -752,7 +752,7 @@ export const paymentFields: FormField[] = [
     type: "radio",
     options: [
       {
-        label: "Cash On Delivery",
+        label: "Bank Transfer / WhatsApp Slip Verification",
         value: "cod",
       },
     ],

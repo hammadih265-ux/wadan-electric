@@ -11,13 +11,13 @@ import {
 export const metadata: Metadata = {
   title: "Refund & Chargeback Policy",
   description:
-    "Learn about Wadan Electrics refund, return, exchange, and chargeback policies.",
+    "Learn about Wadan Electric Store refund, return, exchange, and chargeback policies.",
   alternates: {
     canonical: "/refund-policy",
   },
   openGraph: {
     url: "/refund-policy",
-    title: "Refund & Chargeback Policy | Wadan Electrics",
+    title: "Refund & Chargeback Policy | Wadan Electric Store",
     description:
       "Information about returns, refunds, exchanges, and payment disputes.",
   },

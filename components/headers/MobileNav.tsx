@@ -8,12 +8,18 @@ import {
   Search,
   ShoppingBag,
   X,
+  Phone,
 } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useNavigationMenu } from "@/hooks/useNavigationMenu";
 import { useCartStore, useUIStore } from "@/store";
+import {
+  STORE_CONTACT,
+  FacebookIcon,
+  TikTokIcon,
+} from "@/components/common/SocialIcons";
 
 interface MenuItem {
   title: string;
@@ -100,71 +106,67 @@ export default function MobileNav({ open, onClose }: MobileNavProps) {
           />
 
           <motion.aside
+            className="fixed inset-y-0 left-0 z-50 flex w-[85%] max-w-sm flex-col bg-neutral-950 text-white shadow-2xl border-r border-neutral-800"
             initial={{ x: "-100%" }}
             animate={{ x: 0 }}
             exit={{ x: "-100%" }}
-            transition={{
-              type: "spring",
-              stiffness: 280,
-              damping: 28,
-            }}
-            className="fixed left-0 top-0 z-50 flex h-screen w-[340px] max-w-[90vw] flex-col bg-neutral-950 text-white border-r border-neutral-800 shadow-2xl"
+            transition={{ type: "tween", duration: 0.28, ease: "easeInOut" }}
           >
             {/* Header */}
-            <div className="flex items-center justify-between border-b border-neutral-800/80 px-6 py-5">
-              <div className="flex items-center gap-3">
-                {stack.length > 0 && (
-                  <button
-                    onClick={goBack}
-                    className="p-1 -ml-1 text-neutral-400 hover:text-white transition-colors"
-                    aria-label="Go back"
-                  >
-                    <ChevronLeft className="w-5 h-5" />
-                  </button>
-                )}
-
-                <h2 className="text-lg font-bold tracking-tight text-white">
-                  {currentTitle}
-                </h2>
-              </div>
+            <div className="flex items-center justify-between border-b border-neutral-800/80 px-5 py-4">
+              <span className="font-heading text-base font-extrabold tracking-wider text-white">
+                Wadan Electric Store
+              </span>
 
               <button
                 onClick={onClose}
-                className="p-1 -mr-1 text-neutral-400 hover:text-white transition-colors"
                 aria-label="Close menu"
+                className="rounded-lg p-1.5 text-neutral-400 transition-colors hover:bg-neutral-800 hover:text-white"
               >
-                <X className="w-5 h-5" />
+                <X size={20} />
               </button>
             </div>
 
-            {/* Navigation */}
+            {/* Back button */}
+            {stack.length > 0 && (
+              <button
+                onClick={goBack}
+                className="flex items-center gap-2 border-b border-neutral-800/80 px-5 py-3 text-xs font-semibold uppercase tracking-wider text-neutral-400 transition-colors hover:bg-neutral-900 hover:text-[#d4af37]"
+              >
+                <ChevronLeft size={16} />
+                <span>Back to {titles[titles.length - 2]}</span>
+              </button>
+            )}
+
+            {/* Title */}
+            <div className="border-b border-neutral-800/80 px-5 py-3.5">
+              <span className="text-xs font-bold uppercase tracking-widest text-[#d4af37]">
+                {currentTitle}
+              </span>
+            </div>
+
+            {/* Menu List */}
             <motion.div
               key={currentTitle}
-              initial={{ x: 30, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              exit={{ x: -30, opacity: 0 }}
-              className="flex-1 overflow-y-auto p-4 sm:p-5"
+              initial={{ opacity: 0, x: 12 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.18 }}
+              className="flex-1 overflow-y-auto px-3 py-3"
             >
-              <ul className="space-y-1.5">
-                {current.map((item, index) => (
+              <ul className="space-y-1">
+                {current?.map((item) => (
                   <motion.li
                     key={item.title}
-                    initial={{ opacity: 0, y: 15 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{
-                      delay: index * 0.04,
-                    }}
+                    whileTap={{ scale: 0.98 }}
+                    transition={{ duration: 0.1 }}
                   >
                     {item.children ? (
                       <button
                         onClick={() => openChildren(item)}
-                        className="group flex w-full items-center justify-between rounded-xl px-4 py-3.5 text-sm font-semibold text-neutral-200 transition-colors hover:bg-neutral-900 hover:text-[#d4af37]"
+                        className="flex w-full items-center justify-between rounded-xl px-4 py-3.5 text-sm font-semibold text-neutral-200 transition-colors hover:bg-neutral-900 hover:text-[#d4af37]"
                       >
                         <span>{item.title}</span>
-                        <ChevronRight
-                          size={18}
-                          className="text-neutral-500 group-hover:text-[#d4af37] transition-colors"
-                        />
+                        <ChevronRight size={16} className="text-neutral-500" />
                       </button>
                     ) : (
                       <Link
@@ -181,7 +183,7 @@ export default function MobileNav({ open, onClose }: MobileNavProps) {
             </motion.div>
 
             {/* Search */}
-            <form onSubmit={handleSearchSubmit} className="px-5 pb-4">
+            <form onSubmit={handleSearchSubmit} className="px-5 pb-3">
               <div className="flex items-center gap-2.5 rounded-xl border border-neutral-800 bg-neutral-900/90 px-3.5 py-2.5 transition-colors focus-within:border-[#d4af37]/60">
                 <Search size={16} className="flex-shrink-0 text-neutral-400" />
 
@@ -196,8 +198,41 @@ export default function MobileNav({ open, onClose }: MobileNavProps) {
               </div>
             </form>
 
+            {/* Contact & Social Strip */}
+            <div className="px-5 py-3 border-t border-neutral-800/80 bg-neutral-900/40">
+              <div className="flex items-center justify-between text-xs">
+                <a
+                  href={`tel:${STORE_CONTACT.phone}`}
+                  className="text-[11px] font-mono text-neutral-400 hover:text-white flex items-center gap-1.5 transition"
+                >
+                  <Phone size={13} className="text-[#d4af37]" />
+                  <span>{STORE_CONTACT.phone}</span>
+                </a>
+                <div className="flex items-center gap-2.5">
+                  <a
+                    href={STORE_CONTACT.tiktok}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-1.5 rounded-lg bg-neutral-800 hover:bg-neutral-700 text-white transition"
+                    aria-label="TikTok"
+                  >
+                    <TikTokIcon className="w-3.5 h-3.5" />
+                  </a>
+                  <a
+                    href={STORE_CONTACT.facebook}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-1.5 rounded-lg bg-neutral-800 hover:bg-[#1877F2] text-white transition"
+                    aria-label="Facebook"
+                  >
+                    <FacebookIcon className="w-3.5 h-3.5" />
+                  </a>
+                </div>
+              </div>
+            </div>
+
             {/* Footer */}
-            <div className="border-t border-neutral-800/80 p-5 bg-neutral-950">
+            <div className="border-t border-neutral-800/80 p-4 bg-neutral-950">
               <div className="flex justify-around">
                 <Link
                   href="/login"

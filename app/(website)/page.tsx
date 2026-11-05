@@ -24,12 +24,12 @@ import type { Banner } from "@/services/banner.service";
 export const revalidate = 60;
 
 export const metadata: Metadata = {
-  title: "Wadan Electrics | Electric Accessories, Solar Inverter, Lithium Battery & Fire Safety",
+  title: "Wadan Electric Store | Electric Accessories, Solar Inverter, Lithium Battery & Fire Safety",
   description:
-    "Shop premium Electric Accessories, high-efficiency Solar Inverters, durable Lithium Batteries, and certified Fire Safety equipment at Wadan Electrics. Quality-tested power & protection solutions nationwide.",
+    "Shop premium Electric Accessories, high-efficiency Solar Inverters, durable Lithium Batteries, and certified Fire Safety equipment at Wadan Electric Store. Quality-tested power & protection solutions nationwide.",
   alternates: { canonical: "/" },
   keywords: [
-    "Wadan Electrics",
+    "Wadan Electric Store",
     "Electric Accessories",
     "Solar Inverter",
     "Lithium Battery",
@@ -42,82 +42,110 @@ export const metadata: Metadata = {
   ],
   openGraph: {
     url: "/",
-    title: "Wadan Electrics | Premium Electric, Solar & Fire Safety Solutions",
+    title: "Wadan Electric Store | Premium Electric, Solar & Fire Safety Solutions",
     description: "Quality Electric Accessories, Solar Inverters, Lithium Batteries, and Fire Safety equipment.",
-    images: [{ url: "/logo.png", width: 1200, height: 630, alt: "Wadan Electrics" }],
+    images: [{ url: "/logo.png", width: 1200, height: 630, alt: "Wadan Electric Store" }],
   },
 };
 
+const fallbackDefaultProducts = [
+  {
+    id: "fallback-prod-1",
+    slug: "hybrid-solar-inverter-6kw",
+    name: "Pure Sine Wave Hybrid Solar Inverter 6kW",
+    price: 185000,
+    oldPrice: 210000,
+    sale: true,
+    image: "/categories/solar-inverter.svg",
+  },
+  {
+    id: "fallback-prod-2",
+    slug: "lifepo4-48v-100ah-battery",
+    name: "LiFePO4 48V 100Ah Lithium Storage Battery",
+    price: 320000,
+    oldPrice: 350000,
+    sale: false,
+    image: "/categories/lithium-battery.svg",
+  },
+  {
+    id: "fallback-prod-3",
+    slug: "molded-case-circuit-breaker",
+    name: "Triple Pole AC/DC Molded Circuit Breaker",
+    price: 14500,
+    oldPrice: 16500,
+    sale: false,
+    image: "/categories/electric-accessories.svg",
+  },
+  {
+    id: "fallback-prod-4",
+    slug: "automated-fire-suppression",
+    name: "Automatic Cabinet Dry Powder Fire Extinguisher",
+    price: 8500,
+    oldPrice: 9500,
+    sale: true,
+    image: "/categories/fire-safety.svg",
+  },
+];
+
 export default async function Home() {
-  let dbProducts: Product[] = [];
-  try {
-    dbProducts = await getLatestProducts(8);
-  } catch {
-    // ignore error in server component context
-  }
+  // Parallel resilient data fetching to prevent blocking or build timeouts
+  const [latestRes, featuredRes, upcomingRes, categoriesRes, bannersRes] =
+    await Promise.allSettled([
+      getLatestProducts(8),
+      getFeaturedProducts(4),
+      getUpcomingProducts(1),
+      getCategories(),
+      getBanners(),
+    ]);
 
-  let featuredProducts: Product[] = [];
-  try {
-    featuredProducts = await getFeaturedProducts(4);
-  } catch {
-    // ignore error in server component context
-  }
-
-  let upcomingProducts: Product[] = [];
-  try {
-    upcomingProducts = await getUpcomingProducts(1);
-  } catch {
-    // ignore error in server component context
-  }
+  const dbProducts: Product[] =
+    latestRes.status === "fulfilled" ? latestRes.value || [] : [];
+  const featuredProducts: Product[] =
+    featuredRes.status === "fulfilled" ? featuredRes.value || [] : [];
+  const upcomingProducts: Product[] =
+    upcomingRes.status === "fulfilled" ? upcomingRes.value || [] : [];
+  const cats =
+    categoriesRes.status === "fulfilled" ? categoriesRes.value || [] : [];
+  const banners: Banner[] =
+    bannersRes.status === "fulfilled" ? bannersRes.value || [] : [];
 
   let showcaseItems: CollectionItem[] = [];
-  try {
-    const cats = await getCategories();
-    if (cats && cats.length > 0) {
-      showcaseItems = cats.map((cat) => ({
-        id: cat.id,
-        title: cat.name,
-        image: cat.image_url ?? "/placeholder.jpg",
-        href: `/collection?category=${getCategorySlug(cat)}`,
-      }));
-    } else {
-      // High-converting defaults matching user requested categories
-      showcaseItems = [
-        {
-          id: "electric-accessories",
-          title: "Electric Accessories",
-          image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&q=80",
-          href: "/collection?category=electric-accessories",
-        },
-        {
-          id: "solar-inverter",
-          title: "Solar Inverter",
-          image: "https://images.unsplash.com/photo-1509391365360-2e959784a276?w=800&q=80",
-          href: "/collection?category=solar-inverter",
-        },
-        {
-          id: "lithium-battery",
-          title: "Lithium Battery",
-          image: "https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?w=800&q=80",
-          href: "/collection?category=lithium-battery",
-        },
-        {
-          id: "fire-safety",
-          title: "Fire Safety",
-          image: "https://images.unsplash.com/photo-1582139329536-e7284fece509?w=800&q=80",
-          href: "/collection?category=fire-safety",
-        },
-      ];
-    }
-  } catch {
-    // ignore error in server component context
-  }
 
-  let banners: Banner[] = [];
-  try {
-    banners = await getBanners();
-  } catch {
-    // ignore error in server component context
+  if (cats && cats.length > 0) {
+    showcaseItems = cats.map((cat) => ({
+      id: cat.id,
+      title: cat.name,
+      image: cat.image_url ?? "/placeholder.svg",
+      href: `/collection?category=${getCategorySlug(cat)}`,
+    }));
+  } else {
+    // Branded high-converting local SVGs without external dummy Unsplash dependencies
+    showcaseItems = [
+      {
+        id: "electric-accessories",
+        title: "Electric Accessories",
+        image: "/categories/electric-accessories.svg",
+        href: "/collection?category=electric-accessories",
+      },
+      {
+        id: "solar-inverter",
+        title: "Solar Inverter",
+        image: "/categories/solar-inverter.svg",
+        href: "/collection?category=solar-inverter",
+      },
+      {
+        id: "lithium-battery",
+        title: "Lithium Battery",
+        image: "/categories/lithium-battery.svg",
+        href: "/collection?category=lithium-battery",
+      },
+      {
+        id: "fire-safety",
+        title: "Fire Safety",
+        image: "/categories/fire-safety.svg",
+        href: "/collection?category=fire-safety",
+      },
+    ];
   }
 
   // Map DB shape → lightweight UI shape used by ProductCard / Zustand
@@ -125,11 +153,15 @@ export default async function Home() {
     id: p.id,
     slug: p.slug,
     name: p.name,
-    image: p.product_images?.[0]?.image_url ?? "/placeholder.jpg",
+    image: p.product_images?.[0]?.image_url || "/placeholder.svg",
     price: p.price,
     oldPrice: p.compare_at_price || undefined,
     sale: p.compare_at_price ? p.compare_at_price > p.price : false,
   }));
+
+  // If Supabase hasn't returned products yet at first, show hardware placeholders
+  const activeProducts =
+    mappedProducts.length > 0 ? mappedProducts : fallbackDefaultProducts;
 
   return (
     <main className="container mx-auto sm:max-w-7xl">
@@ -141,7 +173,7 @@ export default async function Home() {
        * server-fetched products into Zustand so any client component
        * can access them instantly.
        */}
-      <ProductsHydrator products={mappedProducts} />
+      <ProductsHydrator products={activeProducts} />
 
       {/* Hero Banner Slider */}
       <BannerSlider banners={banners} />
@@ -155,7 +187,7 @@ export default async function Home() {
           "🔋 Long-Life LiFePO4 Lithium Batteries",
           "🧯 Certified Fire Safety & Detection Systems",
           "🚚 Fast Shipping Nationwide Across Pakistan",
-          "💵 Cash On Delivery Available",
+          "💳 Send Payment Slip via WhatsApp for Quick Dispatch",
         ]}
       />
 
@@ -171,18 +203,7 @@ export default async function Home() {
       <CollectionShowcase items={showcaseItems} />
 
       {/* Latest Products Grid */}
-      {mappedProducts.length > 0 ? (
-        <ProductsGrid products={mappedProducts} />
-      ) : (
-        <section className="container mx-auto my-10 max-w-5xl rounded-2xl bg-neutral-50 px-6 py-16 text-center">
-          <h2 className="mb-2 text-2xl font-semibold text-neutral-800">
-            Products Coming Soon
-          </h2>
-          <p className="mx-auto mb-6 max-w-md text-neutral-500">
-            Our online catalog is currently updating with the latest solar and electrical items. Check back soon or contact us on WhatsApp.
-          </p>
-        </section>
-      )}
+      <ProductsGrid products={activeProducts} />
 
       {/* Recently Viewed Products */}
       <RecentlyViewedSection />

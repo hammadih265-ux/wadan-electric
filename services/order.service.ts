@@ -53,7 +53,7 @@ export async function createOrderFromCart(
   customer: OrderCustomerInfo,
   shippingAddress: string,
   shippingCost = 0,
-  paymentMethod = "Cash On Delivery",
+  paymentMethod = "Bank Transfer / WhatsApp Slip Verification",
   notes?: string,
 ) {
   const supabase = createClient();

@@ -69,7 +69,7 @@ export default function RelatedProducts({ products }: RelatedProductsProps) {
                 id: product.id,
                 slug: product.slug,
                 name: product.name,
-                image: product.image || "/placeholder.jpg",
+                image: product.image || "/placeholder.svg",
                 price: product.price,
                 oldPrice: product.oldPrice,
                 sale: isSale,

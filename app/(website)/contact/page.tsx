@@ -9,8 +9,12 @@ import {
   MapPin,
   MessageCircle,
   PhoneCall,
-  Clock,
 } from "lucide-react";
+import {
+  STORE_CONTACT,
+  FacebookIcon,
+  TikTokIcon,
+} from "@/components/common/SocialIcons";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -41,7 +45,7 @@ const pillars = [
     icon: Truck,
     title: "Nationwide Dispatch",
     description:
-      "Fast, insured delivery across Lahore, Karachi, Islamabad, and all cities in Pakistan.",
+      "Fast, insured delivery across Mardan, Peshawar, Lahore, Karachi, Islamabad, and all cities in Pakistan.",
   },
 ];
 
@@ -72,7 +76,7 @@ export default function ContactPage() {
           >
             Contact{" "}
             <span className="bg-gradient-to-r from-[#d4af37] to-[#b8941f] bg-clip-text text-transparent">
-              Wadan Electrics
+              Wadan Electric Store
             </span>
           </motion.h1>
 
@@ -92,10 +96,10 @@ export default function ContactPage() {
       <section className="py-20 -mt-10 relative z-10">
         <div className="max-w-6xl mx-auto px-6">
           <div className="grid md:grid-cols-3 gap-6">
-            {/* WhatsApp */}
+            {/* WhatsApp & Call */}
             <motion.a
               whileHover={{ y: -6 }}
-              href="https://wa.me/923159686822"
+              href={STORE_CONTACT.whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="bg-white rounded-3xl p-8 border border-neutral-200 shadow-sm hover:shadow-xl hover:border-[#25D366]/40 transition-all text-center block group"
@@ -104,20 +108,23 @@ export default function ContactPage() {
                 <MessageCircle className="w-8 h-8" />
               </div>
               <h2 className="font-bold text-lg text-neutral-900 mb-1">
-                WhatsApp Support
+                WhatsApp & Direct Call
               </h2>
               <p className="text-xs text-neutral-500 mb-4">
-                Fastest response for pricing & orders
+                Fastest response for pricing & payment slips
               </p>
-              <span className="text-sm font-semibold text-emerald-600 block">
-                +92 315 9686822
+              <span className="text-sm font-bold text-emerald-600 block">
+                {STORE_CONTACT.phoneFormatted}
+              </span>
+              <span className="text-xs text-neutral-500 mt-1 block font-mono">
+                {STORE_CONTACT.phone}
               </span>
             </motion.a>
 
             {/* Email */}
             <motion.a
               whileHover={{ y: -6 }}
-              href="mailto:wadanelectrics@gmail.com"
+              href={`mailto:${STORE_CONTACT.email}`}
               className="bg-white rounded-3xl p-8 border border-neutral-200 shadow-sm hover:shadow-xl hover:border-[#d4af37]/40 transition-all text-center block group"
             >
               <div className="w-16 h-16 rounded-2xl bg-amber-50 text-[#d4af37] flex items-center justify-center mx-auto mb-5 shadow-sm group-hover:scale-110 transition-transform">
@@ -130,7 +137,7 @@ export default function ContactPage() {
                 Corporate quotes & technical specs
               </p>
               <span className="text-sm font-semibold text-neutral-900 block truncate">
-                wadanelectrics@gmail.com
+                {STORE_CONTACT.email}
               </span>
             </motion.a>
 
@@ -140,18 +147,48 @@ export default function ContactPage() {
               className="bg-white rounded-3xl p-8 border border-neutral-200 shadow-sm hover:shadow-xl hover:border-[#d4af37]/40 transition-all text-center group"
             >
               <div className="w-16 h-16 rounded-2xl bg-neutral-100 text-neutral-800 flex items-center justify-center mx-auto mb-5 shadow-sm group-hover:scale-110 transition-transform">
-                <MapPin className="w-8 h-8" />
+                <MapPin className="w-8 h-8 text-[#d4af37]" />
               </div>
               <h2 className="font-bold text-lg text-neutral-900 mb-1">
-                Physical Office
+                Store & Physical Office
               </h2>
               <p className="text-xs text-neutral-500 mb-4">
-                Lahore Distribution Hub
+                Main Showroom & Distribution Hub
               </p>
-              <span className="text-xs font-semibold text-neutral-800 leading-relaxed block">
-                93K DHA Phase 1, Lahore, Pakistan
+              <span className="text-sm font-bold text-neutral-900 leading-relaxed block">
+                {STORE_CONTACT.address}
               </span>
             </motion.div>
+          </div>
+
+          {/* Social Channels Section */}
+          <div className="mt-12 bg-white rounded-3xl p-8 border border-neutral-200 shadow-sm text-center">
+            <h3 className="font-bold text-xl text-neutral-900 mb-2">
+              Connect With Us On Social Media
+            </h3>
+            <p className="text-xs sm:text-sm text-neutral-500 max-w-lg mx-auto mb-6">
+              Watch product demonstrations, new arrivals, and technical testing on our official TikTok and Facebook channels.
+            </p>
+            <div className="flex flex-wrap items-center justify-center gap-4">
+              <a
+                href={STORE_CONTACT.tiktok}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2.5 px-6 py-3 rounded-2xl bg-black text-white hover:bg-neutral-800 transition shadow-md font-semibold text-sm"
+              >
+                <TikTokIcon className="w-5 h-5" />
+                <span>Follow on TikTok</span>
+              </a>
+              <a
+                href={STORE_CONTACT.facebook}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2.5 px-6 py-3 rounded-2xl bg-[#1877F2] text-white hover:bg-[#166fe5] transition shadow-md font-semibold text-sm"
+              >
+                <FacebookIcon className="w-5 h-5" />
+                <span>Follow on Facebook</span>
+              </a>
+            </div>
           </div>
         </div>
       </section>
@@ -164,7 +201,7 @@ export default function ContactPage() {
               OUR COMMITMENT
             </span>
             <h2 className="text-3xl font-extrabold text-neutral-900 mt-2">
-              Why Work With Wadan Electrics?
+              Why Work With Wadan Electric Store?
             </h2>
           </div>
 

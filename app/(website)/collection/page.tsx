@@ -12,15 +12,15 @@ export function generateStaticParams() {
 }
 
 export const metadata: Metadata = {
-  title: "Collection | Wadan Electrics",
+  title: "Collection | Wadan Electric Store",
   description:
     "Browse our full collection of Electric Accessories, Solar Inverters, Lithium Batteries, and Fire Safety equipment. Filter by category and price. Free shipping nationwide.",
   alternates: { canonical: "/collection" },
   openGraph: {
     url: "/collection",
-    title: "Collection | Wadan Electrics",
+    title: "Collection | Wadan Electric Store",
     description:
-      "Browse premium Electric Accessories, Solar Inverters, Lithium Batteries, and Fire Safety gear at Wadan Electrics.",
+      "Browse premium Electric Accessories, Solar Inverters, Lithium Batteries, and Fire Safety gear at Wadan Electric Store.",
   },
 };
 
@@ -35,6 +35,45 @@ interface Props {
 }
 
 const PRODUCTS_PER_PAGE = 12;
+
+const fallbackCollectionPlaceholder = [
+  {
+    id: "fb-col-1",
+    slug: "hybrid-solar-inverter-6kw",
+    name: "Pure Sine Wave Hybrid Solar Inverter 6kW",
+    image: "/categories/solar-inverter.svg",
+    price: 185000,
+    oldPrice: 210000,
+    sale: true,
+  },
+  {
+    id: "fb-col-2",
+    slug: "lifepo4-48v-100ah-battery",
+    name: "LiFePO4 48V 100Ah Lithium Storage Battery",
+    image: "/categories/lithium-battery.svg",
+    price: 320000,
+    oldPrice: 350000,
+    sale: false,
+  },
+  {
+    id: "fb-col-3",
+    slug: "molded-case-circuit-breaker",
+    name: "Triple Pole AC/DC Molded Circuit Breaker",
+    image: "/categories/electric-accessories.svg",
+    price: 14500,
+    oldPrice: 16500,
+    sale: false,
+  },
+  {
+    id: "fb-col-4",
+    slug: "automated-fire-suppression",
+    name: "Automatic Cabinet Dry Powder Fire Extinguisher",
+    image: "/categories/fire-safety.svg",
+    price: 8500,
+    oldPrice: 9500,
+    sale: true,
+  },
+];
 
 // ── Filter skeleton shown while CollectionFilters hydrates ────────────────────
 function FilterSkeleton() {
@@ -79,13 +118,26 @@ export default async function CollectionPage({ searchParams }: Props) {
     id: p.id,
     slug: p.slug,
     name: p.name,
-    image: p.product_images?.[0]?.image_url || "/placeholder.jpg",
+    image: p.product_images?.[0]?.image_url || "/placeholder.svg",
     price: p.price,
     oldPrice: p.compare_at_price || undefined,
     sale: p.compare_at_price ? p.compare_at_price > p.price : false,
   }));
 
-  const totalPages = Math.ceil((filteredData.total || 0) / PRODUCTS_PER_PAGE);
+  const hasFilter = Boolean(category || search || minPrice || maxPrice);
+  const displayedProducts =
+    mappedProducts.length > 0
+      ? mappedProducts
+      : hasFilter
+        ? []
+        : fallbackCollectionPlaceholder;
+
+  const totalCount =
+    filteredData.total != null && filteredData.total > 0
+      ? filteredData.total
+      : displayedProducts.length;
+
+  const totalPages = Math.ceil(totalCount / PRODUCTS_PER_PAGE);
 
   const paginationBase = [
     category ? `category=${category}` : "",
@@ -97,8 +149,6 @@ export default async function CollectionPage({ searchParams }: Props) {
     .join("&");
 
   return (
-    /* overflow-x-hidden stops the filter panel or any child from
-       causing a horizontal scrollbar on narrow viewports */
     <div className="w-full overflow-x-hidden">
       <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
         {/* ── Page heading ─────────────────────────────────────────────── */}
@@ -106,10 +156,9 @@ export default async function CollectionPage({ searchParams }: Props) {
           <h1 className="font-heading text-2xl font-semibold uppercase tracking-tight sm:text-3xl">
             Collection
           </h1>
-          {filteredData.total != null && filteredData.total > 0 && (
+          {totalCount > 0 && (
             <p className="mt-1 text-sm text-neutral-500">
-              {filteredData.total}{" "}
-              {filteredData.total === 1 ? "product" : "products"}
+              {totalCount} {totalCount === 1 ? "product" : "products"}
             </p>
           )}
         </div>
@@ -125,10 +174,10 @@ export default async function CollectionPage({ searchParams }: Props) {
 
           {/* Products — takes remaining space, min-w-0 prevents flex overflow */}
           <div className="min-w-0 flex-1">
-            {mappedProducts.length > 0 ? (
+            {displayedProducts.length > 0 ? (
               <>
                 <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 xl:grid-cols-4">
-                  {mappedProducts.map((product) => (
+                  {displayedProducts.map((product) => (
                     <ProductCardWithCart
                       key={String(product.id)}
                       product={product}

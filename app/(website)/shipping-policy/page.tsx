@@ -12,15 +12,15 @@ import {
 export const metadata: Metadata = {
   title: "Shipping Policy",
   description:
-    "Learn about Wadan Electrics shipping times, delivery process, and order policies across Pakistan.",
+    "Learn about Wadan Electric Store shipping times, delivery process, and order policies across Pakistan.",
   alternates: {
     canonical: "/shipping-policy",
   },
   openGraph: {
     url: "/shipping-policy",
-    title: "Shipping Policy | Wadan Electrics",
+    title: "Shipping Policy | Wadan Electric Store",
     description:
-      "Information about delivery times and shipping policies for Wadan Electrics orders.",
+      "Information about delivery times and shipping policies for Wadan Electric Store orders.",
   },
 };
 

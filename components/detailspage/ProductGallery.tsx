@@ -22,53 +22,71 @@ export default function ProductGallery({
 }: ProductGalleryProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [zoom, setZoom] = useState(false);
+  const [imgLoaded, setImgLoaded] = useState(false);
+  const [failedImgs, setFailedImgs] = useState<Record<string, boolean>>({});
 
   const activeImage = images[activeIndex];
 
   const nextImage = () => {
+    setImgLoaded(false);
     setActiveIndex((prev) =>
       prev === images.length - 1 ? 0 : prev + 1
     );
   };
 
   const previousImage = () => {
+    setImgLoaded(false);
     setActiveIndex((prev) =>
       prev === 0 ? images.length - 1 : prev - 1
     );
   };
 
-  if (!images.length) {
+  if (!images.length || !activeImage) {
     return (
-      <div className="flex aspect-square items-center justify-center rounded-2xl bg-muted">
+      <div className="flex aspect-square items-center justify-center rounded-3xl bg-neutral-100 border text-neutral-400 text-sm">
         No image available
       </div>
     );
   }
 
+  const activeSrc = failedImgs[activeImage.id]
+    ? "/placeholder.svg"
+    : activeImage.url;
+
   return (
     <div className="space-y-5">
-
       {/* Main Image */}
       <div
         className="
           group relative overflow-hidden
           rounded-3xl
           bg-neutral-100
-        aspect-[3/3]
-          border
+          aspect-square
+          border border-neutral-200/80
         "
       >
+        {/* Placeholder skeleton */}
+        {!imgLoaded && (
+          <div className="absolute inset-0 z-0 bg-neutral-200 animate-pulse rounded-3xl" />
+        )}
+
         <Image
           key={activeImage.id}
-          src={activeImage.url}
+          src={activeSrc}
           alt={activeImage.alt || productName}
           fill
           sizes="(max-width: 768px) 100vw, 50vw"
           priority
+          onLoad={() => setImgLoaded(true)}
+          onError={() => {
+            setFailedImgs((prev) => ({ ...prev, [activeImage.id]: true }));
+            setImgLoaded(true);
+          }}
           className={`
-           object-contain
+            object-contain
             transition-all duration-700
             ease-out
+            ${imgLoaded ? "opacity-100" : "opacity-0"}
             ${
               zoom
                 ? "scale-125 cursor-zoom-out"
@@ -105,7 +123,6 @@ export default function ProductGallery({
           <ZoomIn className="h-5 w-5" />
         </Button>
 
-
         {/* Navigation */}
         {images.length > 1 && (
           <>
@@ -124,7 +141,6 @@ export default function ProductGallery({
             >
               <ChevronLeft />
             </Button>
-
 
             <Button
               size="icon"
@@ -145,7 +161,6 @@ export default function ProductGallery({
         )}
       </div>
 
-
       {/* Thumbnails */}
       {images.length > 1 && (
         <div
@@ -156,45 +171,52 @@ export default function ProductGallery({
             scrollbar-none
           "
         >
-          {images.map((image, index) => (
-            <button
-              key={image.id}
-              onClick={() => {
-                setActiveIndex(index);
-                setZoom(false);
-              }}
-              className={`
-                relative
-                h-20 w-20
-                shrink-0
-                overflow-hidden
-                rounded-xl
-                border-2
-                transition-all duration-300
-                
-                ${
-                  activeIndex === index
-                    ? "border-black scale-105"
-                    : "border-transparent opacity-70 hover:opacity-100"
-                }
-              `}
-            >
-              <Image
-                src={image.url}
-                alt={image.alt || productName}
-                width={80}
-                height={80}
-                className="
-                  object-cover
-                  transition-transform duration-300
-                  hover:scale-110
-                "
-              />
-            </button>
-          ))}
+          {images.map((image, index) => {
+            const thumbSrc = failedImgs[image.id]
+              ? "/placeholder.svg"
+              : image.url;
+            return (
+              <button
+                key={image.id}
+                onClick={() => {
+                  setImgLoaded(false);
+                  setActiveIndex(index);
+                  setZoom(false);
+                }}
+                className={`
+                  relative
+                  h-20 w-20
+                  shrink-0
+                  overflow-hidden
+                  rounded-xl
+                  border-2
+                  transition-all duration-300
+                  ${
+                    activeIndex === index
+                      ? "border-black scale-105"
+                      : "border-transparent opacity-70 hover:opacity-100"
+                  }
+                `}
+              >
+                <Image
+                  src={thumbSrc}
+                  alt={image.alt || productName}
+                  width={80}
+                  height={80}
+                  className="
+                    object-cover w-full h-full
+                    transition-transform duration-300
+                    hover:scale-110
+                  "
+                  onError={() =>
+                    setFailedImgs((prev) => ({ ...prev, [image.id]: true }))
+                  }
+                />
+              </button>
+            );
+          })}
         </div>
       )}
-
     </div>
   );
 }

@@ -31,13 +31,13 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://wadanelectrics.com"),
   title: {
     default:
-      "Wadan Electrics | Electric Accessories, Solar Inverter, Lithium Battery & Fire Safety",
-    template: "%s | Wadan Electrics",
+      "Wadan Electric Store | Electric Accessories, Solar Inverter, Lithium Battery & Fire Safety",
+    template: "%s | Wadan Electric Store",
   },
   description:
-    "Wadan Electrics supplies premium Electric Accessories, high-efficiency Solar Inverters, durable LiFePO4 Lithium Batteries, and certified Fire Safety equipment in Pakistan. Quality-tested power & protection solutions.",
+    "Wadan Electric Store supplies premium Electric Accessories, high-efficiency Solar Inverters, durable LiFePO4 Lithium Batteries, and certified Fire Safety equipment in Pakistan. Quality-tested power & protection solutions.",
   keywords: [
-    "Wadan Electrics",
+    "Wadan Electric Store",
     "Electric Accessories",
     "Solar Inverter",
     "Lithium Battery",
@@ -49,17 +49,17 @@ export const metadata: Metadata = {
     "Circuit Breakers and Distribution",
     "Industrial Electrical Accessories",
   ],
-  authors: [{ name: "Wadan Electrics", url: "https://wadanelectrics.com" }],
-  creator: "Wadan Electrics",
-  publisher: "Wadan Electrics",
+  authors: [{ name: "Wadan Electric Store", url: "https://wadanelectrics.com" }],
+  creator: "Wadan Electric Store",
+  publisher: "Wadan Electric Store",
   category: "Electronics, Solar Power & Safety Equipment",
   openGraph: {
     type: "website",
     locale: "en_PK",
     url: "https://wadanelectrics.com",
-    siteName: "Wadan Electrics",
+    siteName: "Wadan Electric Store",
     title:
-      "Wadan Electrics | Electric Accessories, Solar Inverter, Lithium Battery & Fire Safety",
+      "Wadan Electric Store | Electric Accessories, Solar Inverter, Lithium Battery & Fire Safety",
     description:
       "Your trusted source for premium Electric Accessories, Solar Inverters, Lithium Batteries, and Fire Safety systems. Quality-tested products with nationwide delivery.",
     images: [
@@ -67,14 +67,14 @@ export const metadata: Metadata = {
         url: "/logo.png",
         width: 1200,
         height: 630,
-        alt: "Wadan Electrics — Power, Solar & Safety Systems",
+        alt: "Wadan Electric Store — Power, Solar & Safety Systems",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
     title:
-      "Wadan Electrics | Electric Accessories, Solar Inverter, Lithium Battery & Fire Safety",
+      "Wadan Electric Store | Electric Accessories, Solar Inverter, Lithium Battery & Fire Safety",
     description:
       "Premium Electric Accessories, Solar Inverters, Lithium Batteries & Fire Safety equipment with nationwide delivery.",
     images: ["/logo.png"],
@@ -97,14 +97,14 @@ const jsonLd = {
     {
       "@type": "Organization",
       "@id": "https://wadanelectrics.com/#organization",
-      name: "Wadan Electrics",
+      name: "Wadan Electric Store",
       url: "https://wadanelectrics.com",
       logo: "https://wadanelectrics.com/logo.png",
       description:
         "Trusted supplier of Electric Accessories, Solar Inverters, Lithium Batteries, and Fire Safety solutions in Pakistan.",
       contactPoint: {
         "@type": "ContactPoint",
-        telephone: "+92 315 9686822",
+        telephone: "+92 313 9235476",
         contactType: "customer service",
         availableLanguage: ["English", "Urdu"],
       },
@@ -113,7 +113,7 @@ const jsonLd = {
       "@type": "WebSite",
       "@id": "https://wadanelectrics.com/#website",
       url: "https://wadanelectrics.com",
-      name: "Wadan Electrics",
+      name: "Wadan Electric Store",
       publisher: {
         "@id": "https://wadanelectrics.com/#organization",
       },

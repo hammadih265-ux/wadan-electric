@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import QuantitySelector from "./QuantitySelector";
 import { useState } from "react";
 import AddToCartButton from "./AddCardBtn";
+import { STORE_CONTACT } from "@/components/common/SocialIcons";
 
 interface ProductInfoProps {
   product: {
@@ -43,7 +44,7 @@ export default function ProductInfo({ product }: ProductInfoProps) {
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-75" />
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-600" />
               </span>
-              In Stock · Immediate Dispatch
+              In Stock · Fast Dispatch
             </span>
           ) : (
             <span className="inline-flex items-center gap-1.5 rounded-full border border-red-500/20 bg-red-500/10 px-3 py-1 text-xs font-semibold text-red-600">
@@ -104,8 +105,8 @@ export default function ProductInfo({ product }: ProductInfoProps) {
           </span>
         )}
 
-        <span className="ml-auto text-xs font-mono font-semibold uppercase tracking-wider text-neutral-500">
-          PKR · Net Cash on Delivery
+        <span className="ml-auto text-xs font-mono font-semibold uppercase tracking-wider text-amber-700 bg-amber-100/60 px-2.5 py-1 rounded-md">
+          PKR · Dispatch on Payment Slip Verification
         </span>
       </div>
 
@@ -140,8 +141,8 @@ export default function ProductInfo({ product }: ProductInfoProps) {
           </Button>
 
           <a
-            href={`https://wa.me/923159686822?text=${encodeURIComponent(
-              `Hi Wadan Electrics! I need engineering consultation & sizing for: ${product.name} (Qty: ${quantity})`
+            href={`https://wa.me/${STORE_CONTACT.whatsappNumber}?text=${encodeURIComponent(
+              `Hi Wadan Electric Store! I need engineering consultation & sizing for: ${product.name} (Qty: ${quantity})`
             )}`}
             target="_blank"
             rel="noopener noreferrer"
@@ -173,14 +174,14 @@ export default function ProductInfo({ product }: ProductInfoProps) {
 
         <Feature
           icon={<Truck className="w-5 h-5 text-[#d4af37]" />}
-          title="Insured Transit"
-          text="Heavy-duty crating with Cash on Delivery across Pakistan"
+          title="Insured Direct Transit"
+          text="Heavy-duty crating & fast dispatch upon payment slip verification across Pakistan"
         />
 
         <Feature
           icon={<Wrench className="w-5 h-5 text-[#d4af37]" />}
           title="Engineering Support"
-          text="Direct WhatsApp sizing, load calculations & warranty"
+          text={`Direct WhatsApp sizing & support at ${STORE_CONTACT.phoneFormatted}`}
         />
       </div>
     </div>

@@ -11,10 +11,38 @@ interface BannerSliderProps {
   banners: Banner[];
 }
 
+const fallbackBanners: Banner[] = [
+  {
+    id: "fallback-banner-1",
+    title: "Certified Solar Inverters & High-Yield Energy",
+    subtitle:
+      "High-efficiency hybrid solar inverters, LiFePO4 battery storage, and industrial-grade electrical safety solutions nationwide.",
+    image_url: "/categories/solar-inverter.svg",
+    link_href: "/collection?category=solar-inverter",
+    link_label: "Explore Solar Inverters",
+    is_active: true,
+    sort_order: 1,
+    created_at: new Date().toISOString(),
+  },
+  {
+    id: "fallback-banner-2",
+    title: "Long-Life LiFePO4 Storage & Distribution Gear",
+    subtitle:
+      "Heavy-duty switchgear, distribution panels, and high-capacity lithium storage engineered for maximum endurance.",
+    image_url: "/categories/lithium-battery.svg",
+    link_href: "/collection?category=lithium-battery",
+    link_label: "View Energy Storage",
+    is_active: true,
+    sort_order: 2,
+    created_at: new Date().toISOString(),
+  },
+];
+
 export default function BannerSlider({ banners }: BannerSliderProps) {
-  const displayed = banners.slice(0, 5);
+  const displayed = banners && banners.length > 0 ? banners.slice(0, 5) : fallbackBanners;
   const [current, setCurrent] = useState(0);
   const [paused, setPaused] = useState(false);
+  const [failedBanners, setFailedBanners] = useState<Record<string, boolean>>({});
 
   const prev = useCallback(() => {
     setCurrent((c) => (c - 1 + displayed.length) % displayed.length);
@@ -31,8 +59,6 @@ export default function BannerSlider({ banners }: BannerSliderProps) {
     return () => clearInterval(timer);
   }, [displayed.length, paused, next]);
 
-  if (!displayed.length) return null;
-
   return (
     <section
       className="relative w-full my-4 sm:my-6 overflow-hidden rounded-2xl sm:rounded-3xl border border-neutral-800/80 bg-neutral-950 shadow-2xl"
@@ -42,8 +68,14 @@ export default function BannerSlider({ banners }: BannerSliderProps) {
       aria-label="Featured Highlights Banner"
     >
       <AnimatePresence mode="wait">
-        {displayed.map((banner, i) =>
-          i === current ? (
+        {displayed.map((banner, i) => {
+          if (i !== current) return null;
+
+          const bannerImgSrc = failedBanners[banner.id]
+            ? "/placeholder.svg"
+            : banner.image_url || "/placeholder.svg";
+
+          return (
             <motion.div
               key={banner.id}
               initial={{ opacity: 0, scale: 1.04 }}
@@ -54,12 +86,15 @@ export default function BannerSlider({ banners }: BannerSliderProps) {
             >
               {/* Background image */}
               <Image
-                src={banner.image_url}
+                src={bannerImgSrc}
                 alt={banner.title}
                 fill
                 sizes="(max-width: 1280px) 100vw, 1280px"
                 className="object-cover object-center"
                 priority={i === 0}
+                onError={() =>
+                  setFailedBanners((prev) => ({ ...prev, [banner.id]: true }))
+                }
               />
 
               {/* Multi-layer Dark Gradient Overlay for Maximum Legibility & Mood */}
@@ -92,7 +127,7 @@ export default function BannerSlider({ banners }: BannerSliderProps) {
                     className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-semibold uppercase tracking-wider bg-[#d4af37]/15 text-[#d4af37] border border-[#d4af37]/30 backdrop-blur-md mb-3 sm:mb-4 shadow-sm"
                   >
                     <Zap className="w-3 h-3 fill-[#d4af37]" />
-                    <span>Wadan Electrics · Official</span>
+                    <span>Wadan Electric Store · Official</span>
                   </motion.div>
 
                   {/* Banner Title */}
@@ -140,8 +175,8 @@ export default function BannerSlider({ banners }: BannerSliderProps) {
                 </div>
               </div>
             </motion.div>
-          ) : null,
-        )}
+          );
+        })}
       </AnimatePresence>
 
       {/* Prev / Next arrows — shown if more than 1 banner */}

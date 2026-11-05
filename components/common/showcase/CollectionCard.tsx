@@ -1,6 +1,6 @@
 "use client";
 
-import { memo } from "react";
+import { memo, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
@@ -14,6 +14,8 @@ interface Props {
 
 function CollectionCard({ item, index }: Props) {
   const prefersReducedMotion = useReducedMotion();
+  const [imgLoaded, setImgLoaded] = useState(false);
+  const [imgSrc, setImgSrc] = useState(item.image || "/placeholder.svg");
 
   return (
     <motion.div
@@ -27,15 +29,27 @@ function CollectionCard({ item, index }: Props) {
         href={item.href}
         className="group relative block overflow-hidden rounded-3xl aspect-[4/5] border border-neutral-200/80 bg-neutral-900 shadow-md transition-all duration-300 hover:border-[#d4af37]/60 hover:shadow-2xl"
       >
+        {/* Placeholder skeleton */}
+        {!imgLoaded && (
+          <div className="absolute inset-0 z-0 bg-neutral-800 animate-pulse" />
+        )}
+
         {/* Category Image */}
         <Image
-          src={item.image}
+          src={imgSrc}
           alt={item.title}
           fill
           sizes="(max-width: 640px) 80vw, (max-width: 1024px) 45vw, 25vw"
-          quality={80}
-          className="object-cover object-center transition-transform duration-700 group-hover:scale-108"
+          quality={85}
+          className={`object-cover object-center transition-all duration-700 group-hover:scale-108 ${
+            imgLoaded ? "opacity-100" : "opacity-0"
+          }`}
           loading="lazy"
+          onLoad={() => setImgLoaded(true)}
+          onError={() => {
+            setImgSrc("/placeholder.svg");
+            setImgLoaded(true);
+          }}
         />
 
         {/* Multi-layer Dark Gradient for Legibility */}

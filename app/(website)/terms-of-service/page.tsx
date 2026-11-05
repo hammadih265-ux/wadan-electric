@@ -20,15 +20,15 @@ import {
 export const metadata: Metadata = {
   title: "Terms of Service",
   description:
-    "Read Wadan Electrics Terms of Service covering website usage, purchases, policies, and customer responsibilities.",
+    "Read Wadan Electric Store Terms of Service covering website usage, purchases, policies, and customer responsibilities.",
   alternates: {
     canonical: "/terms-of-service",
   },
   openGraph: {
     url: "/terms-of-service",
-    title: "Terms of Service | Wadan Electrics",
+    title: "Terms of Service | Wadan Electric Store",
     description:
-      "Terms and conditions for using Wadan Electrics website and services.",
+      "Terms and conditions for using Wadan Electric Store website and services.",
   },
 };
 

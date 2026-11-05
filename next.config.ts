@@ -5,15 +5,19 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
 
   images: {
-    unoptimized: true,
+    qualities: [75, 85],
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "the960club.com",
+        hostname: "*.supabase.co",
       },
       {
         protocol: "https",
-        hostname: "*.supabase.co",
+        hostname: "tetaeagqedpbxevwmghi.supabase.co",
+      },
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com",
       },
     ],
     formats: ["image/avif", "image/webp"],
@@ -25,7 +29,7 @@ const nextConfig: NextConfig = {
   async headers() {
     return [
       {
-        source: "/:path*.(mp3|webm|mp4|webp|png|jpg|jpeg|avif|woff2)",
+        source: "/:path*.(mp3|webm|mp4|webp|png|jpg|jpeg|avif|woff2|svg)",
         headers: [
           {
             key: "Cache-Control",
