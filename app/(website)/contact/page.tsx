@@ -8,12 +8,10 @@ import {
   Mail,
   MapPin,
   MessageCircle,
-  PhoneCall,
 } from "lucide-react";
 import {
   STORE_CONTACT,
-  FacebookIcon,
-  TikTokIcon,
+  GlowingSocialSection,
 } from "@/components/common/SocialIcons";
 
 const fadeUp = {
@@ -161,34 +159,9 @@ export default function ContactPage() {
             </motion.div>
           </div>
 
-          {/* Social Channels Section */}
-          <div className="mt-12 bg-white rounded-3xl p-8 border border-neutral-200 shadow-sm text-center">
-            <h3 className="font-bold text-xl text-neutral-900 mb-2">
-              Connect With Us On Social Media
-            </h3>
-            <p className="text-xs sm:text-sm text-neutral-500 max-w-lg mx-auto mb-6">
-              Watch product demonstrations, new arrivals, and technical testing on our official TikTok and Facebook channels.
-            </p>
-            <div className="flex flex-wrap items-center justify-center gap-4">
-              <a
-                href={STORE_CONTACT.tiktok}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2.5 px-6 py-3 rounded-2xl bg-black text-white hover:bg-neutral-800 transition shadow-md font-semibold text-sm"
-              >
-                <TikTokIcon className="w-5 h-5" />
-                <span>Follow on TikTok</span>
-              </a>
-              <a
-                href={STORE_CONTACT.facebook}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2.5 px-6 py-3 rounded-2xl bg-[#1877F2] text-white hover:bg-[#166fe5] transition shadow-md font-semibold text-sm"
-              >
-                <FacebookIcon className="w-5 h-5" />
-                <span>Follow on Facebook</span>
-              </a>
-            </div>
+          {/* Glowing Social Channels Section */}
+          <div className="mt-12">
+            <GlowingSocialSection />
           </div>
         </div>
       </section>

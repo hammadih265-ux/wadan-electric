@@ -11,12 +11,12 @@ const DEFAULT_CATEGORIES: { title: string; slug: string }[] = [
     slug: "electric-accessories",
   },
   {
-    title: "Solar Inverter",
-    slug: "solar-inverter",
+    title: "Solar & Energy Storage",
+    slug: "solar-energy-storage",
   },
   {
-    title: "Lithium Battery",
-    slug: "lithium-battery",
+    title: "Home Automation",
+    slug: "home-automation",
   },
   {
     title: "Fire Safety",
@@ -85,7 +85,7 @@ export function useNavigationMenu(): MenuItem[] {
         href: "/collection",
       },
       {
-        title: "Categories",
+        title: "Solutions",
         children: shopChildren,
       },
       {

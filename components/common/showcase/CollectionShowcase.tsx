@@ -29,13 +29,13 @@ function CollectionShowcase({ items }: Props) {
         <div className="mb-10 text-center sm:mb-12">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider bg-[#d4af37]/15 text-[#d4af37] border border-[#d4af37]/30 mb-3">
             <LayoutGrid className="w-3.5 h-3.5" />
-            <span>Core Product Lines</span>
+            <span>Specialized Range</span>
           </div>
           <h2 className="font-heading text-3xl font-extrabold tracking-tight text-neutral-900 sm:text-4xl lg:text-5xl">
-            Browse By Category
+            Explore Our Solutions
           </h2>
           <p className="mt-2 text-xs sm:text-sm text-neutral-500 max-w-md mx-auto">
-            Explore our specialized categories engineered for high power efficiency and certified safety.
+            Explore our specialized systems engineered for high efficiency, smart automation, and certified safety.
           </p>
         </div>
 

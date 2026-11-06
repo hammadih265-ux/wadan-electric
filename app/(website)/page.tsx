@@ -119,7 +119,7 @@ export default async function Home() {
       href: `/collection?category=${getCategorySlug(cat)}`,
     }));
   } else {
-    // Branded high-converting local SVGs without external dummy Unsplash dependencies
+    // Branded high-converting local SVGs without external dummy dependencies
     showcaseItems = [
       {
         id: "electric-accessories",
@@ -128,16 +128,16 @@ export default async function Home() {
         href: "/collection?category=electric-accessories",
       },
       {
-        id: "solar-inverter",
-        title: "Solar Inverter",
-        image: "/categories/solar-inverter.svg",
-        href: "/collection?category=solar-inverter",
+        id: "solar-energy-storage",
+        title: "Solar & Energy Storage",
+        image: "/categories/solar-storage.svg",
+        href: "/collection?category=solar-energy-storage",
       },
       {
-        id: "lithium-battery",
-        title: "Lithium Battery",
-        image: "/categories/lithium-battery.svg",
-        href: "/collection?category=lithium-battery",
+        id: "home-automation",
+        title: "Home Automation",
+        image: "/categories/home-automation.svg",
+        href: "/collection?category=home-automation",
       },
       {
         id: "fire-safety",

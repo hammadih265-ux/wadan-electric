@@ -1,28 +1,140 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Sparkles, Calendar, ArrowRight, Flame, MessageCircle } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  Sparkles,
+  ArrowRight,
+  Flame,
+  MessageCircle,
+  Wrench,
+  CheckCircle2,
+  ShieldCheck,
+  FileText,
+  MapPin,
+  Phone,
+} from "lucide-react";
 import { Product } from "@/services/product.service";
 import { useCartStore } from "@/store/cart-store";
 import { toast } from "sonner";
 import ProductCard from "@/components/common/product-card/ProductCard";
+import { STORE_CONTACT } from "@/components/common/SocialIcons";
 
 interface FeaturedShowcaseProps {
   featuredProducts?: Product[];
   upcomingProducts?: Product[];
 }
 
-const fallbackUpcomingItem: Product = {
-  id: "upcoming-fallback-1",
-  name: "Industrial Hybrid Solar Inverter 10kW",
-  description:
-    "Engineered for high-yield efficiency, active thermal stability, and maximum durability. Launching soon under Wadan Electric Store precision engineering.",
-  price: 245000,
-  slug: "industrial-hybrid-solar-inverter-10kw",
-  product_images: [{ id: "fb-img-1", image_url: "/categories/solar-inverter.svg", position: 0 }],
-} as unknown as Product;
+interface EngineeringSolution {
+  id: string;
+  shortTitle: string;
+  badge: string;
+  title: string;
+  tagline: string;
+  description: string;
+  category: string;
+  image: string;
+  specs: { label: string; value: string }[];
+  highlights: string[];
+  inquiryText: string;
+}
+
+const DEFAULT_ENGINEERING_SOLUTIONS: EngineeringSolution[] = [
+  {
+    id: "solar-inverter-10kw",
+    shortTitle: "⚡ 10kW Solar Inverter",
+    badge: "Precision Solar Engineering · Technical Specs",
+    title: "10kW Industrial Hybrid Solar Inverter",
+    tagline: "High-Yield Dual MPPT & Smart Grid-Tie Architecture",
+    description:
+      "Want technical specifications through our engineering team? Our certified electrical engineers deliver full single-line diagrams (SLD), peak efficiency curves, and custom solar sizing calculations for residential and commercial setups across Pakistan.",
+    category: "Solar Inverter",
+    image: "/categories/solar-inverter.svg",
+    specs: [
+      { label: "Rated Power", value: "10,000 Watts (10kW)" },
+      { label: "MPPT Efficiency", value: "99.2% Real-World" },
+      { label: "Battery Bus", value: "48V LiFePO4 / Lead-Acid" },
+      { label: "Transfer Time", value: "< 10ms UPS Grade" },
+    ],
+    highlights: [
+      "Certified datasheets with total harmonic distortion reports (THD < 3%)",
+      "Single-line diagram (SLD) customized to your property's electrical load",
+      "Direct consultation with Wadan Electric Store certified electrical engineers",
+    ],
+    inquiryText: "10kW Industrial Hybrid Solar Inverter Technical Specs",
+  },
+  {
+    id: "lithium-storage-bank",
+    shortTitle: "🔋 LiFePO4 Storage Bank",
+    badge: "Energy Storage · Precision Sizing",
+    title: "48V 100Ah / 200Ah LiFePO4 Lithium Storage Bank",
+    tagline: "High-Cycle Prismatic Cell Architecture with Smart CAN/RS485 BMS",
+    description:
+      "Need accurate runtime calculations and battery bank sizing through our engineering department? We calculate depth of discharge (DoD), ambient thermal derating, and BMS communication protocols with your inverter for guaranteed 10+ year longevity.",
+    category: "Lithium Battery",
+    image: "/categories/lithium-battery.svg",
+    specs: [
+      { label: "Cycle Life", value: "6,000+ Cycles @ 80% DoD" },
+      { label: "Cell Chemistry", value: "Grade-A Prismatic LiFePO4" },
+      { label: "BMS Protocol", value: "CAN / RS485 Dual Bus" },
+      { label: "Warranty", value: "5 Years Official Warranty" },
+    ],
+    highlights: [
+      "Custom amp-hour (Ah) & kilowatt-hour (kWh) load matching",
+      "Thermal safety analysis & cell balance verification reports",
+      "Engineered plug-and-play installation schematics",
+    ],
+    inquiryText: "LiFePO4 Lithium Storage Bank Engineering Datasheet",
+  },
+  {
+    id: "industrial-switchgear",
+    shortTitle: "🛡️ AC/DC Protection Gear",
+    badge: "Electrical Distribution · Safety Engineering",
+    title: "Industrial AC/DC Distribution & Protection Gear",
+    tagline: "Triple-Pole Breakers, Type II SPD Surge Suppressors & Custom DBs",
+    description:
+      "Ensure complete overvoltage, short-circuit, and lightning protection. Our engineers design certified distribution boxes (DB), selecting exact breaking capacities (kA) and trip curves tailored to your facility's transformers and solar arrays.",
+    category: "Electric Accessories",
+    image: "/categories/electric-accessories.svg",
+    specs: [
+      { label: "Breaking Capacity", value: "Up to 10kA Rated" },
+      { label: "Surge Protection", value: "Class II / 40kA SPD" },
+      { label: "Enclosure Rating", value: "IP65 Weather & Dust Proof" },
+      { label: "Standards", value: "IEC 60947-2 Certified" },
+    ],
+    highlights: [
+      "Calculated short-circuit breaking capacity for fault currents",
+      "Surge protection zone (LPZ) design against lightning strikes",
+      "Pre-wired, labeled, and tested distribution assemblies",
+    ],
+    inquiryText: "Industrial AC/DC Distribution & Protection Engineering Specs",
+  },
+  {
+    id: "fire-suppression-systems",
+    shortTitle: "🧯 Fire Safety Suppression",
+    badge: "Fire Safety Compliance · Automated Defense",
+    title: "Electrical Room Fire Safety & Suppression Systems",
+    tagline: "Clean-Agent Extinguishers, Heat Sensors & Auto-Discharge Enclosures",
+    description:
+      "Protect high-voltage inverters, battery banks, and server rooms from electrical fire risks. Our safety team provides NFPA-compliant fire containment recommendations, automated thermal release devices, and certified suppression gear.",
+    category: "Fire Safety",
+    image: "/categories/fire-safety.svg",
+    specs: [
+      { label: "Activation Temp", value: "68°C / 93°C Thermal Bulb" },
+      { label: "Agent Type", value: "Clean Agent / ABC Dry Chemical" },
+      { label: "Discharge Time", value: "< 10 Seconds Rapid Flood" },
+      { label: "Certification", value: "ISO & NFPA Standard Tested" },
+    ],
+    highlights: [
+      "Electrical hazard risk audit & suppression sizing",
+      "Residue-free clean agent options safe for electronics",
+      "Complete installation diagrams & maintenance schedules",
+    ],
+    inquiryText: "Electrical Fire Safety & Suppression System Engineering Consultation",
+  },
+];
 
 const fallbackFeaturedProducts: Product[] = [
   {
@@ -64,11 +176,44 @@ export default function FeaturedShowcase({
   upcomingProducts = [],
 }: FeaturedShowcaseProps) {
   const addItemToCart = useCartStore((s) => s.addItem);
+  const [selectedSolutionIdx, setSelectedSolutionIdx] = useState(0);
   const [upcomingImgLoaded, setUpcomingImgLoaded] = useState(false);
   const [upcomingImgSrc, setUpcomingImgSrc] = useState<string | null>(null);
 
-  // If Supabase hasn't returned records yet, show verified hardware placeholders
-  const upcomingItem = upcomingProducts[0] || fallbackUpcomingItem;
+  // Combine any real Supabase upcoming products with engineering solutions
+  const solutions = useMemo(() => {
+    if (upcomingProducts && upcomingProducts.length > 0) {
+      const dbSolutions: EngineeringSolution[] = upcomingProducts.map((p) => ({
+        id: String(p.id),
+        shortTitle: `⚡ ${p.name.split(" ").slice(0, 3).join(" ")}`,
+        badge: "Next-Gen Engineering · Upcoming Release",
+        title: p.name,
+        tagline: "Engineered by Wadan Electric Store Specialists",
+        description:
+          p.description ||
+          "Looking for verified electrical ratings, custom schematics, or load sizing? Consult our certified electrical engineers for complete datasheets and project diagrams.",
+        category: "Upcoming Hardware",
+        image: p.product_images?.[0]?.image_url || "/placeholder.svg",
+        specs: [
+          { label: "Hardware Status", value: "Engineering Release" },
+          { label: "Technical Specs", value: "Verified by Engineers" },
+          { label: "Consultation", value: "Available on WhatsApp" },
+          { label: "Dispatch Area", value: "Nationwide Pakistan" },
+        ],
+        highlights: [
+          "Complete engineering datasheets & electrical schematics",
+          "Custom load sizing & compatibility analysis",
+          "Direct consultation with Wadan Electric Store engineers",
+        ],
+        inquiryText: `${p.name} Technical Specs & Engineering Consultation`,
+      }));
+      return [...dbSolutions, ...DEFAULT_ENGINEERING_SOLUTIONS];
+    }
+    return DEFAULT_ENGINEERING_SOLUTIONS;
+  }, [upcomingProducts]);
+
+  const currentSolution = solutions[selectedSolutionIdx] || solutions[0];
+
   const activeFeatured =
     featuredProducts.length > 0 ? featuredProducts : fallbackFeaturedProducts;
 
@@ -83,74 +228,150 @@ export default function FeaturedShowcase({
     toast.success(`${product.name} added to cart`);
   };
 
-  const upcomingImageUrl =
-    upcomingImgSrc ||
-    upcomingItem?.product_images?.[0]?.image_url ||
-    "/placeholder.svg";
+  const currentImageUrl =
+    upcomingImgSrc || currentSolution?.image || "/placeholder.svg";
+
+  const whatsappInquiryUrl = `https://wa.me/${STORE_CONTACT.whatsappNumber}?text=${encodeURIComponent(
+    `Hi Wadan Electric Store! I want technical specifications and engineering consultation for: ${currentSolution.title}. Please provide the engineering datasheet and load sizing guidance.`
+  )}`;
 
   return (
     <section className="container mx-auto my-14 px-4 sm:px-6 lg:px-8 max-w-7xl">
-      {/* ── Spotlight / Upcoming Tech Release ── */}
-      {upcomingItem && (
-        <div className="mb-16 relative overflow-hidden rounded-3xl bg-neutral-950 text-white border border-neutral-800 shadow-2xl">
-          {/* Ambient Spotlight Background */}
-          <div className="absolute top-0 right-1/4 w-96 h-96 bg-[radial-gradient(ellipse_at_top,rgba(212,175,55,0.18)_0%,transparent_70%)] pointer-events-none" />
+      {/* ── Engineering Technical Specs & Spotlight Section ── */}
+      <div className="mb-16 relative overflow-hidden rounded-3xl bg-neutral-950 text-white border border-neutral-800 shadow-2xl">
+        {/* Ambient Spotlight Background Glow */}
+        <div className="absolute top-0 right-1/4 w-96 h-96 bg-[radial-gradient(ellipse_at_top,rgba(212,175,55,0.18)_0%,transparent_70%)] pointer-events-none" />
+        <div className="absolute bottom-0 left-10 w-80 h-80 bg-[radial-gradient(ellipse_at_bottom,rgba(37,244,238,0.08)_0%,transparent_70%)] pointer-events-none" />
 
-          <div className="relative z-10 p-6 sm:p-10 lg:p-14">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-              {/* Left Column: Tech Overview */}
+        <div className="relative z-10 p-6 sm:p-10 lg:p-12">
+          {/* ── Engineering Selector Navigation Bar ── */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-6 mb-6 border-b border-white/10">
+            <div className="flex items-center gap-2 text-xs font-mono font-semibold uppercase tracking-wider text-[#d4af37]">
+              <Wrench className="w-4 h-4" />
+              <span>Technical Specs Through Our Engineering</span>
+            </div>
+
+            {/* Interactive Solution Tabs */}
+            <div className="flex flex-wrap items-center gap-2">
+              {solutions.map((item, idx) => {
+                const isActive = selectedSolutionIdx === idx;
+                return (
+                  <button
+                    key={item.id}
+                    onClick={() => {
+                      setSelectedSolutionIdx(idx);
+                      setUpcomingImgSrc(null);
+                      setUpcomingImgLoaded(false);
+                    }}
+                    className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200 border cursor-pointer ${
+                      isActive
+                        ? "bg-[#d4af37] text-black border-[#d4af37] font-bold shadow-md shadow-[#d4af37]/20"
+                        : "bg-white/5 text-neutral-300 border-white/10 hover:bg-white/10 hover:text-white"
+                    }`}
+                  >
+                    {item.shortTitle}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* ── Main Showcase Grid ── */}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentSolution.id}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.28, ease: "easeOut" }}
+              className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center"
+            >
+              {/* Left Column: Tech Overview & Engineering Specs */}
               <div className="lg:col-span-7">
-                <div className="inline-flex items-center gap-2 rounded-full border border-[#d4af37]/30 bg-[#d4af37]/10 px-3.5 py-1 text-xs font-mono font-semibold uppercase tracking-wider text-[#d4af37] mb-4">
+                <div className="inline-flex items-center gap-2 rounded-full border border-[#d4af37]/30 bg-[#d4af37]/10 px-3.5 py-1 text-xs font-mono font-semibold uppercase tracking-wider text-[#d4af37] mb-3">
                   <Sparkles className="w-3.5 h-3.5" />
-                  <span>Next-Gen Engineering · Upcoming Release</span>
+                  <span>{currentSolution.badge}</span>
                 </div>
 
-                <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white leading-tight">
-                  {upcomingItem.name}
+                <h2 className="font-heading text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-white leading-tight">
+                  {currentSolution.title}
                 </h2>
 
-                <p className="mt-3 text-sm sm:text-base text-neutral-300 max-w-xl leading-relaxed">
-                  {upcomingItem.description ||
-                    "Engineered for high-yield efficiency, active thermal stability, and maximum durability. Launching soon under Wadan Electric Store precision engineering."}
+                <p className="mt-1 text-xs sm:text-sm font-semibold text-[#d4af37]">
+                  {currentSolution.tagline}
                 </p>
 
-                <div className="mt-6 flex flex-wrap items-center gap-4">
+                <p className="mt-3 text-xs sm:text-sm text-neutral-300 max-w-xl leading-relaxed">
+                  {currentSolution.description}
+                </p>
+
+                {/* Technical Specifications Grid */}
+                <div className="mt-5 grid grid-cols-2 sm:grid-cols-4 gap-2.5 max-w-xl">
+                  {currentSolution.specs.map((spec, sIdx) => (
+                    <div
+                      key={sIdx}
+                      className="rounded-xl border border-white/10 bg-white/5 p-2.5 backdrop-blur-sm"
+                    >
+                      <span className="block text-[10px] font-mono uppercase tracking-wider text-neutral-400 truncate">
+                        {spec.label}
+                      </span>
+                      <span className="block text-xs sm:text-sm font-bold text-white mt-0.5 truncate">
+                        {spec.value}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Engineering Highlights */}
+                <div className="mt-4 space-y-1.5 max-w-xl">
+                  {currentSolution.highlights.map((h, hIdx) => (
+                    <div
+                      key={hIdx}
+                      className="flex items-center gap-2 text-xs text-neutral-300"
+                    >
+                      <CheckCircle2 className="w-3.5 h-3.5 text-[#d4af37] shrink-0" />
+                      <span>{h}</span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Call To Action Buttons */}
+                <div className="mt-6 flex flex-wrap items-center gap-3">
                   <a
-                    href={`https://wa.me/923139235476?text=${encodeURIComponent(
-                      `Hi Wadan Electric Store! I want to inquire about your upcoming release: ${upcomingItem.name}`
-                    )}`}
+                    href={whatsappInquiryUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#d4af37] to-[#b8941f] px-6 py-3 text-sm font-bold text-black shadow-lg shadow-[#d4af37]/20 transition-all hover:brightness-110 active:scale-95"
+                    className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#d4af37] to-[#b8941f] px-5 py-3 text-xs sm:text-sm font-bold text-black shadow-lg shadow-[#d4af37]/20 transition-all hover:brightness-110 active:scale-95"
                   >
                     <MessageCircle className="w-4 h-4" />
-                    <span>Reserve via WhatsApp</span>
+                    <span>Request Specs on WhatsApp</span>
                   </a>
 
                   <Link
-                    href={`/collection/${upcomingItem.slug}`}
-                    className="flex items-center gap-2 rounded-xl border border-white/15 bg-white/5 px-6 py-3 text-sm font-medium text-white transition-all hover:bg-white/10"
+                    href="/contact"
+                    className="flex items-center gap-2 rounded-xl border border-white/15 bg-white/5 px-5 py-3 text-xs sm:text-sm font-medium text-white transition-all hover:bg-white/10 hover:border-white/30"
                   >
-                    <span>Technical Specs</span>
-                    <ArrowRight className="w-4 h-4" />
+                    <Wrench className="w-4 h-4 text-[#d4af37]" />
+                    <span>Consult Our Engineers</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
                   </Link>
                 </div>
               </div>
 
-              {/* Right Column: Image Preview */}
-              <div className="lg:col-span-5 flex justify-center">
+              {/* Right Column: Visual Preview & Engineering Verification Badge */}
+              <div className="lg:col-span-5 flex flex-col items-center">
                 <div className="relative aspect-square w-full max-w-md overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-white/5 to-white/0 p-4 shadow-xl">
-                  <div className="relative h-full w-full overflow-hidden rounded-xl bg-neutral-900">
+                  <div className="relative h-full w-full overflow-hidden rounded-xl bg-neutral-900 flex items-center justify-center">
                     {!upcomingImgLoaded && (
                       <div className="absolute inset-0 z-0 bg-neutral-900 animate-pulse rounded-xl" />
                     )}
 
                     <Image
-                      src={upcomingImageUrl}
-                      alt={upcomingItem.name}
+                      src={currentImageUrl}
+                      alt={currentSolution.title}
                       fill
                       sizes="(max-width: 768px) 100vw, 400px"
-                      className={`object-cover transition-all duration-700 hover:scale-105 ${
+                      className={`object-contain p-6 transition-all duration-700 hover:scale-105 ${
                         upcomingImgLoaded ? "opacity-100" : "opacity-0"
                       }`}
                       onLoad={() => setUpcomingImgLoaded(true)}
@@ -159,17 +380,38 @@ export default function FeaturedShowcase({
                         setUpcomingImgLoaded(true);
                       }}
                     />
-                    <div className="absolute top-3 right-3 rounded-xl bg-black/75 px-3 py-1.5 text-xs font-mono font-bold text-[#d4af37] backdrop-blur-md border border-white/10 flex items-center gap-1.5">
-                      <Calendar className="w-3.5 h-3.5" />
-                      <span>Coming Soon</span>
+
+                    {/* Top Right: Verified Engineering Badge */}
+                    <div className="absolute top-3 right-3 rounded-xl bg-black/85 px-3 py-1.5 text-[11px] font-mono font-bold text-[#d4af37] backdrop-blur-md border border-white/15 flex items-center gap-1.5 shadow-md">
+                      <ShieldCheck className="w-3.5 h-3.5 text-[#d4af37]" />
+                      <span>Certified Specs</span>
+                    </div>
+
+                    {/* Bottom Category Pill */}
+                    <div className="absolute bottom-3 left-3 rounded-xl bg-black/85 px-3 py-1.5 text-[11px] font-mono text-neutral-300 backdrop-blur-md border border-white/15 flex items-center gap-1.5 shadow-md">
+                      <FileText className="w-3.5 h-3.5 text-[#d4af37]" />
+                      <span>{currentSolution.category}</span>
                     </div>
                   </div>
                 </div>
+
+                {/* Store Physical Verification Strip */}
+                <div className="mt-3 text-[11px] text-neutral-400 flex flex-wrap items-center justify-center gap-2">
+                  <span className="flex items-center gap-1">
+                    <MapPin className="w-3 h-3 text-[#d4af37]" />
+                    <span>{STORE_CONTACT.address}</span>
+                  </span>
+                  <span className="text-neutral-600 hidden sm:inline">•</span>
+                  <span className="flex items-center gap-1 font-mono">
+                    <Phone className="w-3 h-3 text-[#d4af37]" />
+                    <span>{STORE_CONTACT.phoneFormatted}</span>
+                  </span>
+                </div>
               </div>
-            </div>
-          </div>
+            </motion.div>
+          </AnimatePresence>
         </div>
-      )}
+      </div>
 
       {/* ── Featured Products Section ── */}
       <div>

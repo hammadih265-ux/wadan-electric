@@ -17,8 +17,7 @@ import { useNavigationMenu } from "@/hooks/useNavigationMenu";
 import { useCartStore, useUIStore } from "@/store";
 import {
   STORE_CONTACT,
-  FacebookIcon,
-  TikTokIcon,
+  GlowingSocialButton,
 } from "@/components/common/SocialIcons";
 
 interface MenuItem {
@@ -208,25 +207,10 @@ export default function MobileNav({ open, onClose }: MobileNavProps) {
                   <Phone size={13} className="text-[#d4af37]" />
                   <span>{STORE_CONTACT.phone}</span>
                 </a>
-                <div className="flex items-center gap-2.5">
-                  <a
-                    href={STORE_CONTACT.tiktok}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="p-1.5 rounded-lg bg-neutral-800 hover:bg-neutral-700 text-white transition"
-                    aria-label="TikTok"
-                  >
-                    <TikTokIcon className="w-3.5 h-3.5" />
-                  </a>
-                  <a
-                    href={STORE_CONTACT.facebook}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="p-1.5 rounded-lg bg-neutral-800 hover:bg-[#1877F2] text-white transition"
-                    aria-label="Facebook"
-                  >
-                    <FacebookIcon className="w-3.5 h-3.5" />
-                  </a>
+                <div className="flex items-center gap-2">
+                  <GlowingSocialButton platform="tiktok" variant="icon-only" size="sm" />
+                  <GlowingSocialButton platform="facebook" variant="icon-only" size="sm" />
+                  <GlowingSocialButton platform="whatsapp" variant="icon-only" size="sm" />
                 </div>
               </div>
             </div>

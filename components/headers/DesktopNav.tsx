@@ -7,6 +7,7 @@ import { useState } from "react";
 
 import { useNavigationMenu } from "@/hooks/useNavigationMenu";
 import type { MenuItem } from "./types";
+import { GlowingSocialButton } from "@/components/common/SocialIcons";
 
 function Dropdown({ items }: { items: MenuItem[] }) {
   return (
@@ -87,7 +88,7 @@ export default function DesktopNav() {
   const menu = useNavigationMenu();
 
   return (
-    <nav className="hidden lg:flex items-center gap-8">
+    <nav className="hidden lg:flex items-center gap-6 xl:gap-8">
       {menu.map((item: MenuItem) => (
         <div
           key={item.title}
@@ -98,9 +99,10 @@ export default function DesktopNav() {
           {item.href ? (
             <Link
               href={item.href}
-              className="group relative flex items-center gap-1 py-2 text-sm font-medium hover:text-[#d4af37] transition-colors"
+              className="group relative flex items-center gap-1.5 py-2 text-sm font-medium hover:text-[#d4af37] transition-colors"
             >
-              {item.title}
+              {item.icon && <item.icon className="w-4 h-4 text-[#d4af37]" />}
+              <span>{item.title}</span>
 
               <motion.span
                 className="absolute bottom-0 left-0 h-[2px] w-full origin-left bg-[#d4af37]"
@@ -112,12 +114,13 @@ export default function DesktopNav() {
           ) : (
             <button
               type="button"
-              className="group relative flex items-center gap-1 py-2 text-sm font-medium"
+              className="group relative flex items-center gap-1.5 py-2 text-sm font-medium"
               onFocus={() => setActive(item.title)}
               onBlur={() => setActive(null)}
               aria-expanded={active === item.title}
             >
-              {item.title}
+              {item.icon && <item.icon className="w-4 h-4 text-[#d4af37]" />}
+              <span>{item.title}</span>
 
               <motion.div
                 animate={{
@@ -145,6 +148,16 @@ export default function DesktopNav() {
           </AnimatePresence>
         </div>
       ))}
+
+      {/* Subtle vertical separator */}
+      <div className="h-5 w-[1px] bg-neutral-200" aria-hidden="true" />
+
+      {/* Glowing Social Channels on Desktop Navigation */}
+      <div className="flex items-center gap-2">
+        <GlowingSocialButton platform="tiktok" variant="icon-only" size="sm" />
+        <GlowingSocialButton platform="facebook" variant="icon-only" size="sm" />
+        <GlowingSocialButton platform="whatsapp" variant="icon-only" size="sm" />
+      </div>
     </nav>
   );
 }

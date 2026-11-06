@@ -29,8 +29,7 @@ import { useUser } from "@/hooks/useAuth";
 import { toast } from "sonner";
 import {
   STORE_CONTACT,
-  FacebookIcon,
-  TikTokIcon,
+  GlowingSocialButton,
 } from "@/components/common/SocialIcons";
 
 const STORE_WHATSAPP_NUMBER = STORE_CONTACT.whatsappNumber; // 923139235476
@@ -366,24 +365,9 @@ Thank you for your order!`;
                 Connect with our Official Channels:
               </p>
               <div className="flex flex-wrap items-center justify-center gap-3">
-                <a
-                  href={STORE_CONTACT.tiktok}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-black text-white hover:bg-neutral-800 text-xs font-semibold transition"
-                >
-                  <TikTokIcon className="w-4 h-4" />
-                  <span>TikTok Channel</span>
-                </a>
-                <a
-                  href={STORE_CONTACT.facebook}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#1877F2] text-white hover:bg-[#166fe5] text-xs font-semibold transition shadow-sm"
-                >
-                  <FacebookIcon className="w-4 h-4" />
-                  <span>Facebook Page</span>
-                </a>
+                <GlowingSocialButton platform="tiktok" variant="pill" size="md" />
+                <GlowingSocialButton platform="facebook" variant="pill" size="md" />
+                <GlowingSocialButton platform="whatsapp" variant="pill" size="md" />
               </div>
 
               <div className="mt-3 text-neutral-500 text-[11px] flex items-center justify-center gap-1.5">
@@ -569,27 +553,11 @@ Thank you for your order!`;
                     </div>
 
                     {/* Official Social Links in Checkout */}
-                    <div className="flex items-center justify-between p-2.5 rounded-xl bg-gray-100/80 border border-gray-200 text-xs">
-                      <span className="text-gray-600 font-medium">Follow Us:</span>
+                    <div className="flex flex-wrap items-center justify-between gap-2 p-2.5 rounded-xl bg-gray-100/80 border border-gray-200 text-xs">
+                      <span className="text-gray-600 font-medium text-xs">Follow Us:</span>
                       <div className="flex items-center gap-2">
-                        <a
-                          href={STORE_CONTACT.tiktok}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-black text-white text-[11px] font-medium hover:bg-neutral-800 transition"
-                        >
-                          <TikTokIcon className="w-3.5 h-3.5" />
-                          <span>TikTok</span>
-                        </a>
-                        <a
-                          href={STORE_CONTACT.facebook}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[#1877F2] text-white text-[11px] font-medium hover:bg-[#166fe5] transition"
-                        >
-                          <FacebookIcon className="w-3.5 h-3.5" />
-                          <span>Facebook</span>
-                        </a>
+                        <GlowingSocialButton platform="tiktok" variant="pill" size="sm" label="TikTok" />
+                        <GlowingSocialButton platform="facebook" variant="pill" size="sm" label="Facebook" />
                       </div>
                     </div>
                   </div>

@@ -5,18 +5,26 @@ import { Phone, Mail, MapPin, ShieldCheck } from "lucide-react";
 import Image from "next/image";
 import {
   STORE_CONTACT,
-  FacebookIcon,
-  TikTokIcon,
+  GlowingSocialButton,
 } from "@/components/common/SocialIcons";
 
-const categoryLinks = [
+const solutionLinks = [
   {
     label: "Electric Accessories",
     href: "/collection?category=electric-accessories",
   },
-  { label: "Solar Inverter", href: "/collection?category=solar-inverter" },
-  { label: "Lithium Battery", href: "/collection?category=lithium-battery" },
-  { label: "Fire Safety", href: "/collection?category=fire-safety" },
+  {
+    label: "Solar & Energy Storage",
+    href: "/collection?category=solar-energy-storage",
+  },
+  {
+    label: "Home Automation",
+    href: "/collection?category=home-automation",
+  },
+  {
+    label: "Fire Safety & Protection",
+    href: "/collection?category=fire-safety",
+  },
 ];
 
 const companyLinks = [
@@ -59,41 +67,26 @@ export default function Footer() {
               <span>100% Quality & Authenticity Guaranteed</span>
             </div>
 
-            {/* Social Channels */}
-            <div className="space-y-2">
+            {/* Social Channels with Glowing Light Burst on Click */}
+            <div className="space-y-2.5">
               <p className="text-xs font-semibold text-white tracking-wide uppercase">
                 Official Channels
               </p>
-              <div className="flex items-center gap-3">
-                <a
-                  href={STORE_CONTACT.tiktok}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-9 h-9 rounded-xl bg-neutral-900 border border-neutral-800 text-white flex items-center justify-center hover:bg-white hover:text-black hover:border-white transition-colors"
-                  aria-label="TikTok Channel"
-                >
-                  <TikTokIcon className="w-4 h-4" />
-                </a>
-                <a
-                  href={STORE_CONTACT.facebook}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-9 h-9 rounded-xl bg-neutral-900 border border-neutral-800 text-white flex items-center justify-center hover:bg-[#1877F2] hover:border-[#1877F2] transition-colors"
-                  aria-label="Facebook Page"
-                >
-                  <FacebookIcon className="w-4 h-4" />
-                </a>
+              <div className="flex items-center gap-3 pt-1">
+                <GlowingSocialButton platform="tiktok" variant="icon-only" size="md" />
+                <GlowingSocialButton platform="facebook" variant="icon-only" size="md" />
+                <GlowingSocialButton platform="whatsapp" variant="icon-only" size="md" />
               </div>
             </div>
           </div>
 
-          {/* Categories */}
+          {/* Solutions & Product Lines */}
           <div>
             <h3 className="mb-4 text-xs font-bold tracking-widest text-white uppercase">
-              CATEGORIES
+              OUR SOLUTIONS
             </h3>
             <ul className="space-y-2.5">
-              {categoryLinks.map((link) => (
+              {solutionLinks.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}

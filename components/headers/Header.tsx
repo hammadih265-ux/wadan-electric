@@ -7,6 +7,7 @@ import { Menu, Search, ShoppingBag, User, X, LogIn } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import MobileNav from "./MobileNav";
+import DesktopNav from "./DesktopNav";
 import { useUIStore, useCartStore } from "@/store";
 
 export default function Header() {
@@ -107,6 +108,7 @@ export default function Header() {
           <button
             onClick={toggleMobileMenu}
             aria-label="Toggle navigation menu"
+            className="lg:hidden"
           >
             <Menu className="h-7 w-7" />
           </button>
@@ -123,11 +125,21 @@ export default function Header() {
           >
             <Link
               href="/"
-              className="relative h-22 w-22 sm:h-32 sm:w-32 block ml-10 sm:ml-20"
+              className="relative h-25 w-25 sm:h-40 sm:w-40 block mt-5 sm:mt-10 ml-2 md:ml-6 lg:ml-0"
             >
-              <Image unoptimized src="/logo.png" alt="Logo" width={128} height={128} priority  />
+              <Image
+                unoptimized
+                src="/logo.png"
+                alt="Logo"
+                width={138}
+                height={138}
+                priority
+              />
             </Link>
           </motion.div>
+
+          {/* ── Desktop Navigation & Social Glowing Icons ── */}
+          <DesktopNav />
 
           <div className="flex items-center sm:gap-5  gap-3">
             {/* ── Inline Search ── */}
