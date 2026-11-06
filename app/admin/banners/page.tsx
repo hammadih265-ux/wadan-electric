@@ -52,12 +52,19 @@ function BannerFormModal({
 
   const saveMutation = useMutation({
     mutationFn: async () => {
+      if (!formData.title.trim()) {
+        throw new Error("Banner title is required.");
+      }
+      if (!formData.image_url.trim()) {
+        throw new Error("Banner image is required. Please upload an image.");
+      }
+
       const payload: CreateBannerInput = {
-        title: formData.title,
-        subtitle: formData.subtitle || null,
-        image_url: formData.image_url,
-        link_href: formData.link_href || null,
-        link_label: formData.link_label || null,
+        title: formData.title.trim(),
+        subtitle: formData.subtitle?.trim() || null,
+        image_url: formData.image_url.trim(),
+        link_href: formData.link_href?.trim() || null,
+        link_label: formData.link_label?.trim() || null,
         sort_order: Number(formData.sort_order),
         is_active: formData.is_active,
       };

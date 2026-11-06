@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getAllOrders, getTotalSales, getOrderCount } from "@/services/order.service";
 import { getProducts, getLowStockProducts } from "@/services/product.service";
 import { getAllCategories } from "@/services/category.service";
+import { getAllBannersAdmin } from "@/services/banner.service";
 import {
   AreaChart,
   Area,
@@ -14,7 +15,15 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import { TrendingUp, Package, ShoppingBag, Tag, AlertTriangle, KeyRound } from "lucide-react";
+import {
+  TrendingUp,
+  Package,
+  ShoppingBag,
+  Tag,
+  AlertTriangle,
+  KeyRound,
+  Image as ImageIcon,
+} from "lucide-react";
 import { format } from "date-fns";
 import { createClient } from "@/lib/supabase/client";
 import { toast } from "sonner";
@@ -297,6 +306,10 @@ export default function AdminDashboardPage() {
     queryKey: ["admin", "categories"],
     queryFn: getAllCategories,
   });
+  const { data: banners = [] } = useQuery({
+    queryKey: ["admin", "banners"],
+    queryFn: getAllBannersAdmin,
+  });
   const { data: lowStock = [] } = useQuery({
     queryKey: ["admin", "lowStock"],
     queryFn: () => getLowStockProducts(5),
@@ -337,7 +350,7 @@ export default function AdminDashboardPage() {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-4">
         <StatCard
           label="Total Revenue"
           value={`PKR ${totalSales.toLocaleString()}`}
@@ -354,12 +367,19 @@ export default function AdminDashboardPage() {
           label="Total Products"
           value={products.length}
           icon={Package}
-          sub={`${products.filter((p) => p.is_active).length} active`}
+          sub={`${products.filter((p) => p.is_active).length} active (Max 4 imgs/item)`}
         />
         <StatCard
-          label="Categories"
+          label="Solutions"
           value={categories.length}
           icon={Tag}
+          sub="Active categories"
+        />
+        <StatCard
+          label="Hero Banners"
+          value={`${banners.length} / 5`}
+          icon={ImageIcon}
+          sub={`${banners.filter((b) => b.is_active).length} active (Max 5)`}
         />
       </div>
 

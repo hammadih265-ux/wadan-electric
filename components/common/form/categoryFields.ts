@@ -91,11 +91,11 @@ export const productFields: FormField[] = [
   },
   {
     name: "image",
-    label: "Images (Max 3, auto-converted to WebP)",
+    label: "Images (Max 4, auto-converted to WebP — Replace/Delete anytime)",
     type: "image",
     bucket: "product-images",
     folder: "products",
     multiple: true,
-    maxFiles: 3,
+    maxFiles: 4,
   },
 ];

@@ -64,11 +64,18 @@ function CategoryFormModal({
 
   const saveMutation = useMutation({
     mutationFn: async () => {
+      if (!formData.name.trim()) {
+        throw new Error("Category name is required.");
+      }
+      if (!formData.slug.trim()) {
+        throw new Error("Category slug is required.");
+      }
+
       const payload: CreateCategoryInput = {
-        name: formData.name,
-        slug: formData.slug,
-        description: formData.description || undefined,
-        image_url: formData.image_url || undefined,
+        name: formData.name.trim(),
+        slug: formData.slug.trim(),
+        description: formData.description?.trim() || undefined,
+        image_url: formData.image_url?.trim() || undefined,
         sort_order: Number(formData.sort_order),
         is_active: formData.is_active,
       };
@@ -112,6 +119,36 @@ function CategoryFormModal({
       onClose={onClose}
       maxWidth="max-w-lg"
     >
+      {/* Quick Slug Suggestions */}
+      <div className="mb-4 p-3 rounded-xl bg-neutral-900/60 border border-white/5">
+        <p className="text-[11px] text-[#888] uppercase tracking-wider mb-2 font-medium">
+          Suggested Simple Slugs:
+        </p>
+        <div className="flex flex-wrap gap-1.5">
+          {[
+            { name: "Electric Accessories", slug: "accessories" },
+            { name: "Solar & Energy Storage", slug: "solar" },
+            { name: "Home Automation", slug: "automation" },
+            { name: "Fire Safety", slug: "fire-safety" },
+          ].map((s) => (
+            <button
+              key={s.slug}
+              type="button"
+              onClick={() =>
+                setFormData((prev) => ({
+                  ...prev,
+                  name: prev.name || s.name,
+                  slug: s.slug,
+                }))
+              }
+              className="px-2.5 py-1 rounded-lg bg-neutral-800 hover:bg-[#d4af37]/20 hover:border-[#d4af37]/40 border border-white/10 text-xs text-neutral-300 font-mono transition cursor-pointer"
+            >
+              {s.slug}
+            </button>
+          ))}
+        </div>
+      </div>
+
       <DynamicForm
         fields={categoryFields}
         values={formData}

@@ -5,9 +5,15 @@ export interface Area {
   height: number;
 }
 
-const MAX_DIMENSION = 1600;
-const WEBP_QUALITY = 0.8;
+export const MAX_DIMENSION = 1600;
+export const WEBP_QUALITY = 0.8; // 80% quality delivers 70-85% file size reduction with visual parity
 
+/**
+ * Compresses an uncropped image file:
+ * - Downscales resolution to maximum 1600px preserving aspect ratio
+ * - High-quality bicubic smoothing
+ * - Encodes to modern lossy WebP at 80% quality
+ */
 export async function compressImage(file: File): Promise<File> {
   if (file.type === "image/gif") return file;
 
@@ -27,14 +33,14 @@ export async function compressImage(file: File): Promise<File> {
   }
 
   const canvas = document.createElement("canvas");
-
   canvas.width = width;
   canvas.height = height;
 
   const ctx = canvas.getContext("2d");
-
   if (!ctx) return file;
 
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = "high";
   ctx.drawImage(bitmap, 0, 0, width, height);
 
   bitmap.close();
@@ -50,27 +56,48 @@ export async function compressImage(file: File): Promise<File> {
   });
 }
 
-
-
-
+/**
+ * Crops and optimizes image in a single pass:
+ * - Crops selected area
+ * - Bounds dimensions to MAX_DIMENSION (1600px)
+ * - Anti-aliasing with high smoothing quality
+ * - Encodes directly into WebP (80% quality)
+ */
 export async function getCroppedImg(
   imageSrc: string,
   crop: Area
 ): Promise<File> {
   const image = new Image();
-
   image.src = imageSrc;
 
-  await new Promise((resolve) => {
+  await new Promise((resolve, reject) => {
     image.onload = resolve;
+    image.onerror = () => reject(new Error("Failed to load image for cropping"));
   });
 
+  // Calculate scaled target dimensions capped at MAX_DIMENSION
+  let targetWidth = Math.round(crop.width);
+  let targetHeight = Math.round(crop.height);
+
+  if (targetWidth > MAX_DIMENSION || targetHeight > MAX_DIMENSION) {
+    if (targetWidth > targetHeight) {
+      targetHeight = Math.round((targetHeight * MAX_DIMENSION) / targetWidth);
+      targetWidth = MAX_DIMENSION;
+    } else {
+      targetWidth = Math.round((targetWidth * MAX_DIMENSION) / targetHeight);
+      targetHeight = MAX_DIMENSION;
+    }
+  }
+
   const canvas = document.createElement("canvas");
+  canvas.width = targetWidth;
+  canvas.height = targetHeight;
 
-  canvas.width = crop.width;
-  canvas.height = crop.height;
+  const ctx = canvas.getContext("2d");
+  if (!ctx) throw new Error("Could not initialize 2D canvas context.");
 
-  const ctx = canvas.getContext("2d")!;
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = "high";
 
   ctx.drawImage(
     image,
@@ -80,16 +107,17 @@ export async function getCroppedImg(
     crop.height,
     0,
     0,
-    crop.width,
-    crop.height
+    targetWidth,
+    targetHeight
   );
 
   const blob = await new Promise<Blob | null>((resolve) =>
     canvas.toBlob(resolve, "image/webp", WEBP_QUALITY)
   );
 
-  if (!blob)
-    throw new Error("Unable to crop image.");
+  if (!blob) {
+    throw new Error("Unable to encode cropped image to WebP format.");
+  }
 
   return new File(
     [blob],

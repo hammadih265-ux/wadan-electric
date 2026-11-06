@@ -11,15 +11,15 @@ import {
 const solutionLinks = [
   {
     label: "Electric Accessories",
-    href: "/collection?category=electric-accessories",
+    href: "/collection?category=accessories",
   },
   {
     label: "Solar & Energy Storage",
-    href: "/collection?category=solar-energy-storage",
+    href: "/collection?category=solar",
   },
   {
     label: "Home Automation",
-    href: "/collection?category=home-automation",
+    href: "/collection?category=automation",
   },
   {
     label: "Fire Safety & Protection",

@@ -8,15 +8,15 @@ import { getCategorySlug } from "@/lib/utils";
 const DEFAULT_CATEGORIES: { title: string; slug: string }[] = [
   {
     title: "Electric Accessories",
-    slug: "electric-accessories",
+    slug: "accessories",
   },
   {
     title: "Solar & Energy Storage",
-    slug: "solar-energy-storage",
+    slug: "solar",
   },
   {
     title: "Home Automation",
-    slug: "home-automation",
+    slug: "automation",
   },
   {
     title: "Fire Safety",

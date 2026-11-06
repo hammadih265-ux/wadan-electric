@@ -93,10 +93,29 @@ function ProductFormModal({
 
   const saveMutation = useMutation({
     mutationFn: async () => {
+      if (!formData.name?.trim()) {
+        throw new Error("Product name is required.");
+      }
+      if (!formData.category_id) {
+        throw new Error("Please select a category for this product.");
+      }
+      if (formData.price === "" || Number(formData.price) <= 0) {
+        throw new Error("Please enter a valid price greater than 0 PKR.");
+      }
+      if (Number(formData.stock) < 0) {
+        throw new Error("Stock quantity cannot be negative.");
+      }
+      if (!images.length) {
+        throw new Error("Please upload at least 1 product image.");
+      }
+      if (images.length > 4) {
+        throw new Error("Maximum 4 images allowed per product. Please delete excess images.");
+      }
+
       const payload: CreateProductInput = {
         category_id: formData.category_id,
-        name: formData.name,
-        slug: formData.slug,
+        name: formData.name.trim(),
+        slug: formData.slug.trim(),
         description: formData.description || undefined,
         compare_at_price: formData.compare_at_price
           ? Number(formData.compare_at_price)

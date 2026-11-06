@@ -7,7 +7,7 @@ export async function uploadImage(
   bucket: string,
   folder?: string
 ) {
-  const extension = file.name.split(".").pop();
+  const extension = file.name.split(".").pop() || "webp";
 
   const path = folder
     ? `${folder}/${crypto.randomUUID()}.${extension}`
@@ -15,7 +15,11 @@ export async function uploadImage(
 
   const { error } = await supabase.storage
     .from(bucket)
-    .upload(path, file);
+    .upload(path, file, {
+      contentType: file.type || "image/webp",
+      cacheControl: "31536000",
+      upsert: true,
+    });
 
   if (error) throw error;
 
@@ -32,13 +36,13 @@ export async function deleteImage(url: string, bucket: string) {
   const bucketUrlPart = `/storage/v1/object/public/${bucket}/`;
   const index = url.indexOf(bucketUrlPart);
   if (index === -1) return false;
-  
+
   const path = url.substring(index + bucketUrlPart.length);
-  
+
   const { error } = await supabase.storage
     .from(bucket)
     .remove([path]);
-    
+
   if (error) {
     console.error("Error deleting image from bucket:", error);
     return false;

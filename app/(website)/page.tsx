@@ -122,22 +122,22 @@ export default async function Home() {
     // Branded high-converting local SVGs without external dummy dependencies
     showcaseItems = [
       {
-        id: "electric-accessories",
+        id: "accessories",
         title: "Electric Accessories",
         image: "/categories/electric-accessories.svg",
-        href: "/collection?category=electric-accessories",
+        href: "/collection?category=accessories",
       },
       {
-        id: "solar-energy-storage",
+        id: "solar",
         title: "Solar & Energy Storage",
         image: "/categories/solar-storage.svg",
-        href: "/collection?category=solar-energy-storage",
+        href: "/collection?category=solar",
       },
       {
-        id: "home-automation",
+        id: "automation",
         title: "Home Automation",
         image: "/categories/home-automation.svg",
-        href: "/collection?category=home-automation",
+        href: "/collection?category=automation",
       },
       {
         id: "fire-safety",
