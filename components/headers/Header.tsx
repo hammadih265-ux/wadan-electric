@@ -125,7 +125,7 @@ export default function Header() {
           >
             <Link
               href="/"
-              className="relative h-25 w-25 sm:h-40 sm:w-40 block mt-5 sm:mt-10 ml-2 md:ml-6 lg:ml-0"
+              className="relative h-25 w-25 sm:h-40 sm:w-40 block mt-5  sm:mt-10 ml-10 md:ml-8 lg:ml-0"
             >
               <Image
                 unoptimized
