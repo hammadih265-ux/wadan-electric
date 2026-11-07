@@ -48,7 +48,7 @@ export default function RelatedProducts({ products }: RelatedProductsProps) {
             <Zap className="w-3.5 h-3.5" />
             <span>Hardware Ecosystem</span>
           </div>
-          <h2 className="text-2xl font-extrabold tracking-tight md:text-3xl text-neutral-900">
+          <h2 className="text-2xl font-extrabold tracking-tight md:text-3xl text-[#d4af37]">
             Compatible & Related Units
           </h2>
         </div>

@@ -42,14 +42,14 @@ export default function ProductsGrid({ products }: ProductsGridProps) {
             <Zap className="w-3.5 h-3.5" />
             <span>Live Hardware Inventory</span>
           </div>
-          <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-neutral-900">
+          <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#d4af37]">
             Latest Arrivals & Tested Equipment
           </h2>
         </div>
 
         <Link
           href="/collection"
-          className="group inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-neutral-900 hover:text-[#d4af37] transition-colors"
+          className="group inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-neutral-950 dark:text-neutral-100 group-hover:text-[#d4af37] dark:group-hover:text-[#d4af37]  hover:text-[#d4af37] transition-colors"
         >
           <span>View Full Catalog</span>
           <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
