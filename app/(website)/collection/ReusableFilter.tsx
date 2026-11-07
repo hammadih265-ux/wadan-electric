@@ -138,9 +138,9 @@ export default function CollectionFilters() {
         aria-expanded={panelOpen}
         aria-controls="filter-panel"
         onClick={() => setPanelOpen((o) => !o)}
-        className="flex w-full items-center justify-between rounded-xl border border-neutral-200 bg-white px-4 py-3 shadow-sm transition hover:bg-neutral-50 lg:hidden"
+        className="flex w-full items-center justify-between rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 px-4 py-3 shadow-sm transition hover:bg-neutral-50 dark:hover:bg-neutral-800 lg:hidden"
       >
-        <span className="flex items-center gap-2 text-sm font-semibold uppercase tracking-widest text-neutral-700">
+        <span className="flex items-center gap-2 text-sm font-semibold uppercase tracking-widest text-neutral-700 dark:text-neutral-200">
           {isPending ? (
             <span className="inline-block h-3 w-3 animate-spin rounded-full border-2 border-neutral-300 border-t-neutral-700" />
           ) : (
@@ -160,7 +160,7 @@ export default function CollectionFilters() {
           )}
           Filters
           {activeFilters > 0 && (
-            <span className="rounded-full bg-black px-1.5 py-0.5 text-[10px] font-bold text-white leading-none">
+            <span className="rounded-full bg-black dark:bg-[#d4af37] px-1.5 py-0.5 text-[10px] font-bold text-white dark:text-black leading-none">
               {activeFilters}
             </span>
           )}
@@ -174,7 +174,7 @@ export default function CollectionFilters() {
         id="filter-panel"
         className={[
           // mobile: show/hide based on panelOpen, with subtle slide
-          "mt-3 overflow-hidden rounded-xl border border-neutral-200 bg-white shadow-sm",
+          "mt-3 overflow-hidden rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 shadow-sm",
           panelOpen ? "block" : "hidden",
           // desktop: always show, no border/shadow (embedded in the page)
           "lg:mt-0 lg:block lg:rounded-none lg:border-0 lg:bg-transparent lg:shadow-none",
@@ -225,12 +225,12 @@ export default function CollectionFilters() {
                 value={searchValue}
                 placeholder="Search products…"
                 onChange={handleSearch}
-                className="w-full rounded-xl border border-neutral-200 bg-neutral-50 py-2.5 pl-9 pr-3 text-sm placeholder-neutral-400 outline-none transition focus:border-neutral-700 focus:bg-white focus:ring-2 focus:ring-neutral-100"
+                className="w-full rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-800/80 text-neutral-900 dark:text-white py-2.5 pl-9 pr-3 text-sm placeholder-neutral-400 dark:placeholder-neutral-500 outline-none transition focus:border-neutral-700 dark:focus:border-[#d4af37] focus:bg-white dark:focus:bg-neutral-900 focus:ring-2 focus:ring-neutral-100 dark:focus:ring-neutral-800"
               />
             </div>
           </div>
 
-          <hr className="border-neutral-100" />
+          <hr className="border-neutral-100 dark:border-neutral-800" />
 
           {/* ── Price Range ───────────────────────────────────────────── */}
           <div className="space-y-3">
@@ -252,11 +252,11 @@ export default function CollectionFilters() {
                   placeholder="Min"
                   min={0}
                   onChange={handleMin}
-                  className="w-full rounded-xl border border-neutral-200 bg-neutral-50 py-2.5 pl-7 pr-2 text-sm placeholder-neutral-400 outline-none transition focus:border-neutral-700 focus:bg-white focus:ring-2 focus:ring-neutral-100"
+                  className="w-full rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-800/80 text-neutral-900 dark:text-white py-2.5 pl-7 pr-2 text-sm placeholder-neutral-400 dark:placeholder-neutral-500 outline-none transition focus:border-neutral-700 dark:focus:border-[#d4af37] focus:bg-white dark:focus:bg-neutral-900 focus:ring-2 focus:ring-neutral-100 dark:focus:ring-neutral-800"
                 />
               </div>
 
-              <span className="hidden shrink-0 text-lg leading-none text-neutral-300 sm:block">
+              <span className="hidden shrink-0 text-lg leading-none text-neutral-300 dark:text-neutral-600 sm:block">
                 —
               </span>
 
@@ -272,13 +272,13 @@ export default function CollectionFilters() {
                   placeholder="Max"
                   min={0}
                   onChange={handleMax}
-                  className="w-full rounded-xl border border-neutral-200 bg-neutral-50 py-2.5 pl-7 pr-2 text-sm placeholder-neutral-400 outline-none transition focus:border-neutral-700 focus:bg-white focus:ring-2 focus:ring-neutral-100"
+                  className="w-full rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-800/80 text-neutral-900 dark:text-white py-2.5 pl-7 pr-2 text-sm placeholder-neutral-400 dark:placeholder-neutral-500 outline-none transition focus:border-neutral-700 dark:focus:border-[#d4af37] focus:bg-white dark:focus:bg-neutral-900 focus:ring-2 focus:ring-neutral-100 dark:focus:ring-neutral-800"
                 />
               </div>
             </div>
           </div>
 
-          <hr className="border-neutral-100" />
+          <hr className="border-neutral-100 dark:border-neutral-800" />
 
           {/* ── Categories ───────────────────────────────────────────── */}
           <CategoryFilter onUpdate={updateFilter} currentParams={params} />
@@ -324,7 +324,7 @@ function CategoryFilter({ onUpdate, currentParams }: CategoryFilterProps) {
       {isLoading && (
         <div className="space-y-2 animate-pulse">
           {[1, 2, 3].map((i) => (
-            <div key={i} className="h-9 rounded-xl bg-neutral-100" />
+            <div key={i} className="h-9 rounded-xl bg-neutral-100 dark:bg-neutral-800" />
           ))}
         </div>
       )}
@@ -345,21 +345,21 @@ function CategoryFilter({ onUpdate, currentParams }: CategoryFilterProps) {
                   onClick={() => handleSelect(cat.id)}
                   className={`flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all ${
                     isActive
-                      ? "bg-neutral-900 text-white shadow-sm"
-                      : "text-neutral-700 hover:bg-neutral-100"
+                      ? "bg-neutral-900 dark:bg-[#d4af37] text-white dark:text-black shadow-sm"
+                      : "text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800"
                   }`}
                 >
                   {/* Checkbox indicator */}
                   <span
                     className={`flex h-4 w-4 flex-shrink-0 items-center justify-center rounded border transition-colors ${
                       isActive
-                        ? "border-white bg-white"
-                        : "border-neutral-300 bg-white"
+                        ? "border-white dark:border-black bg-white dark:bg-black"
+                        : "border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-800"
                     }`}
                   >
                     {isActive && (
                       <svg
-                        className="h-2.5 w-2.5 text-neutral-900"
+                        className="h-2.5 w-2.5 text-neutral-900 dark:text-black"
                         viewBox="0 0 12 12"
                         fill="none"
                       >

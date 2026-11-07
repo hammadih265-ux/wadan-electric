@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import { cn } from "@/lib/utils";
 
 const navItems = [
   { label: "Dashboard", href: "/admin/dashboard", icon: LayoutDashboard },
@@ -63,16 +64,12 @@ function Sidebar({
 
       <aside
         className={`fixed inset-y-0 left-0 w-64 flex flex-col z-40 transition-transform duration-300 ease-in-out
-          ${open ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0`}
-        style={{
-          background: "#0d0d0d",
-          borderRight: "1px solid rgba(255,255,255,0.06)",
-        }}
+          ${open ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0
+          bg-white dark:bg-[#0d0d0d] border-r border-neutral-200 dark:border-white/10`}
       >
         {/* Logo */}
         <div
-          className="flex items-center gap-3 px-6 py-5"
-          style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}
+          className="flex items-center gap-3 px-6 py-5 border-b border-neutral-200 dark:border-white/10"
         >
           <div className="flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-br from-[#d4af37] to-[#b8941f] shadow-lg shadow-[#d4af37]/20 shrink-0">
             <div className="inline-flex items-center justify-center w-30 h-30 rounded-2xl bg-gradient-to-br from-[#d4af37] to-[#b8941f] mb-4 shadow-lg shadow-[#d4af37]/20">
@@ -80,15 +77,15 @@ function Sidebar({
             </div>
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-white text-sm font-semibold leading-none">
+            <p className="text-neutral-900 dark:text-white text-sm font-semibold leading-none">
               Wadan Electronics
             </p>
-            <p className="text-[#555] text-[11px] mt-0.5">Admin Panel</p>
+            <p className="text-neutral-500 dark:text-neutral-400 text-[11px] mt-0.5">Admin Panel</p>
           </div>
           {/* Close button — mobile only */}
           <button
             onClick={onClose}
-            className="lg:hidden text-[#555] hover:text-white transition-colors"
+            className="lg:hidden text-neutral-400 hover:text-neutral-900 dark:text-neutral-500 dark:hover:text-white transition-colors"
           >
             <X size={18} />
           </button>
@@ -105,23 +102,25 @@ function Sidebar({
                 key={item.href}
                 href={item.href}
                 onClick={onClose}
-                className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all duration-150 group"
-                style={{
-                  background: active ? "rgba(212,175,55,0.1)" : "transparent",
-                  color: active ? "#d4af37" : "#888",
-                  border: active
-                    ? "1px solid rgba(212,175,55,0.2)"
-                    : "1px solid transparent",
-                }}
+                className={cn(
+                  "flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all duration-150 group font-medium",
+                  active
+                    ? "bg-[#d4af37]/15 text-[#b8941f] dark:text-[#d4af37] border border-[#d4af37]/30"
+                    : "text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white hover:bg-neutral-100 dark:hover:bg-white/5 border border-transparent"
+                )}
               >
                 <Icon
                   size={16}
-                  className="shrink-0"
-                  style={{ color: active ? "#d4af37" : "#555" }}
+                  className={cn(
+                    "shrink-0",
+                    active
+                      ? "text-[#b8941f] dark:text-[#d4af37]"
+                      : "text-neutral-400 dark:text-neutral-500 group-hover:text-neutral-700 dark:group-hover:text-neutral-300"
+                  )}
                 />
                 <span className="flex-1">{item.label}</span>
                 {active && (
-                  <ChevronRight size={12} style={{ color: "#d4af37" }} />
+                  <ChevronRight size={12} className="text-[#b8941f] dark:text-[#d4af37]" />
                 )}
               </Link>
             );
@@ -130,13 +129,12 @@ function Sidebar({
 
         {/* Store Link & Sign out */}
         <div
-          className="px-3 py-4 space-y-1"
-          style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}
+          className="px-3 py-4 space-y-1 border-t border-neutral-200 dark:border-white/10"
         >
           <Link
             href="/"
             target="_blank"
-            className="flex items-center gap-3 w-full px-3 py-2 rounded-xl text-xs transition-all duration-150 text-[#888] hover:text-[#d4af37] hover:bg-white/5"
+            className="flex items-center gap-3 w-full px-3 py-2 rounded-xl text-xs transition-all duration-150 text-neutral-600 dark:text-neutral-400 hover:text-[#b8941f] dark:hover:text-[#d4af37] hover:bg-neutral-100 dark:hover:bg-white/5 font-medium"
           >
             <ExternalLink size={14} className="shrink-0" />
             <span>View Live Store</span>
@@ -146,7 +144,7 @@ function Sidebar({
             id="admin-signout-btn"
             onClick={handleSignOut}
             disabled={signingOut}
-            className="flex items-center gap-3 w-full px-3 py-2 rounded-xl text-xs transition-all duration-150 text-[#666] hover:text-red-400 hover:bg-red-500/10 disabled:opacity-50"
+            className="flex items-center gap-3 w-full px-3 py-2 rounded-xl text-xs transition-all duration-150 text-neutral-500 hover:text-red-500 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-500/10 disabled:opacity-50 font-medium"
           >
             <LogOut size={14} className="shrink-0" />
             {signingOut ? "Signing out…" : "Sign Out"}
@@ -179,35 +177,30 @@ function TopBar({ onMenuClick }: { onMenuClick: () => void }) {
 
   return (
     <header
-      className="sticky top-0 z-30 flex items-center justify-between px-4 sm:px-8 py-4"
-      style={{
-        background: "rgba(10,10,10,0.8)",
-        borderBottom: "1px solid rgba(255,255,255,0.06)",
-        backdropFilter: "blur(16px)",
-      }}
+      className="sticky top-0 z-30 flex items-center justify-between px-4 sm:px-8 py-4 bg-white/80 dark:bg-[#0a0a0a]/80 border-b border-neutral-200 dark:border-white/10 backdrop-blur-md"
     >
       <div className="flex items-center gap-3">
         {/* Hamburger — mobile only */}
         <button
           id="admin-menu-btn"
           onClick={onMenuClick}
-          className="lg:hidden text-[#666] hover:text-white transition-colors p-1 -ml-1"
+          className="lg:hidden text-neutral-500 hover:text-neutral-900 dark:hover:text-white transition-colors p-1 -ml-1"
           aria-label="Open menu"
         >
           <Menu size={20} />
         </button>
-        <p className="text-white text-sm font-medium">{pageTitle}</p>
+        <p className="text-neutral-900 dark:text-white text-sm font-semibold">{pageTitle}</p>
       </div>
       <div className="flex items-center gap-3">
         <Link
           href="/"
           target="_blank"
-          className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-[#aaa] hover:text-white bg-white/5 hover:bg-white/10 transition border border-white/5"
+          className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-neutral-600 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white bg-neutral-100 dark:bg-white/5 hover:bg-neutral-200 dark:hover:bg-white/10 transition border border-neutral-200 dark:border-white/10"
         >
           <ExternalLink size={12} />
           <span>View Store</span>
         </Link>
-        <span className="text-[#555] text-xs hidden md:block">
+        <span className="text-neutral-500 dark:text-neutral-400 text-xs hidden md:block">
           {email ?? ""}
         </span>
         <div
@@ -229,12 +222,12 @@ export default function AdminLayout({
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="min-h-screen" style={{ background: "#0a0a0a" }}>
+    <div className="min-h-screen bg-neutral-100 dark:bg-[#0a0a0a] text-neutral-900 dark:text-neutral-100 transition-colors">
       <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
       {/* lg:ml-64 pushes content right on desktop; on mobile it uses full width */}
-      <div className="lg:ml-64 min-h-screen">
+      <div className="lg:ml-64 min-h-screen flex flex-col">
         <TopBar onMenuClick={() => setSidebarOpen(true)} />
-        <main className="p-4 sm:p-8">{children}</main>
+        <main className="p-4 sm:p-8 flex-1">{children}</main>
       </div>
     </div>
   );

@@ -30,28 +30,27 @@ export function AdminTable({
 
   return (
     <div
-      className="rounded-2xl overflow-x-auto"
-      style={{ border: "1px solid rgba(255,255,255,0.07)" }}
+      className="rounded-2xl overflow-x-auto bg-white dark:bg-[#111] border border-neutral-200 dark:border-white/10 shadow-sm"
     >
       <table className="w-full min-w-[650px] text-sm">
         <thead>
-          <tr style={{ background: "rgba(255,255,255,0.03)" }}>
+          <tr className="bg-neutral-50 dark:bg-white/[0.03] border-b border-neutral-200 dark:border-white/10">
             {headers.map((h) => (
               <th
                 key={h}
-                className="text-left px-5 py-3.5 text-[#555] text-xs uppercase tracking-widest font-medium"
+                className="text-left px-5 py-3.5 text-neutral-500 dark:text-neutral-400 text-xs uppercase tracking-widest font-medium"
               >
                 {h}
               </th>
             ))}
           </tr>
         </thead>
-        <tbody>
+        <tbody className="divide-y divide-neutral-100 dark:divide-white/5">
           {isLoading && (
             <tr>
               <td
                 colSpan={colSpan}
-                className="text-center text-[#555] py-16 text-sm"
+                className="text-center text-neutral-400 dark:text-neutral-500 py-16 text-sm"
               >
                 Loading…
               </td>
@@ -61,8 +60,8 @@ export function AdminTable({
             <tr>
               <td colSpan={colSpan} className="text-center py-16">
                 <div className="flex flex-col items-center gap-3">
-                  <span className="text-[#333]">{emptyIcon}</span>
-                  <p className="text-[#555] text-sm">{emptyText}</p>
+                  <span className="text-neutral-300 dark:text-neutral-700">{emptyIcon}</span>
+                  <p className="text-neutral-500 dark:text-neutral-400 text-sm">{emptyText}</p>
                 </div>
               </td>
             </tr>

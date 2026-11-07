@@ -293,11 +293,7 @@ export default function AdminCategoriesPage() {
             return (
               <tr
                 key={cat.id}
-                style={{
-                  borderTop:
-                    i > 0 ? "1px solid rgba(255,255,255,0.04)" : "none",
-                }}
-                className="hover:bg-white/[0.02] transition-colors"
+                className="hover:bg-neutral-50 dark:hover:bg-white/[0.02] transition-colors border-t border-neutral-100 dark:border-white/[0.04]"
               >
                 <td className="px-5 py-4">
                   <div className="flex items-center gap-3">
@@ -306,32 +302,30 @@ export default function AdminCategoriesPage() {
                       <img
                         src={cat.image_url}
                         alt={cat.name}
-                        className="w-9 h-9 rounded-lg object-cover shrink-0"
-                        style={{ border: "1px solid rgba(255,255,255,0.08)" }}
+                        className="w-9 h-9 rounded-lg object-cover shrink-0 border border-neutral-200 dark:border-white/10"
                       />
                     ) : (
                       <div
-                        className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0"
-                        style={{ background: "rgba(212,175,55,0.1)" }}
+                        className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0 bg-[#d4af37]/10"
                       >
-                        <Tag size={14} className="text-[#d4af37]" />
+                        <Tag size={14} className="text-[#b8941f] dark:text-[#d4af37]" />
                       </div>
                     )}
                     <div>
-                      <p className="text-white font-medium">{cat.name}</p>
+                      <p className="text-neutral-900 dark:text-white font-medium">{cat.name}</p>
                       {cat.description && (
-                        <p className="text-[#555] text-xs truncate max-w-[180px]">
+                        <p className="text-neutral-500 dark:text-neutral-400 text-xs truncate max-w-[180px]">
                           {cat.description}
                         </p>
                       )}
                     </div>
                   </div>
                 </td>
-                <td className="px-5 py-4 text-[#666] font-mono text-xs">
+                <td className="px-5 py-4 text-neutral-500 dark:text-neutral-400 font-mono text-xs">
                   {cat.slug}
                 </td>
-                <td className="px-5 py-4 text-[#888]">{productCount}</td>
-                <td className="px-5 py-4 text-[#888]">{cat.sort_order}</td>
+                <td className="px-5 py-4 text-neutral-600 dark:text-neutral-400">{productCount}</td>
+                <td className="px-5 py-4 text-neutral-600 dark:text-neutral-400">{cat.sort_order}</td>
                 <td className="px-5 py-4">
                   <button
                     onClick={() =>
@@ -349,14 +343,14 @@ export default function AdminCategoriesPage() {
                     <button
                       id={`edit-cat-${cat.id}`}
                       onClick={() => setEditCat(cat)}
-                      className="p-2 rounded-lg text-[#555] hover:text-[#d4af37] hover:bg-[rgba(212,175,55,0.1)] transition-all"
+                      className="p-2 rounded-lg text-neutral-400 hover:text-[#b8941f] dark:hover:text-[#d4af37] hover:bg-[#d4af37]/10 dark:text-neutral-500 transition-all cursor-pointer"
                     >
                       <Pencil size={14} />
                     </button>
                     <button
                       id={`delete-cat-${cat.id}`}
                       onClick={() => setDeleteCat(cat)}
-                      className="p-2 rounded-lg text-[#555] hover:text-red-400 hover:bg-red-500/10 transition-all"
+                      className="p-2 rounded-lg text-neutral-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 dark:text-neutral-500 transition-all cursor-pointer"
                     >
                       <Trash2 size={14} />
                     </button>

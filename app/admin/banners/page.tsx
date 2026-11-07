@@ -87,20 +87,6 @@ function BannerFormModal({
       setError(e instanceof Error ? e.message : "Save failed"),
   });
 
-  const inputCls =
-    "w-full rounded-xl px-4 py-2.5 text-sm text-white placeholder-[#444] outline-none transition-all";
-  const inputStyle = {
-    background: "rgba(255,255,255,0.05)",
-    border: "1px solid rgba(255,255,255,0.08)",
-  };
-
-  function focusBorder(e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) {
-    e.currentTarget.style.borderColor = "rgba(212,175,55,0.5)";
-  }
-  function blurBorder(e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) {
-    e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)";
-  }
-
   return (
     <AdminModal
       title={isEdit ? "Edit Banner" : "New Banner"}
@@ -110,7 +96,7 @@ function BannerFormModal({
       <div className="space-y-4">
         {/* Title */}
         <div>
-          <label className="block text-xs font-medium text-[#888] uppercase tracking-widest mb-1.5">
+          <label className="block text-xs font-medium text-neutral-600 dark:text-neutral-400 uppercase tracking-widest mb-1.5">
             Title *
           </label>
           <input
@@ -119,16 +105,13 @@ function BannerFormModal({
             value={formData.title}
             onChange={(e) => setFormData((p) => ({ ...p, title: e.target.value }))}
             placeholder="e.g. New Arrivals – Premium Audio"
-            className={inputCls}
-            style={inputStyle}
-            onFocus={focusBorder}
-            onBlur={blurBorder}
+            className="admin-input"
           />
         </div>
 
         {/* Subtitle */}
         <div>
-          <label className="block text-xs font-medium text-[#888] uppercase tracking-widest mb-1.5">
+          <label className="block text-xs font-medium text-neutral-600 dark:text-neutral-400 uppercase tracking-widest mb-1.5">
             Subtitle
           </label>
           <input
@@ -136,16 +119,13 @@ function BannerFormModal({
             value={formData.subtitle}
             onChange={(e) => setFormData((p) => ({ ...p, subtitle: e.target.value }))}
             placeholder="Optional short description or tagline"
-            className={inputCls}
-            style={inputStyle}
-            onFocus={focusBorder}
-            onBlur={blurBorder}
+            className="admin-input"
           />
         </div>
 
         {/* Image Upload with WebP conversion */}
         <div>
-          <label className="block text-xs font-medium text-[#888] uppercase tracking-widest mb-2">
+          <label className="block text-xs font-medium text-neutral-600 dark:text-neutral-400 uppercase tracking-widest mb-2">
             Banner Image (Auto WebP Crop & Upload) *
           </label>
           <ImageUpload
@@ -166,10 +146,7 @@ function BannerFormModal({
                 setFormData((p) => ({ ...p, image_url: e.target.value }))
               }
               placeholder="Or paste external image URL (https://…)"
-              className={`${inputCls} text-xs`}
-              style={inputStyle}
-              onFocus={focusBorder}
-              onBlur={blurBorder}
+              className="admin-input text-xs"
             />
           </div>
         </div>
@@ -177,7 +154,7 @@ function BannerFormModal({
         {/* Link */}
         <div className="grid grid-cols-2 gap-3">
           <div>
-            <label className="block text-xs font-medium text-[#888] uppercase tracking-widest mb-1.5">
+            <label className="block text-xs font-medium text-neutral-600 dark:text-neutral-400 uppercase tracking-widest mb-1.5">
               Link URL
             </label>
             <input
@@ -185,14 +162,11 @@ function BannerFormModal({
               value={formData.link_href}
               onChange={(e) => setFormData((p) => ({ ...p, link_href: e.target.value }))}
               placeholder="/collection"
-              className={inputCls}
-              style={inputStyle}
-              onFocus={focusBorder}
-              onBlur={blurBorder}
+              className="admin-input"
             />
           </div>
           <div>
-            <label className="block text-xs font-medium text-[#888] uppercase tracking-widest mb-1.5">
+            <label className="block text-xs font-medium text-neutral-600 dark:text-neutral-400 uppercase tracking-widest mb-1.5">
               Link Label
             </label>
             <input
@@ -200,10 +174,7 @@ function BannerFormModal({
               value={formData.link_label}
               onChange={(e) => setFormData((p) => ({ ...p, link_label: e.target.value }))}
               placeholder="Shop Now"
-              className={inputCls}
-              style={inputStyle}
-              onFocus={focusBorder}
-              onBlur={blurBorder}
+              className="admin-input"
             />
           </div>
         </div>
@@ -211,7 +182,7 @@ function BannerFormModal({
         {/* Sort order & Active */}
         <div className="grid grid-cols-2 gap-3">
           <div>
-            <label className="block text-xs font-medium text-[#888] uppercase tracking-widest mb-1.5">
+            <label className="block text-xs font-medium text-neutral-600 dark:text-neutral-400 uppercase tracking-widest mb-1.5">
               Sort Order
             </label>
             <input
@@ -220,10 +191,7 @@ function BannerFormModal({
               onChange={(e) =>
                 setFormData((p) => ({ ...p, sort_order: Number(e.target.value) }))
               }
-              className={inputCls}
-              style={inputStyle}
-              onFocus={focusBorder}
-              onBlur={blurBorder}
+              className="admin-input"
             />
           </div>
           <div className="flex items-end pb-1">
@@ -232,25 +200,24 @@ function BannerFormModal({
                 onClick={() =>
                   setFormData((p) => ({ ...p, is_active: !p.is_active }))
                 }
-                className="relative w-10 h-5 rounded-full transition-all cursor-pointer"
-                style={{
-                  background: formData.is_active
-                    ? "rgba(212,175,55,0.6)"
-                    : "rgba(255,255,255,0.1)",
-                }}
+                className={`relative w-10 h-5 rounded-full transition-all cursor-pointer ${
+                  formData.is_active
+                    ? "bg-[#d4af37]"
+                    : "bg-neutral-200 dark:bg-white/15"
+                }`}
               >
                 <div
-                  className="absolute top-0.5 w-4 h-4 rounded-full bg-white transition-all"
+                  className="absolute top-0.5 w-4 h-4 rounded-full bg-white transition-all shadow"
                   style={{ left: formData.is_active ? "calc(100% - 18px)" : 2 }}
                 />
               </div>
-              <span className="text-xs text-[#888]">Active</span>
+              <span className="text-xs text-neutral-600 dark:text-neutral-400 font-medium">Active</span>
             </label>
           </div>
         </div>
 
         {error && (
-          <div className="text-red-400 text-sm bg-red-500/10 border border-red-500/20 rounded-xl px-4 py-3">
+          <div className="text-red-500 dark:text-red-400 text-sm bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 rounded-xl px-4 py-3">
             {error}
           </div>
         )}
@@ -258,14 +225,14 @@ function BannerFormModal({
         <div className="flex gap-3 pt-2">
           <button
             onClick={onClose}
-            className="flex-1 py-2.5 rounded-xl text-sm text-[#666] border border-[rgba(255,255,255,0.08)] hover:text-white transition-colors"
+            className="flex-1 py-2.5 rounded-xl text-sm font-medium text-neutral-700 dark:text-neutral-300 border border-neutral-200 dark:border-white/10 hover:bg-neutral-100 dark:hover:bg-white/5 transition-colors cursor-pointer"
           >
             Cancel
           </button>
           <button
             onClick={() => saveMutation.mutate()}
             disabled={saveMutation.isPending || !formData.title || !formData.image_url}
-            className="flex-1 py-2.5 rounded-xl text-sm font-medium text-black disabled:opacity-50"
+            className="flex-1 py-2.5 rounded-xl text-sm font-semibold text-black disabled:opacity-50 transition-all cursor-pointer"
             style={{
               background: "linear-gradient(135deg,#d4af37,#b8941f)",
               boxShadow: "0 4px 16px rgba(212,175,55,0.3)",
@@ -394,10 +361,7 @@ export default function AdminBannersPage() {
             return (
               <tr
                 key={b.id}
-                style={{
-                  borderTop: i > 0 ? "1px solid rgba(255,255,255,0.04)" : "none",
-                }}
-                className="hover:bg-white/[0.02] transition-colors"
+                className="hover:bg-neutral-50 dark:hover:bg-white/[0.02] transition-colors border-t border-neutral-100 dark:border-white/[0.04]"
               >
                 <td className="px-5 py-4">
                   <div className="flex items-center gap-3">
@@ -407,40 +371,38 @@ export default function AdminBannersPage() {
                       <img
                         src={b.image_url}
                         alt={b.title}
-                        className="w-16 h-9 rounded-lg object-cover shrink-0"
-                        style={{ border: "1px solid rgba(255,255,255,0.08)" }}
+                        className="w-16 h-9 rounded-lg object-cover shrink-0 border border-neutral-200 dark:border-white/10"
                       />
                     ) : (
                       <div
-                        className="w-16 h-9 rounded-lg flex items-center justify-center shrink-0"
-                        style={{ background: "rgba(212,175,55,0.1)" }}
+                        className="w-16 h-9 rounded-lg flex items-center justify-center shrink-0 bg-[#d4af37]/10"
                       >
-                        <ImageIcon size={14} className="text-[#d4af37]" />
+                        <ImageIcon size={14} className="text-[#b8941f] dark:text-[#d4af37]" />
                       </div>
                     )}
                     <div>
-                      <p className="text-white font-medium text-sm">{b.title}</p>
+                      <p className="text-neutral-900 dark:text-white font-medium text-sm">{b.title}</p>
                       {b.subtitle && (
-                        <p className="text-[#555] text-xs truncate max-w-[200px]">
+                        <p className="text-neutral-500 dark:text-neutral-400 text-xs truncate max-w-[200px]">
                           {b.subtitle}
                         </p>
                       )}
                     </div>
                   </div>
                 </td>
-                <td className="px-5 py-4 text-[#666] font-mono text-xs">
+                <td className="px-5 py-4 text-neutral-500 dark:text-neutral-400 font-mono text-xs">
                   {b.link_href ? (
                     <span>
                       {b.link_href}
                       {b.link_label && (
-                        <span className="text-[#444] ml-1">({b.link_label})</span>
+                        <span className="text-neutral-400 dark:text-neutral-500 ml-1">({b.link_label})</span>
                       )}
                     </span>
                   ) : (
-                    <span className="text-[#444]">—</span>
+                    <span className="text-neutral-400 dark:text-neutral-500">—</span>
                   )}
                 </td>
-                <td className="px-5 py-4 text-[#888]">{b.sort_order}</td>
+                <td className="px-5 py-4 text-neutral-600 dark:text-neutral-400">{b.sort_order}</td>
                 <td className="px-5 py-4">
                   <button
                     onClick={() =>
@@ -457,13 +419,13 @@ export default function AdminBannersPage() {
                   <div className="flex items-center gap-2">
                     <button
                       onClick={() => setEditBanner(b)}
-                      className="p-2 rounded-lg text-[#555] hover:text-[#d4af37] hover:bg-[rgba(212,175,55,0.1)] transition-all"
+                      className="p-2 rounded-lg text-neutral-400 hover:text-[#b8941f] dark:hover:text-[#d4af37] hover:bg-[#d4af37]/10 dark:text-neutral-500 transition-all cursor-pointer"
                     >
                       <Pencil size={14} />
                     </button>
                     <button
                       onClick={() => setDeleteBannerItem(b)}
-                      className="p-2 rounded-lg text-[#555] hover:text-red-400 hover:bg-red-500/10 transition-all"
+                      className="p-2 rounded-lg text-neutral-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 dark:text-neutral-500 transition-all cursor-pointer"
                     >
                       <Trash2 size={14} />
                     </button>

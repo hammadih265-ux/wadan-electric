@@ -23,13 +23,13 @@ export default function ImagePreview({
       className={
         multiple
           ? "grid grid-cols-2 sm:grid-cols-3 gap-3 mt-3"
-          : "relative max-w-sm rounded-2xl overflow-hidden border border-neutral-700/60 bg-neutral-900/40 p-2 mt-3"
+          : "relative max-w-sm rounded-2xl overflow-hidden border border-neutral-200 dark:border-neutral-700/60 bg-neutral-50 dark:bg-neutral-900/40 p-2 mt-3"
       }
     >
       {images.map((url, index) => (
         <div
           key={`${url}-${index}`}
-          className="group relative rounded-xl overflow-hidden border border-neutral-700/60 bg-neutral-900/50"
+          className="group relative rounded-xl overflow-hidden border border-neutral-200 dark:border-neutral-700/60 bg-white dark:bg-neutral-900/50"
         >
           {/* Main / Primary badge for multiple */}
           {multiple && index === 0 && (
@@ -38,7 +38,7 @@ export default function ImagePreview({
             </span>
           )}
 
-          <div className="relative aspect-square w-full overflow-hidden bg-neutral-950 flex items-center justify-center">
+          <div className="relative aspect-square w-full overflow-hidden bg-neutral-100 dark:bg-neutral-950 flex items-center justify-center">
             <Image
               src={url}
               alt={`Uploaded ${index + 1}`}
@@ -51,15 +51,15 @@ export default function ImagePreview({
           </div>
 
           {/* Action Overlay */}
-          <div className="p-2 bg-neutral-900/90 border-t border-neutral-800 flex items-center justify-between gap-2">
+          <div className="p-2 bg-neutral-50 dark:bg-neutral-900/90 border-t border-neutral-200 dark:border-neutral-800 flex items-center justify-between gap-2">
             {onReplace && (
               <button
                 type="button"
                 onClick={() => onReplace(index)}
-                className="flex-1 inline-flex items-center justify-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-neutral-800 hover:bg-neutral-700 text-neutral-200 text-xs font-medium transition cursor-pointer"
+                className="flex-1 inline-flex items-center justify-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-neutral-200 dark:bg-neutral-800 hover:bg-neutral-300 dark:hover:bg-neutral-700 text-neutral-800 dark:text-neutral-200 text-xs font-medium transition cursor-pointer"
                 title="Replace this image"
               >
-                <RefreshCw size={13} className="text-[#d4af37]" />
+                <RefreshCw size={13} className="text-[#b8941f] dark:text-[#d4af37]" />
                 <span>Replace</span>
               </button>
             )}
@@ -67,7 +67,7 @@ export default function ImagePreview({
             <button
               type="button"
               onClick={() => onDelete(index)}
-              className="inline-flex items-center justify-center p-1.5 rounded-lg bg-red-500/15 hover:bg-red-500/30 text-red-400 hover:text-red-300 transition cursor-pointer"
+              className="inline-flex items-center justify-center p-1.5 rounded-lg bg-red-500/15 hover:bg-red-500/30 text-red-500 dark:text-red-400 hover:text-red-600 dark:hover:text-red-300 transition cursor-pointer"
               title="Delete this image"
               aria-label="Delete image"
             >

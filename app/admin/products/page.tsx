@@ -357,27 +357,23 @@ export default function AdminProductsPage() {
             return (
               <tr
                 key={p.id}
-                style={{
-                  borderTop:
-                    i > 0 ? "1px solid rgba(255,255,255,0.04)" : "none",
-                }}
-                className="hover:bg-white/[0.02] transition-colors"
+                className="hover:bg-neutral-50 dark:hover:bg-white/[0.02] transition-colors border-t border-neutral-100 dark:border-white/[0.04]"
               >
                 <td className="px-5 py-4">
-                  <p className="text-white font-medium leading-snug">
+                  <p className="text-neutral-900 dark:text-white font-medium leading-snug">
                     {p.name}
                   </p>
-                  <p className="text-[#555] text-xs font-mono mt-0.5">
+                  <p className="text-neutral-500 dark:text-neutral-400 text-xs font-mono mt-0.5">
                     {p.slug}
                   </p>
                 </td>
-                <td className="px-5 py-4 text-[#888]">{catName}</td>
+                <td className="px-5 py-4 text-neutral-600 dark:text-neutral-400">{catName}</td>
                 <td className="px-5 py-4">
-                  <p className="text-[#d4af37] font-medium">
+                  <p className="text-[#b8941f] dark:text-[#d4af37] font-medium">
                     PKR {Number(p.price).toLocaleString()}
                   </p>
                   {p.compare_at_price && (
-                    <p className="text-[#555] text-xs line-through">
+                    <p className="text-neutral-400 dark:text-neutral-500 text-xs line-through">
                       PKR {Number(p.compare_at_price).toLocaleString()}
                     </p>
                   )}
@@ -386,10 +382,10 @@ export default function AdminProductsPage() {
                   <span
                     className={`font-medium ${
                       p.stock <= 3
-                        ? "text-red-400"
+                        ? "text-red-500"
                         : p.stock <= 10
-                          ? "text-yellow-400"
-                          : "text-white"
+                          ? "text-yellow-600 dark:text-yellow-400"
+                          : "text-neutral-900 dark:text-white"
                     }`}
                   >
                     {p.stock}
@@ -398,19 +394,19 @@ export default function AdminProductsPage() {
                 <td className="px-5 py-4">
                   <div className="flex flex-wrap gap-1">
                     {p.is_featured && (
-                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-semibold bg-[#d4af37]/15 text-[#d4af37] border border-[#d4af37]/30">
+                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-semibold bg-[#d4af37]/15 text-[#b8941f] dark:text-[#d4af37] border border-[#d4af37]/30">
                         <Sparkles className="w-2.5 h-2.5" />
                         Featured
                       </span>
                     )}
                     {p.is_upcoming && (
-                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-semibold bg-purple-500/15 text-purple-300 border border-purple-500/30">
+                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-semibold bg-purple-500/15 text-purple-600 dark:text-purple-300 border border-purple-500/30">
                         <Clock className="w-2.5 h-2.5" />
                         Upcoming
                       </span>
                     )}
                     {!p.is_featured && !p.is_upcoming && (
-                      <span className="text-[#444] text-xs">—</span>
+                      <span className="text-neutral-400 dark:text-neutral-500 text-xs">—</span>
                     )}
                   </div>
                 </td>
@@ -431,14 +427,14 @@ export default function AdminProductsPage() {
                     <button
                       id={`edit-product-${p.id}`}
                       onClick={() => setEditProduct(p)}
-                      className="p-2 rounded-lg text-[#555] hover:text-[#d4af37] hover:bg-[rgba(212,175,55,0.1)] transition-all"
+                      className="p-2 rounded-lg text-neutral-400 hover:text-[#b8941f] dark:hover:text-[#d4af37] hover:bg-[#d4af37]/10 dark:text-neutral-500 transition-all cursor-pointer"
                     >
                       <Pencil size={14} />
                     </button>
                     <button
                       id={`delete-product-${p.id}`}
                       onClick={() => setDeleteTarget(p)}
-                      className="p-2 rounded-lg text-[#555] hover:text-red-400 hover:bg-red-500/10 transition-all"
+                      className="p-2 rounded-lg text-neutral-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 dark:text-neutral-500 transition-all cursor-pointer"
                     >
                       <Trash2 size={14} />
                     </button>

@@ -85,20 +85,6 @@ function PopupFormModal({
       setError(e instanceof Error ? e.message : "Save failed"),
   });
 
-  const inputCls =
-    "w-full rounded-xl px-4 py-2.5 text-sm text-white placeholder-[#444] outline-none transition-all";
-  const inputStyle = {
-    background: "rgba(255,255,255,0.05)",
-    border: "1px solid rgba(255,255,255,0.08)",
-  };
-
-  function focusBorder(e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) {
-    e.currentTarget.style.borderColor = "rgba(212,175,55,0.5)";
-  }
-  function blurBorder(e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) {
-    e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)";
-  }
-
   return (
     <AdminModal
       title={isEdit ? "Edit Popup Announcement" : "Create New Popup / Deal"}
@@ -108,7 +94,7 @@ function PopupFormModal({
       <div className="space-y-4">
         {/* Title */}
         <div>
-          <label className="block text-xs font-medium text-[#888] uppercase tracking-widest mb-1.5">
+          <label className="block text-xs font-medium text-neutral-600 dark:text-neutral-400 uppercase tracking-widest mb-1.5">
             Popup Title *
           </label>
           <input
@@ -117,17 +103,14 @@ function PopupFormModal({
             value={formData.title}
             onChange={(e) => setFormData((p) => ({ ...p, title: e.target.value }))}
             placeholder="e.g. Flash Sale: 20% OFF Everything!"
-            className={inputCls}
-            style={inputStyle}
-            onFocus={focusBorder}
-            onBlur={blurBorder}
+            className="admin-input"
           />
         </div>
 
         {/* Type & Discount Code */}
         <div className="grid grid-cols-2 gap-3">
           <div>
-            <label className="block text-xs font-medium text-[#888] uppercase tracking-widest mb-1.5">
+            <label className="block text-xs font-medium text-neutral-600 dark:text-neutral-400 uppercase tracking-widest mb-1.5">
               Popup Category
             </label>
             <select
@@ -138,10 +121,7 @@ function PopupFormModal({
                   popup_type: e.target.value as typeof p.popup_type,
                 }))
               }
-              className={inputCls}
-              style={{ ...inputStyle, background: "#171717" }}
-              onFocus={focusBorder}
-              onBlur={blurBorder}
+              className="admin-input"
             >
               <option value="discount">Discount / Coupon</option>
               <option value="promotional">Promotional Deal</option>
@@ -152,7 +132,7 @@ function PopupFormModal({
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-[#888] uppercase tracking-widest mb-1.5">
+            <label className="block text-xs font-medium text-neutral-600 dark:text-neutral-400 uppercase tracking-widest mb-1.5">
               Discount Code (Optional)
             </label>
             <input
@@ -162,17 +142,14 @@ function PopupFormModal({
                 setFormData((p) => ({ ...p, discount_code: e.target.value.toUpperCase() }))
               }
               placeholder="e.g. WADAN20"
-              className={inputCls}
-              style={inputStyle}
-              onFocus={focusBorder}
-              onBlur={blurBorder}
+              className="admin-input"
             />
           </div>
         </div>
 
         {/* Description */}
         <div>
-          <label className="block text-xs font-medium text-[#888] uppercase tracking-widest mb-1.5">
+          <label className="block text-xs font-medium text-neutral-600 dark:text-neutral-400 uppercase tracking-widest mb-1.5">
             Description
           </label>
           <textarea
@@ -180,16 +157,13 @@ function PopupFormModal({
             value={formData.description}
             onChange={(e) => setFormData((p) => ({ ...p, description: e.target.value }))}
             placeholder="Exclusive limited-time offer for our valued customers. Apply code at checkout."
-            className={inputCls}
-            style={inputStyle}
-            onFocus={focusBorder}
-            onBlur={blurBorder}
+            className="admin-input resize-none"
           />
         </div>
 
         {/* Image Upload with WebP */}
         <div>
-          <label className="block text-xs font-medium text-[#888] uppercase tracking-widest mb-2">
+          <label className="block text-xs font-medium text-neutral-600 dark:text-neutral-400 uppercase tracking-widest mb-2">
             Popup Banner Image (WebP auto-optimized)
           </label>
           <ImageUpload
@@ -209,10 +183,7 @@ function PopupFormModal({
                 setFormData((p) => ({ ...p, image_url: e.target.value }))
               }
               placeholder="Or direct image URL"
-              className={`${inputCls} text-xs`}
-              style={inputStyle}
-              onFocus={focusBorder}
-              onBlur={blurBorder}
+              className="admin-input text-xs"
             />
           </div>
         </div>
@@ -220,7 +191,7 @@ function PopupFormModal({
         {/* Link URL and Label */}
         <div className="grid grid-cols-2 gap-3">
           <div>
-            <label className="block text-xs font-medium text-[#888] uppercase tracking-widest mb-1.5">
+            <label className="block text-xs font-medium text-neutral-600 dark:text-neutral-400 uppercase tracking-widest mb-1.5">
               Target Link URL
             </label>
             <input
@@ -228,14 +199,11 @@ function PopupFormModal({
               value={formData.link_href}
               onChange={(e) => setFormData((p) => ({ ...p, link_href: e.target.value }))}
               placeholder="/collection"
-              className={inputCls}
-              style={inputStyle}
-              onFocus={focusBorder}
-              onBlur={blurBorder}
+              className="admin-input"
             />
           </div>
           <div>
-            <label className="block text-xs font-medium text-[#888] uppercase tracking-widest mb-1.5">
+            <label className="block text-xs font-medium text-neutral-600 dark:text-neutral-400 uppercase tracking-widest mb-1.5">
               Button Text
             </label>
             <input
@@ -243,10 +211,7 @@ function PopupFormModal({
               value={formData.link_label}
               onChange={(e) => setFormData((p) => ({ ...p, link_label: e.target.value }))}
               placeholder="Claim Offer"
-              className={inputCls}
-              style={inputStyle}
-              onFocus={focusBorder}
-              onBlur={blurBorder}
+              className="admin-input"
             />
           </div>
         </div>
@@ -254,7 +219,7 @@ function PopupFormModal({
         {/* Timing & Switches */}
         <div className="grid grid-cols-3 gap-3">
           <div>
-            <label className="block text-xs font-medium text-[#888] uppercase tracking-widest mb-1.5">
+            <label className="block text-xs font-medium text-neutral-600 dark:text-neutral-400 uppercase tracking-widest mb-1.5">
               Delay (ms)
             </label>
             <input
@@ -263,10 +228,7 @@ function PopupFormModal({
               onChange={(e) =>
                 setFormData((p) => ({ ...p, show_delay_ms: Number(e.target.value) }))
               }
-              className={inputCls}
-              style={inputStyle}
-              onFocus={focusBorder}
-              onBlur={blurBorder}
+              className="admin-input"
             />
           </div>
 
@@ -281,9 +243,9 @@ function PopupFormModal({
                     show_once_per_session: e.target.checked,
                   }))
                 }
-                className="rounded border-gray-700 text-[#d4af37] focus:ring-[#d4af37] h-4 w-4 bg-white/5 cursor-pointer"
+                className="rounded border-neutral-300 dark:border-neutral-700 text-[#d4af37] focus:ring-[#d4af37] h-4 w-4 bg-white dark:bg-white/5 cursor-pointer"
               />
-              <span className="text-xs text-[#aaa]">Once/Session</span>
+              <span className="text-xs text-neutral-600 dark:text-neutral-400 font-medium">Once/Session</span>
             </label>
           </div>
 
@@ -298,15 +260,15 @@ function PopupFormModal({
                     is_active: e.target.checked,
                   }))
                 }
-                className="rounded border-gray-700 text-[#d4af37] focus:ring-[#d4af37] h-4 w-4 bg-white/5 cursor-pointer"
+                className="rounded border-neutral-300 dark:border-neutral-700 text-[#d4af37] focus:ring-[#d4af37] h-4 w-4 bg-white dark:bg-white/5 cursor-pointer"
               />
-              <span className="text-xs text-[#d4af37] font-semibold">Active Live</span>
+              <span className="text-xs text-[#b8941f] dark:text-[#d4af37] font-semibold">Active Live</span>
             </label>
           </div>
         </div>
 
         {error && (
-          <div className="text-red-400 text-sm bg-red-500/10 border border-red-500/20 rounded-xl px-4 py-3">
+          <div className="text-red-500 dark:text-red-400 text-sm bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 rounded-xl px-4 py-3">
             {error}
           </div>
         )}
@@ -314,14 +276,14 @@ function PopupFormModal({
         <div className="flex gap-3 pt-2">
           <button
             onClick={onClose}
-            className="flex-1 py-2.5 rounded-xl text-sm text-[#666] border border-[rgba(255,255,255,0.08)] hover:text-white transition-colors"
+            className="flex-1 py-2.5 rounded-xl text-sm font-medium text-neutral-700 dark:text-neutral-300 border border-neutral-200 dark:border-white/10 hover:bg-neutral-100 dark:hover:bg-white/5 transition-colors cursor-pointer"
           >
             Cancel
           </button>
           <button
             onClick={() => saveMutation.mutate()}
             disabled={saveMutation.isPending || !formData.title}
-            className="flex-1 py-2.5 rounded-xl text-sm font-medium text-black disabled:opacity-50"
+            className="flex-1 py-2.5 rounded-xl text-sm font-semibold text-black disabled:opacity-50 transition-all cursor-pointer"
             style={{
               background: "linear-gradient(135deg,#d4af37,#b8941f)",
               boxShadow: "0 4px 16px rgba(212,175,55,0.3)",
@@ -442,11 +404,7 @@ export default function AdminPopupsPage() {
             return (
               <tr
                 key={p.id}
-                style={{
-                  borderTop:
-                    i > 0 ? "1px solid rgba(255,255,255,0.04)" : "none",
-                }}
-                className="hover:bg-white/[0.02] transition-colors"
+                className="hover:bg-neutral-50 dark:hover:bg-white/[0.02] transition-colors border-t border-neutral-100 dark:border-white/[0.04]"
               >
                 <td className="px-5 py-4">
                   <div className="flex items-center gap-3">
@@ -455,39 +413,39 @@ export default function AdminPopupsPage() {
                       <img
                         src={p.image_url}
                         alt={p.title}
-                        className="w-12 h-12 rounded-xl object-cover shrink-0 border border-white/10"
+                        className="w-12 h-12 rounded-xl object-cover shrink-0 border border-neutral-200 dark:border-white/10"
                       />
                     ) : (
-                      <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center shrink-0">
-                        <Sparkles size={16} className="text-[#d4af37]" />
+                      <div className="w-12 h-12 rounded-xl bg-[#d4af37]/10 border border-[#d4af37]/20 flex items-center justify-center shrink-0">
+                        <Sparkles size={16} className="text-[#b8941f] dark:text-[#d4af37]" />
                       </div>
                     )}
                     <div>
-                      <p className="text-white font-medium text-sm leading-snug">
+                      <p className="text-neutral-900 dark:text-white font-medium text-sm leading-snug">
                         {p.title}
                       </p>
                       {p.description && (
-                        <p className="text-[#666] text-xs line-clamp-1 max-w-xs mt-0.5">
+                        <p className="text-neutral-500 dark:text-neutral-400 text-xs line-clamp-1 max-w-xs mt-0.5">
                           {p.description}
                         </p>
                       )}
                     </div>
                   </div>
                 </td>
-                <td className="px-5 py-4 text-xs font-medium capitalize text-neutral-300">
+                <td className="px-5 py-4 text-xs font-medium capitalize text-neutral-700 dark:text-neutral-300">
                   {p.popup_type}
                 </td>
                 <td className="px-5 py-4">
                   {p.discount_code ? (
-                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-mono font-bold bg-[#d4af37]/15 text-[#d4af37] border border-[#d4af37]/30">
+                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-mono font-bold bg-[#d4af37]/15 text-[#b8941f] dark:text-[#d4af37] border border-[#d4af37]/30">
                       <Tag className="w-3 h-3" />
                       {p.discount_code}
                     </span>
                   ) : (
-                    <span className="text-[#444] text-xs">—</span>
+                    <span className="text-neutral-400 dark:text-neutral-500 text-xs">—</span>
                   )}
                 </td>
-                <td className="px-5 py-4 text-xs text-neutral-400 font-mono">
+                <td className="px-5 py-4 text-xs text-neutral-500 dark:text-neutral-400 font-mono">
                   {p.link_href || "—"}
                 </td>
                 <td className="px-5 py-4">
@@ -506,13 +464,13 @@ export default function AdminPopupsPage() {
                   <div className="flex items-center gap-2">
                     <button
                       onClick={() => setEditPopup(p)}
-                      className="p-2 rounded-lg text-[#555] hover:text-[#d4af37] hover:bg-[rgba(212,175,55,0.1)] transition-all"
+                      className="p-2 rounded-lg text-neutral-400 hover:text-[#b8941f] dark:hover:text-[#d4af37] hover:bg-[#d4af37]/10 dark:text-neutral-500 transition-all cursor-pointer"
                     >
                       <Pencil size={14} />
                     </button>
                     <button
                       onClick={() => setDeleteTarget(p)}
-                      className="p-2 rounded-lg text-[#555] hover:text-red-400 hover:bg-red-500/10 transition-all"
+                      className="p-2 rounded-lg text-neutral-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 dark:text-neutral-500 transition-all cursor-pointer"
                     >
                       <Trash2 size={14} />
                     </button>

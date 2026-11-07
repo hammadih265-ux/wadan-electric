@@ -100,8 +100,8 @@ export default function Header() {
         transition={{ duration: 0.6 }}
         className={`sticky top-0 z-50 transition-all duration-500 ${
           scrolled
-            ? "backdrop-blur-2xl bg-white/70 border-b shadow-lg"
-            : "bg-white"
+            ? "backdrop-blur-2xl bg-white/80 dark:bg-neutral-950/80 border-b border-neutral-200/80 dark:border-neutral-800 shadow-lg"
+            : "bg-white dark:bg-neutral-950 border-b border-transparent"
         }`}
       >
         <div className="mx-auto flex h-28 pt-2 max-w-8xl items-center justify-between sm:px-6 px-3">
@@ -164,7 +164,7 @@ export default function Header() {
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       placeholder="Search accessories, solar, batteries…"
-                      className="w-full rounded-full border border-zinc-300 bg-white/80 px-4 py-1.5 text-sm outline-none ring-0 focus:border-zinc-500 transition-colors placeholder:text-zinc-400"
+                      className="w-full rounded-full border border-zinc-300 dark:border-neutral-700 bg-white/80 dark:bg-neutral-900/80 text-neutral-900 dark:text-neutral-100 px-4 py-1.5 text-sm outline-none ring-0 focus:border-[#d4af37] dark:focus:border-[#d4af37] transition-colors placeholder:text-zinc-400 dark:placeholder:text-neutral-500"
                     />
                   </motion.form>
                 )}
@@ -221,13 +221,13 @@ export default function Header() {
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: -8, scale: 0.95 }}
                     transition={{ duration: 0.15 }}
-                    className="absolute right-0 top-full mt-3 w-44 rounded-2xl border border-zinc-100 bg-white/90 backdrop-blur-xl shadow-xl overflow-hidden z-50"
+                    className="absolute right-0 top-full mt-3 w-44 rounded-2xl border border-zinc-200 dark:border-neutral-800 bg-white/95 dark:bg-neutral-900/95 backdrop-blur-xl shadow-xl overflow-hidden z-50"
                   >
-                    <div className="border-t border-zinc-100" />
+                    <div className="border-t border-zinc-100 dark:border-neutral-800" />
                     <Link
                       href="/login"
                       onClick={() => setUserMenuOpen(false)}
-                      className="flex items-center gap-3 px-4 py-3 text-sm font-medium text-zinc-900 hover:bg-zinc-50 transition-colors"
+                      className="flex items-center gap-3 px-4 py-3 text-sm font-medium text-zinc-900 dark:text-zinc-100 hover:bg-zinc-50 dark:hover:bg-neutral-800 transition-colors"
                     >
                       <LogIn size={15} /> Sign In
                     </Link>

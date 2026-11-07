@@ -197,7 +197,7 @@ export default function AdminLoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center p-4 relative overflow-hidden">
+    <div className="min-h-screen bg-neutral-100 dark:bg-[#0a0a0a] flex items-center justify-center p-4 relative overflow-hidden transition-colors">
       {/* Ambient glow */}
       <div
         className="absolute inset-0 pointer-events-none"
@@ -208,10 +208,10 @@ export default function AdminLoginPage() {
       />
       {/* Grid lines */}
       <div
-        className="absolute inset-0 pointer-events-none opacity-[0.03]"
+        className="absolute inset-0 pointer-events-none opacity-[0.03] dark:opacity-[0.03]"
         style={{
           backgroundImage:
-            "linear-gradient(#fff 1px,transparent 1px),linear-gradient(90deg,#fff 1px,transparent 1px)",
+            "linear-gradient(currentColor 1px,transparent 1px),linear-gradient(90deg,currentColor 1px,transparent 1px)",
           backgroundSize: "60px 60px",
         }}
       />
@@ -229,34 +229,30 @@ export default function AdminLoginPage() {
               unoptimized
             />
           </div>
-          <h1 className="text-white text-lg font-semibold tracking-wide">
+          <h1 className="text-neutral-900 dark:text-white text-lg font-semibold tracking-wide">
             Wadan Electronics
           </h1>
-          <p className="text-[#888] text-xs mt-1">Admin Portal</p>
+          <p className="text-neutral-500 dark:text-[#888] text-xs mt-1">Admin Portal</p>
         </div>
 
         {/* Card */}
         <div
-          className="rounded-2xl border p-8"
-          style={{
-            background: "rgba(255,255,255,0.03)",
-            borderColor: isLocked
-              ? "rgba(239,68,68,0.3)"
-              : "rgba(255,255,255,0.08)",
-            backdropFilter: "blur(20px)",
-            boxShadow: "0 25px 50px rgba(0,0,0,0.5)",
-          }}
+          className={`rounded-2xl border p-8 bg-white dark:bg-[#111] backdrop-blur-xl shadow-xl dark:shadow-2xl transition-colors ${
+            isLocked
+              ? "border-red-500/30"
+              : "border-neutral-200 dark:border-white/10"
+          }`}
         >
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-white font-medium text-lg">Sign in</h2>
+            <h2 className="text-neutral-900 dark:text-white font-medium text-lg">Sign in</h2>
             {/* Attempt badge indicator */}
             <div
               className={`text-[11px] font-mono px-2.5 py-1 rounded-full border ${
                 isLocked
-                  ? "bg-red-500/10 text-red-400 border-red-500/20"
+                  ? "bg-red-500/10 text-red-600 dark:text-red-400 border-red-500/20"
                   : failedAttempts > 0
-                  ? "bg-amber-500/10 text-amber-400 border-amber-500/20"
-                  : "bg-white/5 text-[#888] border-white/10"
+                  ? "bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20"
+                  : "bg-neutral-100 dark:bg-white/5 text-neutral-600 dark:text-[#888] border-neutral-200 dark:border-white/10"
               }`}
             >
               {isLocked
@@ -267,16 +263,16 @@ export default function AdminLoginPage() {
 
           {/* Lockout Warning Banner */}
           {isLocked && (
-            <div className="mb-5 rounded-xl p-3.5 bg-red-500/10 border border-red-500/20 text-red-400 text-xs flex items-start gap-2.5">
-              <ShieldAlert className="w-5 h-5 shrink-0 text-red-400 mt-0.5" />
+            <div className="mb-5 rounded-xl p-3.5 bg-red-500/10 border border-red-500/20 text-red-600 dark:text-red-400 text-xs flex items-start gap-2.5">
+              <ShieldAlert className="w-5 h-5 shrink-0 text-red-500 dark:text-red-400 mt-0.5" />
               <div>
-                <p className="font-semibold text-red-300">
+                <p className="font-semibold text-red-700 dark:text-red-300">
                   Account Temporarily Locked
                 </p>
-                <p className="mt-1 text-red-400/90 leading-relaxed">
+                <p className="mt-1 text-red-600/90 dark:text-red-400/90 leading-relaxed">
                   3 failed attempts exceeded. A security alert email has been sent
                   to our Gmail. Try again in:{" "}
-                  <span className="font-mono font-bold text-white">
+                  <span className="font-mono font-bold text-neutral-900 dark:text-white">
                     {lockoutRemaining}
                   </span>
                 </p>
@@ -286,8 +282,8 @@ export default function AdminLoginPage() {
 
           {/* Active Error (when not locked) */}
           {error && !isLocked && (
-            <div className="mb-4 rounded-xl p-3 bg-amber-500/10 border border-amber-500/20 text-amber-300 text-xs flex items-center gap-2">
-              <AlertTriangle className="w-4 h-4 shrink-0 text-amber-400" />
+            <div className="mb-4 rounded-xl p-3 bg-amber-500/10 border border-amber-500/20 text-amber-700 dark:text-amber-300 text-xs flex items-center gap-2">
+              <AlertTriangle className="w-4 h-4 shrink-0 text-amber-500 dark:text-amber-400" />
               <span>{error}</span>
             </div>
           )}
@@ -297,7 +293,7 @@ export default function AdminLoginPage() {
             <div>
               <label
                 htmlFor="admin-email"
-                className="block text-xs font-medium text-[#888] uppercase tracking-widest mb-2"
+                className="block text-xs font-medium text-neutral-600 dark:text-[#888] uppercase tracking-widest mb-2"
               >
                 Email
               </label>
@@ -310,18 +306,7 @@ export default function AdminLoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="user@gmail.com"
-                className="w-full rounded-xl px-4 py-3 text-sm text-white placeholder-[#444] outline-none transition-all disabled:opacity-40 disabled:cursor-not-allowed"
-                style={{
-                  background: "rgba(255,255,255,0.05)",
-                  border: "1px solid rgba(255,255,255,0.08)",
-                }}
-                onFocus={(e) =>
-                  (e.currentTarget.style.borderColor = "rgba(212,175,55,0.5)")
-                }
-                onBlur={(e) =>
-                  (e.currentTarget.style.borderColor =
-                    "rgba(255,255,255,0.08)")
-                }
+                className="admin-input disabled:opacity-40 disabled:cursor-not-allowed"
               />
             </div>
 
@@ -329,7 +314,7 @@ export default function AdminLoginPage() {
             <div>
               <label
                 htmlFor="admin-password"
-                className="block text-xs font-medium text-[#888] uppercase tracking-widest mb-2"
+                className="block text-xs font-medium text-neutral-600 dark:text-[#888] uppercase tracking-widest mb-2"
               >
                 Password
               </label>
@@ -342,18 +327,7 @@ export default function AdminLoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full rounded-xl px-4 py-3 text-sm text-white placeholder-[#444] outline-none transition-all disabled:opacity-40 disabled:cursor-not-allowed"
-                style={{
-                  background: "rgba(255,255,255,0.05)",
-                  border: "1px solid rgba(255,255,255,0.08)",
-                }}
-                onFocus={(e) =>
-                  (e.currentTarget.style.borderColor = "rgba(212,175,55,0.5)")
-                }
-                onBlur={(e) =>
-                  (e.currentTarget.style.borderColor =
-                    "rgba(255,255,255,0.08)")
-                }
+                className="admin-input disabled:opacity-40 disabled:cursor-not-allowed"
               />
             </div>
 
@@ -411,7 +385,7 @@ export default function AdminLoginPage() {
           </form>
         </div>
 
-        <p className="text-center text-[#444] text-xs mt-6">
+        <p className="text-center text-neutral-500 dark:text-[#555] text-xs mt-6">
           © {new Date().getFullYear()} Wadan Electronics · Admin Portal (Strict 3 Attempts Protection)
         </p>
       </div>

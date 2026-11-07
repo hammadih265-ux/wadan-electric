@@ -105,22 +105,22 @@ export default function MobileNav({ open, onClose }: MobileNavProps) {
           />
 
           <motion.aside
-            className="fixed inset-y-0 left-0 z-50 flex w-[85%] max-w-sm flex-col bg-neutral-950 text-white shadow-2xl border-r border-neutral-800"
+            className="fixed inset-y-0 left-0 z-50 flex w-[85%] max-w-sm flex-col bg-white dark:bg-neutral-950 text-neutral-900 dark:text-white shadow-2xl border-r border-neutral-200 dark:border-neutral-800"
             initial={{ x: "-100%" }}
             animate={{ x: 0 }}
             exit={{ x: "-100%" }}
             transition={{ type: "tween", duration: 0.28, ease: "easeInOut" }}
           >
             {/* Header */}
-            <div className="flex items-center justify-between border-b border-neutral-800/80 px-5 py-4">
-              <span className="font-heading text-base font-extrabold tracking-wider text-white">
+            <div className="flex items-center justify-between border-b border-neutral-200 dark:border-neutral-800/80 px-5 py-4">
+              <span className="font-heading text-base font-extrabold tracking-wider text-neutral-900 dark:text-white">
                 Wadan Electric Store
               </span>
 
               <button
                 onClick={onClose}
                 aria-label="Close menu"
-                className="rounded-lg p-1.5 text-neutral-400 transition-colors hover:bg-neutral-800 hover:text-white"
+                className="rounded-lg p-1.5 text-neutral-500 dark:text-neutral-400 transition-colors hover:bg-neutral-100 dark:hover:bg-neutral-800 hover:text-neutral-900 dark:hover:text-white"
               >
                 <X size={20} />
               </button>
@@ -130,7 +130,7 @@ export default function MobileNav({ open, onClose }: MobileNavProps) {
             {stack.length > 0 && (
               <button
                 onClick={goBack}
-                className="flex items-center gap-2 border-b border-neutral-800/80 px-5 py-3 text-xs font-semibold uppercase tracking-wider text-neutral-400 transition-colors hover:bg-neutral-900 hover:text-[#d4af37]"
+                className="flex items-center gap-2 border-b border-neutral-200 dark:border-neutral-800/80 px-5 py-3 text-xs font-semibold uppercase tracking-wider text-neutral-500 dark:text-neutral-400 transition-colors hover:bg-neutral-100 dark:hover:bg-neutral-900 hover:text-[#d4af37]"
               >
                 <ChevronLeft size={16} />
                 <span>Back to {titles[titles.length - 2]}</span>
@@ -138,7 +138,7 @@ export default function MobileNav({ open, onClose }: MobileNavProps) {
             )}
 
             {/* Title */}
-            <div className="border-b border-neutral-800/80 px-5 py-3.5">
+            <div className="border-b border-neutral-200 dark:border-neutral-800/80 px-5 py-3.5">
               <span className="text-xs font-bold uppercase tracking-widest text-[#d4af37]">
                 {currentTitle}
               </span>
@@ -162,16 +162,16 @@ export default function MobileNav({ open, onClose }: MobileNavProps) {
                     {item.children ? (
                       <button
                         onClick={() => openChildren(item)}
-                        className="flex w-full items-center justify-between rounded-xl px-4 py-3.5 text-sm font-semibold text-neutral-200 transition-colors hover:bg-neutral-900 hover:text-[#d4af37]"
+                        className="flex w-full items-center justify-between rounded-xl px-4 py-3.5 text-sm font-semibold text-neutral-800 dark:text-neutral-200 transition-colors hover:bg-neutral-100 dark:hover:bg-neutral-900 hover:text-[#d4af37] dark:hover:text-[#d4af37]"
                       >
                         <span>{item.title}</span>
-                        <ChevronRight size={16} className="text-neutral-500" />
+                        <ChevronRight size={16} className="text-neutral-400 dark:text-neutral-500" />
                       </button>
                     ) : (
                       <Link
                         href={item.href!}
                         onClick={onClose}
-                        className="block rounded-xl px-4 py-3.5 text-sm font-semibold text-neutral-200 transition-colors hover:bg-neutral-900 hover:text-[#d4af37]"
+                        className="block rounded-xl px-4 py-3.5 text-sm font-semibold text-neutral-800 dark:text-neutral-200 transition-colors hover:bg-neutral-100 dark:hover:bg-neutral-900 hover:text-[#d4af37] dark:hover:text-[#d4af37]"
                       >
                         {item.title}
                       </Link>
@@ -183,8 +183,8 @@ export default function MobileNav({ open, onClose }: MobileNavProps) {
 
             {/* Search */}
             <form onSubmit={handleSearchSubmit} className="px-5 pb-3">
-              <div className="flex items-center gap-2.5 rounded-xl border border-neutral-800 bg-neutral-900/90 px-3.5 py-2.5 transition-colors focus-within:border-[#d4af37]/60">
-                <Search size={16} className="flex-shrink-0 text-neutral-400" />
+              <div className="flex items-center gap-2.5 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-100 dark:bg-neutral-900/90 px-3.5 py-2.5 transition-colors focus-within:border-[#d4af37]/60">
+                <Search size={16} className="flex-shrink-0 text-neutral-500 dark:text-neutral-400" />
 
                 <input
                   ref={searchInputRef}
@@ -192,17 +192,17 @@ export default function MobileNav({ open, onClose }: MobileNavProps) {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Search accessories, solar, batteries…"
-                  className="flex-1 bg-transparent text-sm text-white outline-none placeholder:text-neutral-500"
+                  className="flex-1 bg-transparent text-sm text-neutral-900 dark:text-white outline-none placeholder:text-neutral-400 dark:placeholder:text-neutral-500"
                 />
               </div>
             </form>
 
             {/* Contact & Social Strip */}
-            <div className="px-5 py-3 border-t border-neutral-800/80 bg-neutral-900/40">
+            <div className="px-5 py-3 border-t border-neutral-200 dark:border-neutral-800/80 bg-neutral-50 dark:bg-neutral-900/40">
               <div className="flex items-center justify-between text-xs">
                 <a
                   href={`tel:${STORE_CONTACT.phone}`}
-                  className="text-[11px] font-mono text-neutral-400 hover:text-white flex items-center gap-1.5 transition"
+                  className="text-[11px] font-mono text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white flex items-center gap-1.5 transition"
                 >
                   <Phone size={13} className="text-[#d4af37]" />
                   <span>{STORE_CONTACT.phone}</span>
@@ -216,12 +216,12 @@ export default function MobileNav({ open, onClose }: MobileNavProps) {
             </div>
 
             {/* Footer */}
-            <div className="border-t border-neutral-800/80 p-4 bg-neutral-950">
+            <div className="border-t border-neutral-200 dark:border-neutral-800/80 p-4 bg-white dark:bg-neutral-950">
               <div className="flex justify-around">
                 <Link
                   href="/login"
                   onClick={onClose}
-                  className="flex flex-col items-center gap-1.5 text-xs font-medium text-neutral-400 transition-colors hover:text-[#d4af37]"
+                  className="flex flex-col items-center gap-1.5 text-xs font-medium text-neutral-500 dark:text-neutral-400 transition-colors hover:text-[#d4af37]"
                 >
                   <User size={20} />
                   <span>Account</span>
@@ -229,7 +229,7 @@ export default function MobileNav({ open, onClose }: MobileNavProps) {
 
                 <button
                   onClick={() => searchInputRef.current?.focus()}
-                  className="flex flex-col items-center gap-1.5 text-xs font-medium text-neutral-400 transition-colors hover:text-[#d4af37]"
+                  className="flex flex-col items-center gap-1.5 text-xs font-medium text-neutral-500 dark:text-neutral-400 transition-colors hover:text-[#d4af37]"
                 >
                   <Search size={20} />
                   <span>Search</span>
@@ -237,7 +237,7 @@ export default function MobileNav({ open, onClose }: MobileNavProps) {
 
                 <button
                   onClick={handleCartClick}
-                  className="relative flex flex-col items-center gap-1.5 text-xs font-medium text-neutral-400 transition-colors hover:text-[#d4af37]"
+                  className="relative flex flex-col items-center gap-1.5 text-xs font-medium text-neutral-500 dark:text-neutral-400 transition-colors hover:text-[#d4af37]"
                 >
                   <div className="relative">
                     <ShoppingBag size={20} />

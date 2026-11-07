@@ -415,19 +415,19 @@ export default function FeaturedShowcase({
 
       {/* ── Featured Products Section ── */}
       <div>
-        <div className="mb-6 flex flex-col sm:flex-row sm:items-end justify-between gap-3 border-b pb-4">
+        <div className="mb-6 flex flex-col sm:flex-row sm:items-end justify-between gap-3 border-b border-neutral-200 dark:border-neutral-800 pb-4">
           <div>
             <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#d4af37] mb-1">
               <Flame className="w-4 h-4" />
               <span>Handpicked Exclusives</span>
             </div>
-            <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-neutral-900">
+            <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-neutral-900 dark:text-white">
               Featured Collection
             </h2>
           </div>
           <Link
             href="/collection"
-            className="group flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-neutral-900 hover:text-[#d4af37] transition-colors"
+            className="group flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-neutral-900 dark:text-neutral-100 hover:text-[#d4af37] dark:hover:text-[#d4af37] transition-colors"
           >
             <span>Explore All</span>
             <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />

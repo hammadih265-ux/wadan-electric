@@ -27,7 +27,7 @@ function CollectionCard({ item, index }: Props) {
     >
       <Link
         href={item.href}
-        className="group relative block overflow-hidden rounded-3xl aspect-[4/5] border border-neutral-200/80 bg-neutral-900 shadow-md transition-all duration-300 hover:border-[#d4af37]/60 hover:shadow-2xl"
+        className="group relative block overflow-hidden rounded-3xl aspect-[4/5] border border-neutral-200/80 dark:border-neutral-800 bg-neutral-900 shadow-md transition-all duration-300 hover:border-[#d4af37]/60 hover:shadow-2xl"
       >
         {/* Placeholder skeleton */}
         {!imgLoaded && (

@@ -71,7 +71,7 @@ export default function PopupModal() {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-300">
       <div
-        className="relative w-full max-w-lg overflow-hidden rounded-3xl bg-neutral-950 border border-neutral-800 text-white shadow-2xl shadow-black/80 animate-in zoom-in-95 duration-300"
+        className="relative w-full max-w-lg overflow-hidden rounded-3xl bg-white dark:bg-neutral-950 border border-neutral-200 dark:border-neutral-800 text-neutral-900 dark:text-white shadow-2xl shadow-black/40 dark:shadow-black/80 animate-in zoom-in-95 duration-300"
         role="dialog"
         aria-modal="true"
       >
@@ -80,7 +80,7 @@ export default function PopupModal() {
           onClick={handleClose}
           type="button"
           aria-label="Close offer"
-          className="absolute right-4 top-4 z-20 flex h-9 w-9 items-center justify-center rounded-full bg-black/60 text-white/80 hover:text-white hover:bg-black/90 transition-all border border-white/10"
+          className="absolute right-4 top-4 z-20 flex h-9 w-9 items-center justify-center rounded-full bg-black/10 dark:bg-black/60 text-neutral-700 dark:text-white/80 hover:text-black dark:hover:text-white hover:bg-black/20 dark:hover:bg-black/90 transition-all border border-black/10 dark:border-white/10"
         >
           <X className="w-5 h-5" />
         </button>
@@ -90,7 +90,7 @@ export default function PopupModal() {
 
         {/* Optional Image */}
         {popup.image_url && (
-          <div className="relative w-full h-48 sm:h-56 bg-neutral-900 overflow-hidden">
+          <div className="relative w-full h-48 sm:h-56 bg-neutral-100 dark:bg-neutral-900 overflow-hidden">
             <Image
               src={popup.image_url}
               alt={popup.title}
@@ -98,7 +98,7 @@ export default function PopupModal() {
               className="object-cover"
               priority
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-neutral-950/40 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-white dark:from-neutral-950 via-white/40 dark:via-neutral-950/40 to-transparent" />
           </div>
         )}
 
@@ -116,26 +116,26 @@ export default function PopupModal() {
           </div>
 
           {/* Title */}
-          <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-white mb-2">
+          <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-neutral-900 dark:text-white mb-2">
             {popup.title}
           </h2>
 
           {/* Description */}
           {popup.description && (
-            <p className="text-sm text-neutral-300 leading-relaxed mb-5">
+            <p className="text-sm text-neutral-600 dark:text-neutral-300 leading-relaxed mb-5">
               {popup.description}
             </p>
           )}
 
           {/* Discount Code Box if provided */}
           {popup.discount_code && (
-            <div className="mb-6 flex items-center justify-between p-3.5 rounded-2xl bg-white/5 border border-white/10">
+            <div className="mb-6 flex items-center justify-between p-3.5 rounded-2xl bg-neutral-100 dark:bg-white/5 border border-neutral-200 dark:border-white/10">
               <div className="flex items-center gap-2">
                 <Tag className="w-4 h-4 text-[#d4af37]" />
-                <span className="text-xs uppercase text-neutral-400">
+                <span className="text-xs uppercase text-neutral-500 dark:text-neutral-400">
                   Use Code:
                 </span>
-                <span className="font-mono font-bold text-white tracking-widest text-sm">
+                <span className="font-mono font-bold text-neutral-900 dark:text-white tracking-widest text-sm">
                   {popup.discount_code}
                 </span>
               </div>
@@ -170,7 +170,7 @@ export default function PopupModal() {
             <button
               type="button"
               onClick={handleClose}
-              className="py-3 px-5 rounded-2xl text-xs font-medium text-neutral-400 hover:text-white transition-colors"
+              className="py-3 px-5 rounded-2xl text-xs font-medium text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors"
             >
               No thanks, continue browsing
             </button>

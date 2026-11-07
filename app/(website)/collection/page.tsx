@@ -79,9 +79,9 @@ const fallbackCollectionPlaceholder = [
 function FilterSkeleton() {
   return (
     <div className="animate-pulse space-y-3">
-      <div className="h-10 rounded-xl bg-neutral-100" />
-      <div className="h-10 rounded-xl bg-neutral-100" />
-      <div className="h-10 rounded-xl bg-neutral-100" />
+      <div className="h-10 rounded-xl bg-neutral-100 dark:bg-neutral-800" />
+      <div className="h-10 rounded-xl bg-neutral-100 dark:bg-neutral-800" />
+      <div className="h-10 rounded-xl bg-neutral-100 dark:bg-neutral-800" />
     </div>
   );
 }
@@ -202,8 +202,8 @@ export default async function CollectionPage({ searchParams }: Props) {
                           aria-current={page === pageNum ? "page" : undefined}
                           className={`inline-flex h-10 w-10 items-center justify-center rounded-xl border text-sm font-medium transition-colors ${
                             page === pageNum
-                              ? "border-black bg-black text-white"
-                              : "border-neutral-200 bg-white text-neutral-700 hover:bg-neutral-50"
+                              ? "border-black dark:border-white bg-black dark:bg-white text-white dark:text-black"
+                              : "border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 text-neutral-700 dark:text-neutral-300 hover:bg-neutral-50 dark:hover:bg-neutral-800"
                           }`}
                         >
                           {pageNum}
@@ -214,11 +214,11 @@ export default async function CollectionPage({ searchParams }: Props) {
                 )}
               </>
             ) : (
-              <div className="rounded-2xl border border-dashed border-neutral-200 bg-neutral-50 px-6 py-20 text-center">
-                <h3 className="mb-2 text-xl font-semibold text-neutral-800">
+              <div className="rounded-2xl border border-dashed border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 px-6 py-20 text-center">
+                <h3 className="mb-2 text-xl font-semibold text-neutral-800 dark:text-neutral-200">
                   No Products Found
                 </h3>
-                <p className="mx-auto max-w-sm text-neutral-500">
+                <p className="mx-auto max-w-sm text-neutral-500 dark:text-neutral-400">
                   We couldn&apos;t find any products matching your selection.
                   Try adjusting your filters.
                 </p>

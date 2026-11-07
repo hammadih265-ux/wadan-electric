@@ -34,7 +34,7 @@ export const DynamicForm: React.FC<DynamicFormProps> = ({ fields, values, onChan
     <div className="grid grid-cols-12 gap-4">
       {fields.map((field) => (
         <div key={field.name} className={`${getColSpanClass(field.colSpan)} space-y-1.5`}>
-          <label className="block text-[#666] text-xs uppercase tracking-widest font-medium">
+          <label className="block text-neutral-600 dark:text-neutral-400 text-xs uppercase tracking-widest font-medium">
             {field.label}
           </label>
           <FieldRenderer

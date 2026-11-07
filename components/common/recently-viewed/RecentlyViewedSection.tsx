@@ -37,16 +37,16 @@ export default function RecentlyViewedSection() {
 
   return (
     <section className="container mx-auto my-12 px-4 sm:px-6 lg:px-8 max-w-7xl">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 border-b pb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 border-b border-neutral-200 dark:border-neutral-800 pb-4">
         <div className="flex items-center gap-2.5">
-          <div className="p-2 bg-neutral-900 rounded-xl text-white">
+          <div className="p-2 bg-neutral-900 dark:bg-neutral-800 rounded-xl text-white">
             <Clock className="w-4 h-4 text-[#d4af37]" />
           </div>
           <div>
-            <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-neutral-900">
+            <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-neutral-900 dark:text-white">
               Recently Inspected Hardware
             </h2>
-            <p className="text-xs text-neutral-500">
+            <p className="text-xs text-neutral-500 dark:text-neutral-400">
               Quick access to products and systems you recently viewed
             </p>
           </div>
@@ -58,7 +58,7 @@ export default function RecentlyViewedSection() {
             clearItems();
             toast.info("Recently viewed history cleared");
           }}
-          className="flex items-center gap-1.5 text-xs text-neutral-500 hover:text-red-600 transition-colors self-start sm:self-center font-mono"
+          className="flex items-center gap-1.5 text-xs text-neutral-500 dark:text-neutral-400 hover:text-red-600 dark:hover:text-red-400 transition-colors self-start sm:self-center font-mono"
         >
           <Trash2 className="w-3.5 h-3.5" />
           Clear History

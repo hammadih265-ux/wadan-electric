@@ -54,7 +54,7 @@ export const OrderSnapshotCard: React.FC<OrderSnapshotCardProps> = ({ order }) =
   const { orderId, date, customer, items, subtotal, shipping, total, paymentMethod } = order;
 
   return (
-    <div className="bg-white rounded-3xl border border-gray-200/80 shadow-xl overflow-hidden text-left max-w-2xl mx-auto print:shadow-none print:border-none">
+    <div className="bg-white dark:bg-neutral-900 rounded-3xl border border-gray-200/80 dark:border-neutral-800 shadow-xl overflow-hidden text-left max-w-2xl mx-auto print:shadow-none print:border-none">
       {/* Receipt Header with Brand Logo */}
       <div className="bg-gradient-to-r from-black via-neutral-900 to-neutral-800 text-white p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
         <div className="absolute right-0 top-0 translate-x-8 -translate-y-8 w-40 h-40 bg-white/5 rounded-full blur-2xl pointer-events-none" />
@@ -100,10 +100,10 @@ export const OrderSnapshotCard: React.FC<OrderSnapshotCardProps> = ({ order }) =
 
       <div className="p-6 md:p-8 space-y-6">
         {/* Payment Slip Alert Box */}
-        <div className="rounded-2xl border border-amber-300 bg-amber-50/80 p-4 flex items-start gap-3 text-xs text-amber-950">
-          <AlertCircle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
+        <div className="rounded-2xl border border-amber-300 dark:border-amber-500/30 bg-amber-50/80 dark:bg-amber-950/20 p-4 flex items-start gap-3 text-xs text-amber-950 dark:text-amber-200">
+          <AlertCircle className="w-5 h-5 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
           <div className="space-y-1">
-            <p className="font-bold text-amber-900 text-sm">
+            <p className="font-bold text-amber-900 dark:text-amber-300 text-sm">
               Payment Slip Verification Required for Dispatch
             </p>
             <p className="leading-relaxed">
@@ -114,31 +114,31 @@ export const OrderSnapshotCard: React.FC<OrderSnapshotCardProps> = ({ order }) =
 
         {/* Customer Information Grid */}
         <div>
-          <h3 className="text-xs font-bold uppercase tracking-wider text-gray-400 mb-3 flex items-center gap-1.5">
-            <FileText className="w-3.5 h-3.5 text-black" /> Customer & Delivery Details
+          <h3 className="text-xs font-bold uppercase tracking-wider text-gray-400 dark:text-neutral-500 mb-3 flex items-center gap-1.5">
+            <FileText className="w-3.5 h-3.5 text-neutral-900 dark:text-[#d4af37]" /> Customer & Delivery Details
           </h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-gray-50/80 rounded-2xl p-5 border border-gray-100 text-sm">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-gray-50/80 dark:bg-neutral-800/40 rounded-2xl p-5 border border-gray-100 dark:border-neutral-800 text-sm">
             <div className="space-y-2">
               <div>
-                <span className="text-xs text-gray-500 block font-medium">Customer Name</span>
-                <span className="font-semibold text-gray-900">
+                <span className="text-xs text-gray-500 dark:text-neutral-400 block font-medium">Customer Name</span>
+                <span className="font-semibold text-gray-900 dark:text-white">
                   {customer.firstName} {customer.lastName}
                 </span>
               </div>
-              <div className="flex items-center gap-2 text-gray-700">
+              <div className="flex items-center gap-2 text-gray-700 dark:text-neutral-300">
                 <Phone className="w-3.5 h-3.5 text-gray-400 shrink-0" />
                 <span className="font-mono text-xs">{customer.phone}</span>
               </div>
-              <div className="flex items-center gap-2 text-gray-700">
+              <div className="flex items-center gap-2 text-gray-700 dark:text-neutral-300">
                 <Mail className="w-3.5 h-3.5 text-gray-400 shrink-0" />
                 <span className="text-xs truncate">{customer.email}</span>
               </div>
             </div>
 
-            <div className="space-y-2 sm:border-l sm:border-gray-200/80 sm:pl-4">
+            <div className="space-y-2 sm:border-l sm:border-gray-200/80 dark:sm:border-neutral-700/60 sm:pl-4">
               <div>
-                <span className="text-xs text-gray-500 block font-medium">Delivery Address</span>
-                <div className="flex items-start gap-1.5 text-gray-800 text-xs mt-0.5">
+                <span className="text-xs text-gray-500 dark:text-neutral-400 block font-medium">Delivery Address</span>
+                <div className="flex items-start gap-1.5 text-gray-800 dark:text-neutral-200 text-xs mt-0.5">
                   <MapPin className="w-3.5 h-3.5 text-[#d4af37] shrink-0 mt-0.5" />
                   <span className="font-medium">
                     {customer.address}, {customer.city}, {customer.state} ({customer.postcode})
@@ -148,8 +148,8 @@ export const OrderSnapshotCard: React.FC<OrderSnapshotCardProps> = ({ order }) =
 
               {customer.notes && customer.notes !== "None" && (
                 <div className="pt-1">
-                  <span className="text-[11px] text-gray-500 block font-medium">Order Notes</span>
-                  <span className="text-xs text-gray-700 italic bg-white px-2 py-1 rounded border border-gray-200 inline-block mt-0.5">
+                  <span className="text-[11px] text-gray-500 dark:text-neutral-400 block font-medium">Order Notes</span>
+                  <span className="text-xs text-gray-700 dark:text-neutral-300 italic bg-white dark:bg-neutral-900 px-2 py-1 rounded border border-gray-200 dark:border-neutral-700 inline-block mt-0.5">
                     &quot;{customer.notes}&quot;
                   </span>
                 </div>
@@ -160,13 +160,13 @@ export const OrderSnapshotCard: React.FC<OrderSnapshotCardProps> = ({ order }) =
 
         {/* Ordered Items Table */}
         <div>
-          <h3 className="text-xs font-bold uppercase tracking-wider text-gray-400 mb-3 flex items-center gap-1.5">
-            <ShoppingBag className="w-3.5 h-3.5 text-black" /> Ordered Items ({items.length})
+          <h3 className="text-xs font-bold uppercase tracking-wider text-gray-400 dark:text-neutral-500 mb-3 flex items-center gap-1.5">
+            <ShoppingBag className="w-3.5 h-3.5 text-neutral-900 dark:text-[#d4af37]" /> Ordered Items ({items.length})
           </h3>
-          <div className="border border-gray-100 rounded-2xl overflow-hidden divide-y divide-gray-100">
+          <div className="border border-gray-100 dark:border-neutral-800 rounded-2xl overflow-hidden divide-y divide-gray-100 dark:divide-neutral-800">
             {items.map((item) => (
-              <div key={item.id} className="flex items-center gap-4 p-4 hover:bg-gray-50/50 transition">
-                <div className="w-14 h-14 rounded-xl bg-gray-100 overflow-hidden relative shrink-0 border border-gray-200/80">
+              <div key={item.id} className="flex items-center gap-4 p-4 hover:bg-gray-50/50 dark:hover:bg-neutral-800/40 transition">
+                <div className="w-14 h-14 rounded-xl bg-gray-100 dark:bg-neutral-800 overflow-hidden relative shrink-0 border border-gray-200/80 dark:border-neutral-700">
                   {item.image ? (
                     <Image
                       src={item.image}
@@ -178,18 +178,18 @@ export const OrderSnapshotCard: React.FC<OrderSnapshotCardProps> = ({ order }) =
                       className="w-full h-full object-cover"
                     />
                   ) : (
-                    <div className="w-full h-full flex items-center justify-center text-gray-300">
+                    <div className="w-full h-full flex items-center justify-center text-gray-300 dark:text-neutral-600">
                       <ShoppingBag className="w-5 h-5" />
                     </div>
                   )}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <h4 className="font-semibold text-gray-900 text-sm truncate">{item.name}</h4>
-                  <p className="text-xs text-gray-500 mt-0.5">
+                  <h4 className="font-semibold text-gray-900 dark:text-white text-sm truncate">{item.name}</h4>
+                  <p className="text-xs text-gray-500 dark:text-neutral-400 mt-0.5">
                     Rs {item.price.toLocaleString()} × {item.quantity}
                   </p>
                 </div>
-                <div className="text-right font-bold text-gray-900 text-sm">
+                <div className="text-right font-bold text-gray-900 dark:text-white text-sm">
                   Rs {(item.price * item.quantity).toLocaleString()}
                 </div>
               </div>
@@ -230,8 +230,8 @@ export const OrderSnapshotCard: React.FC<OrderSnapshotCardProps> = ({ order }) =
         </div>
 
         {/* Store Verification Footer */}
-        <div className="pt-2 text-center border-t border-gray-100 text-[11px] text-gray-400 space-y-1">
-          <p className="font-medium text-gray-600">
+        <div className="pt-2 text-center border-t border-gray-100 dark:border-neutral-800 text-[11px] text-gray-400 dark:text-neutral-500 space-y-1">
+          <p className="font-medium text-gray-600 dark:text-neutral-400">
             Wadan Electric Store · {STORE_CONTACT.address} · Helpline: {STORE_CONTACT.phoneFormatted}
           </p>
           <p>

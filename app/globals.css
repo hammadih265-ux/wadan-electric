@@ -229,8 +229,8 @@
   transition: all 0.15s ease-in-out;
 }
 .admin-input:focus {
-  border-color: #000000;
-  box-shadow: 0 0 0 1px #000000;
+  border-color: #d4af37;
+  box-shadow: 0 0 0 1px #d4af37;
 }
 .admin-input::placeholder {
   color: #9ca3af;
@@ -238,4 +238,21 @@
 .admin-input option {
   background: #ffffff;
   color: #111827;
+}
+
+.dark .admin-input {
+  color: #f3f4f6;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+.dark .admin-input:focus {
+  border-color: #d4af37;
+  box-shadow: 0 0 0 1px #d4af37;
+}
+.dark .admin-input::placeholder {
+  color: #6b7280;
+}
+.dark .admin-input option {
+  background: #18181b;
+  color: #f3f4f6;
 }

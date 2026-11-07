@@ -24,13 +24,13 @@ export default function AboutPage() {
           <Zap className="w-3.5 h-3.5" />
           <span>About Wadan Electric Store</span>
         </span>
-        <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-neutral-900 mb-6">
+        <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-neutral-900 dark:text-white mb-6">
           Powering Pakistan with{" "}
           <span className="bg-gradient-to-r from-[#d4af37] to-[#b8941f] bg-clip-text text-transparent">
             Reliable Energy & Safety
           </span>
         </h1>
-        <p className="max-w-3xl mx-auto text-base sm:text-lg text-neutral-600 leading-relaxed">
+        <p className="max-w-3xl mx-auto text-base sm:text-lg text-neutral-600 dark:text-neutral-300 leading-relaxed">
           Wadan Electric Store was founded with a singular commitment: delivering authentic, top-tier electrical accessories, next-generation solar inverters, long-lasting LiFePO4 lithium batteries, and certified fire safety systems engineered for utmost reliability and durability.
         </p>
       </section>
@@ -67,15 +67,15 @@ export default function AboutPage() {
           return (
             <div
               key={v.title}
-              className="bg-neutral-50 rounded-3xl border border-neutral-200/80 p-6 sm:p-7 text-left transition-all hover:shadow-lg hover:border-[#d4af37]/50"
+              className="bg-neutral-50 dark:bg-neutral-900 rounded-3xl border border-neutral-200/80 dark:border-neutral-800 p-6 sm:p-7 text-left transition-all hover:shadow-lg hover:border-[#d4af37]/50"
             >
               <div className="w-12 h-12 rounded-2xl bg-neutral-900 text-[#d4af37] flex items-center justify-center mb-5 shadow">
                 <Icon className="w-6 h-6" />
               </div>
-              <h2 className="text-base font-bold text-neutral-900 mb-2">
+              <h2 className="text-base font-bold text-neutral-900 dark:text-white mb-2">
                 {v.title}
               </h2>
-              <p className="text-xs text-neutral-500 leading-relaxed">
+              <p className="text-xs text-neutral-500 dark:text-neutral-400 leading-relaxed">
                 {v.description}
               </p>
             </div>
@@ -98,10 +98,10 @@ export default function AboutPage() {
 
       {/* CTA */}
       <section className="text-center">
-        <h2 className="text-2xl sm:text-3xl font-extrabold text-neutral-900 mb-3">
+        <h2 className="text-2xl sm:text-3xl font-extrabold text-neutral-900 dark:text-white mb-3">
           Explore Our Catalog
         </h2>
-        <p className="text-neutral-500 text-sm max-w-lg mx-auto mb-8">
+        <p className="text-neutral-500 dark:text-neutral-400 text-sm max-w-lg mx-auto mb-8">
           Browse our complete range of certified Electric Accessories, Solar Inverters, Lithium Batteries, and Fire Safety solutions.
         </p>
         <div className="flex flex-wrap items-center justify-center gap-4">
@@ -116,7 +116,7 @@ export default function AboutPage() {
             href="https://wa.me/923139235476"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 border border-neutral-300 bg-white text-neutral-900 px-7 py-3.5 rounded-2xl font-semibold hover:bg-neutral-50 transition-all text-sm"
+            className="inline-flex items-center gap-2 border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white px-7 py-3.5 rounded-2xl font-semibold hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-all text-sm"
           >
             Talk to an Expert on WhatsApp
           </a>

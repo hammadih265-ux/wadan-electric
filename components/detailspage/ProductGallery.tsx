@@ -43,7 +43,7 @@ export default function ProductGallery({
 
   if (!images.length || !activeImage) {
     return (
-      <div className="flex aspect-square items-center justify-center rounded-3xl bg-neutral-100 border text-neutral-400 text-sm">
+      <div className="flex aspect-square items-center justify-center rounded-3xl bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-neutral-400 dark:text-neutral-500 text-sm">
         No image available
       </div>
     );
@@ -60,14 +60,14 @@ export default function ProductGallery({
         className="
           group relative overflow-hidden
           rounded-3xl
-          bg-neutral-100
+          bg-neutral-100 dark:bg-neutral-900
           aspect-square
-          border border-neutral-200/80
+          border border-neutral-200/80 dark:border-neutral-800
         "
       >
         {/* Placeholder skeleton */}
         {!imgLoaded && (
-          <div className="absolute inset-0 z-0 bg-neutral-200 animate-pulse rounded-3xl" />
+          <div className="absolute inset-0 z-0 bg-neutral-200 dark:bg-neutral-800 animate-pulse rounded-3xl" />
         )}
 
         <Image
@@ -102,7 +102,7 @@ export default function ProductGallery({
             absolute inset-0
             bg-black/0
             transition-colors duration-300
-            group-hover:bg-black/5
+            group-hover:bg-black/5 dark:group-hover:bg-white/5
             pointer-events-none
           "
         />
@@ -193,7 +193,7 @@ export default function ProductGallery({
                   transition-all duration-300
                   ${
                     activeIndex === index
-                      ? "border-black scale-105"
+                      ? "border-[#d4af37] scale-105"
                       : "border-transparent opacity-70 hover:opacity-100"
                   }
                 `}

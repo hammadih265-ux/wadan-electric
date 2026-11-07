@@ -49,7 +49,7 @@ const pillars = [
 
 export default function ContactPage() {
   return (
-    <main className="bg-neutral-50 min-h-screen">
+    <main className="bg-neutral-50 dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100 min-h-screen">
       {/* Hero */}
       <section className="relative overflow-hidden bg-neutral-950 text-white border-b border-neutral-800">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_0%,rgba(212,175,55,0.15)_0%,transparent_70%)]" />
@@ -100,21 +100,21 @@ export default function ContactPage() {
               href={STORE_CONTACT.whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-white rounded-3xl p-8 border border-neutral-200 shadow-sm hover:shadow-xl hover:border-[#25D366]/40 transition-all text-center block group"
+              className="bg-white dark:bg-neutral-900 rounded-3xl p-8 border border-neutral-200 dark:border-neutral-800 shadow-sm hover:shadow-xl hover:border-[#25D366]/40 transition-all text-center block group"
             >
-              <div className="w-16 h-16 rounded-2xl bg-emerald-50 text-[#25D366] flex items-center justify-center mx-auto mb-5 shadow-sm group-hover:scale-110 transition-transform">
+              <div className="w-16 h-16 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 text-[#25D366] flex items-center justify-center mx-auto mb-5 shadow-sm group-hover:scale-110 transition-transform">
                 <MessageCircle className="w-8 h-8" />
               </div>
-              <h2 className="font-bold text-lg text-neutral-900 mb-1">
+              <h2 className="font-bold text-lg text-neutral-900 dark:text-white mb-1">
                 WhatsApp & Direct Call
               </h2>
-              <p className="text-xs text-neutral-500 mb-4">
+              <p className="text-xs text-neutral-500 dark:text-neutral-400 mb-4">
                 Fastest response for pricing & payment slips
               </p>
-              <span className="text-sm font-bold text-emerald-600 block">
+              <span className="text-sm font-bold text-emerald-600 dark:text-emerald-400 block">
                 {STORE_CONTACT.phoneFormatted}
               </span>
-              <span className="text-xs text-neutral-500 mt-1 block font-mono">
+              <span className="text-xs text-neutral-500 dark:text-neutral-400 mt-1 block font-mono">
                 {STORE_CONTACT.phone}
               </span>
             </motion.a>
@@ -123,18 +123,18 @@ export default function ContactPage() {
             <motion.a
               whileHover={{ y: -6 }}
               href={`mailto:${STORE_CONTACT.email}`}
-              className="bg-white rounded-3xl p-8 border border-neutral-200 shadow-sm hover:shadow-xl hover:border-[#d4af37]/40 transition-all text-center block group"
+              className="bg-white dark:bg-neutral-900 rounded-3xl p-8 border border-neutral-200 dark:border-neutral-800 shadow-sm hover:shadow-xl hover:border-[#d4af37]/40 transition-all text-center block group"
             >
-              <div className="w-16 h-16 rounded-2xl bg-amber-50 text-[#d4af37] flex items-center justify-center mx-auto mb-5 shadow-sm group-hover:scale-110 transition-transform">
+              <div className="w-16 h-16 rounded-2xl bg-amber-50 dark:bg-amber-950/40 text-[#d4af37] flex items-center justify-center mx-auto mb-5 shadow-sm group-hover:scale-110 transition-transform">
                 <Mail className="w-8 h-8" />
               </div>
-              <h2 className="font-bold text-lg text-neutral-900 mb-1">
+              <h2 className="font-bold text-lg text-neutral-900 dark:text-white mb-1">
                 Email Inquiries
               </h2>
-              <p className="text-xs text-neutral-500 mb-4">
+              <p className="text-xs text-neutral-500 dark:text-neutral-400 mb-4">
                 Corporate quotes & technical specs
               </p>
-              <span className="text-sm font-semibold text-neutral-900 block truncate">
+              <span className="text-sm font-semibold text-neutral-900 dark:text-neutral-100 block truncate">
                 {STORE_CONTACT.email}
               </span>
             </motion.a>
@@ -142,18 +142,18 @@ export default function ContactPage() {
             {/* Location */}
             <motion.div
               whileHover={{ y: -6 }}
-              className="bg-white rounded-3xl p-8 border border-neutral-200 shadow-sm hover:shadow-xl hover:border-[#d4af37]/40 transition-all text-center group"
+              className="bg-white dark:bg-neutral-900 rounded-3xl p-8 border border-neutral-200 dark:border-neutral-800 shadow-sm hover:shadow-xl hover:border-[#d4af37]/40 transition-all text-center group"
             >
-              <div className="w-16 h-16 rounded-2xl bg-neutral-100 text-neutral-800 flex items-center justify-center mx-auto mb-5 shadow-sm group-hover:scale-110 transition-transform">
+              <div className="w-16 h-16 rounded-2xl bg-neutral-100 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 flex items-center justify-center mx-auto mb-5 shadow-sm group-hover:scale-110 transition-transform">
                 <MapPin className="w-8 h-8 text-[#d4af37]" />
               </div>
-              <h2 className="font-bold text-lg text-neutral-900 mb-1">
+              <h2 className="font-bold text-lg text-neutral-900 dark:text-white mb-1">
                 Store & Physical Office
               </h2>
-              <p className="text-xs text-neutral-500 mb-4">
+              <p className="text-xs text-neutral-500 dark:text-neutral-400 mb-4">
                 Main Showroom & Distribution Hub
               </p>
-              <span className="text-sm font-bold text-neutral-900 leading-relaxed block">
+              <span className="text-sm font-bold text-neutral-900 dark:text-white leading-relaxed block">
                 {STORE_CONTACT.address}
               </span>
             </motion.div>
@@ -167,13 +167,13 @@ export default function ContactPage() {
       </section>
 
       {/* Support Values */}
-      <section className="py-16 bg-white border-t border-neutral-200">
+      <section className="py-16 bg-white dark:bg-neutral-900 border-t border-neutral-200 dark:border-neutral-800">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center max-w-2xl mx-auto mb-14">
             <span className="text-xs font-bold uppercase tracking-widest text-[#d4af37]">
               OUR COMMITMENT
             </span>
-            <h2 className="text-3xl font-extrabold text-neutral-900 mt-2">
+            <h2 className="text-3xl font-extrabold text-neutral-900 dark:text-white mt-2">
               Why Work With Wadan Electric Store?
             </h2>
           </div>
@@ -184,15 +184,15 @@ export default function ContactPage() {
               return (
                 <div
                   key={i}
-                  className="rounded-2xl p-6 bg-neutral-50 border border-neutral-100"
+                  className="rounded-2xl p-6 bg-neutral-50 dark:bg-neutral-800/50 border border-neutral-100 dark:border-neutral-700/60"
                 >
                   <div className="w-12 h-12 rounded-xl bg-neutral-900 text-[#d4af37] flex items-center justify-center mb-4">
                     <Icon className="w-6 h-6" />
                   </div>
-                  <h3 className="font-bold text-base text-neutral-900 mb-2">
+                  <h3 className="font-bold text-base text-neutral-900 dark:text-white mb-2">
                     {item.title}
                   </h3>
-                  <p className="text-xs text-neutral-500 leading-relaxed">
+                  <p className="text-xs text-neutral-500 dark:text-neutral-400 leading-relaxed">
                     {item.description}
                   </p>
                 </div>

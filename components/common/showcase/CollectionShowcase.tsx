@@ -23,7 +23,7 @@ function CollectionShowcase({ items }: Props) {
   if (!items || items.length === 0) return null;
 
   return (
-    <section className="border-y border-neutral-200/80 bg-neutral-50/50 py-16 sm:py-20 my-10">
+    <section className="border-y border-neutral-200/80 dark:border-neutral-800 bg-neutral-50/50 dark:bg-neutral-900/30 py-16 sm:py-20 my-10">
       <div className="container mx-auto px-4 sm:px-6 max-w-7xl">
         {/* Heading */}
         <div className="mb-10 text-center sm:mb-12">
@@ -31,10 +31,10 @@ function CollectionShowcase({ items }: Props) {
             <LayoutGrid className="w-3.5 h-3.5" />
             <span>Specialized Range</span>
           </div>
-          <h2 className="font-heading text-3xl font-extrabold tracking-tight text-neutral-900 sm:text-4xl lg:text-5xl">
+          <h2 className="font-heading text-3xl font-extrabold tracking-tight text-neutral-900 dark:text-white sm:text-4xl lg:text-5xl">
             Explore Our Solutions
           </h2>
-          <p className="mt-2 text-xs sm:text-sm text-neutral-500 max-w-md mx-auto">
+          <p className="mt-2 text-xs sm:text-sm text-neutral-500 dark:text-neutral-400 max-w-md mx-auto">
             Explore our specialized systems engineered for high efficiency, smart automation, and certified safety.
           </p>
         </div>
@@ -45,7 +45,7 @@ function CollectionShowcase({ items }: Props) {
           <button
             onClick={() => scroll("left")}
             aria-label="Scroll left"
-            className="absolute -left-3 top-1/2 z-20 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-2xl border border-neutral-200 bg-white/90 text-neutral-800 shadow-md backdrop-blur transition-all hover:bg-neutral-950 hover:text-white sm:flex lg:hidden"
+            className="absolute -left-3 top-1/2 z-20 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white/90 dark:bg-neutral-900/90 text-neutral-800 dark:text-neutral-200 shadow-md backdrop-blur transition-all hover:bg-neutral-950 dark:hover:bg-white hover:text-white dark:hover:text-black sm:flex lg:hidden"
           >
             <ChevronLeft className="w-5 h-5" />
           </button>
@@ -54,7 +54,7 @@ function CollectionShowcase({ items }: Props) {
           <button
             onClick={() => scroll("right")}
             aria-label="Scroll right"
-            className="absolute -right-3 top-1/2 z-20 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-2xl border border-neutral-200 bg-white/90 text-neutral-800 shadow-md backdrop-blur transition-all hover:bg-neutral-950 hover:text-white sm:flex lg:hidden"
+            className="absolute -right-3 top-1/2 z-20 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white/90 dark:bg-neutral-900/90 text-neutral-800 dark:text-neutral-200 shadow-md backdrop-blur transition-all hover:bg-neutral-950 dark:hover:bg-white hover:text-white dark:hover:text-black sm:flex lg:hidden"
           >
             <ChevronRight className="w-5 h-5" />
           </button>

@@ -198,20 +198,20 @@ export default function ImageUpload({
             transition-all duration-200
             ${
               loading
-                ? "opacity-50 cursor-not-allowed border-neutral-700 bg-neutral-900/30"
-                : "border-neutral-700/80 bg-neutral-900/40 hover:border-[#d4af37] hover:bg-neutral-900/80"
+                ? "opacity-50 cursor-not-allowed border-neutral-300 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-900/30"
+                : "border-neutral-300 dark:border-neutral-700/80 bg-neutral-50 dark:bg-neutral-900/40 hover:border-[#d4af37] hover:bg-neutral-100 dark:hover:bg-neutral-900/80"
             }
           `}
         >
           <Upload className="w-6 h-6 text-[#d4af37]" />
 
           <div className="text-center">
-            <p className="font-semibold text-xs sm:text-sm text-neutral-200">
+            <p className="font-semibold text-xs sm:text-sm text-neutral-800 dark:text-neutral-200">
               {multiple
                 ? `Click to Add Images (${images.length}/${maxFiles})`
                 : "Click to Upload Image"}
             </p>
-            <p className="text-[11px] text-neutral-400 mt-0.5">
+            <p className="text-[11px] text-neutral-500 dark:text-neutral-400 mt-0.5">
               Auto-converts to WebP · Max 5MB (JPG, PNG, WEBP, SVG)
             </p>
           </div>
@@ -230,8 +230,8 @@ export default function ImageUpload({
 
       {/* Max Files Reached Notice */}
       {isMaxReached && (
-        <div className="flex items-center gap-2 p-3 rounded-xl bg-neutral-900/80 border border-[#d4af37]/40 text-xs text-[#d4af37]">
-          <CheckCircle2 size={16} className="shrink-0 text-[#d4af37]" />
+        <div className="flex items-center gap-2 p-3 rounded-xl bg-neutral-100 dark:bg-neutral-900/80 border border-[#d4af37]/40 text-xs text-[#b8941f] dark:text-[#d4af37]">
+          <CheckCircle2 size={16} className="shrink-0 text-[#b8941f] dark:text-[#d4af37]" />
           <span>
             Maximum capacity reached ({images.length}/{maxFiles} images). You can Replace or Delete existing images below.
           </span>

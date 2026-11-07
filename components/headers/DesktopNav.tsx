@@ -19,7 +19,7 @@ function Dropdown({ items }: { items: MenuItem[] }) {
         duration: 0.22,
         ease: "easeOut",
       }}
-      className="absolute left-0 top-full z-50 mt-2 w-72 overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-2xl"
+      className="absolute left-0 top-full z-50 mt-2 w-72 overflow-hidden rounded-2xl border border-zinc-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 shadow-2xl"
     >
       <div className="p-3">
         {items.map((item) =>
@@ -29,7 +29,7 @@ function Dropdown({ items }: { items: MenuItem[] }) {
             <Link
               key={item.title}
               href={item.href!}
-              className="flex items-center justify-between rounded-xl px-4 py-3 transition-all duration-200 hover:bg-zinc-100"
+              className="flex items-center justify-between rounded-xl px-4 py-3 text-neutral-800 dark:text-neutral-200 transition-all duration-200 hover:bg-zinc-100 dark:hover:bg-neutral-800 hover:text-[#d4af37] dark:hover:text-[#d4af37]"
             >
               <span>{item.title}</span>
             </Link>
@@ -51,7 +51,7 @@ function NestedItem({ item }: { item: MenuItem }) {
     >
       <button
         type="button"
-        className="flex w-full items-center justify-between rounded-xl px-4 py-3 transition hover:bg-zinc-100"
+        className="flex w-full items-center justify-between rounded-xl px-4 py-3 text-neutral-800 dark:text-neutral-200 transition hover:bg-zinc-100 dark:hover:bg-neutral-800 hover:text-[#d4af37] dark:hover:text-[#d4af37]"
         aria-expanded={open}
       >
         <span>{item.title}</span>
@@ -65,13 +65,13 @@ function NestedItem({ item }: { item: MenuItem }) {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 10 }}
             transition={{ duration: 0.18 }}
-            className="absolute left-full top-0 z-50 ml-2 w-64 rounded-2xl border border-zinc-200 bg-white p-3 shadow-2xl"
+            className="absolute left-full top-0 z-50 ml-2 w-64 rounded-2xl border border-zinc-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 p-3 shadow-2xl"
           >
             {item.children?.map((child) => (
               <Link
                 key={child.title}
                 href={child.href!}
-                className="block rounded-xl px-4 py-3 transition hover:bg-zinc-100"
+                className="block rounded-xl px-4 py-3 text-neutral-800 dark:text-neutral-200 transition hover:bg-zinc-100 dark:hover:bg-neutral-800 hover:text-[#d4af37] dark:hover:text-[#d4af37]"
               >
                 {child.title}
               </Link>
@@ -150,7 +150,7 @@ export default function DesktopNav() {
       ))}
 
       {/* Subtle vertical separator */}
-      <div className="h-5 w-[1px] bg-neutral-200" aria-hidden="true" />
+      <div className="h-5 w-[1px] bg-neutral-200 dark:bg-neutral-800" aria-hidden="true" />
 
       {/* Glowing Social Channels on Desktop Navigation */}
       <div className="flex items-center gap-2">

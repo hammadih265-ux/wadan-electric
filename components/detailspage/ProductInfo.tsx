@@ -52,19 +52,19 @@ export default function ProductInfo({ product }: ProductInfoProps) {
             </span>
           )}
 
-          <span className="inline-flex items-center gap-1 rounded-full border border-neutral-200 bg-neutral-100 px-3 py-1 text-xs font-mono font-medium text-neutral-700">
+          <span className="inline-flex items-center gap-1 rounded-full border border-neutral-200 dark:border-neutral-800 bg-neutral-100 dark:bg-neutral-800/80 px-3 py-1 text-xs font-mono font-medium text-neutral-700 dark:text-neutral-300">
             <Zap className="w-3 h-3 text-[#d4af37]" />
             IEC / CE Compliant
           </span>
 
           {discount && (
-            <span className="inline-flex items-center rounded-full bg-neutral-950 px-3 py-1 text-xs font-mono font-bold text-[#d4af37]">
+            <span className="inline-flex items-center rounded-full bg-neutral-950 dark:bg-white px-3 py-1 text-xs font-mono font-bold text-[#d4af37] dark:text-black">
               {discount}% OFF
             </span>
           )}
         </div>
 
-        <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-neutral-950 leading-tight">
+        <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-neutral-950 dark:text-white leading-tight">
           {product.name}
         </h1>
 
@@ -77,46 +77,46 @@ export default function ProductInfo({ product }: ProductInfoProps) {
                 className={`h-4 w-4 ${
                   i < Math.round(product.rating || 5)
                     ? "fill-[#d4af37] text-[#d4af37]"
-                    : "text-neutral-200"
+                    : "text-neutral-200 dark:text-neutral-700"
                 }`}
               />
             ))}
           </div>
 
-          <span className="font-semibold text-neutral-800">
+          <span className="font-semibold text-neutral-800 dark:text-neutral-200">
             {product.rating || "5.0"}
           </span>
-          <span className="text-neutral-400">·</span>
-          <span className="text-neutral-500">
+          <span className="text-neutral-400 dark:text-neutral-600">·</span>
+          <span className="text-neutral-500 dark:text-neutral-400">
             ({product.reviews || 12} verified installations)
           </span>
         </div>
       </div>
 
       {/* Price */}
-      <div className="flex items-baseline gap-3 rounded-2xl border border-neutral-200/80 bg-neutral-50/70 p-4">
-        <span className="text-3xl sm:text-4xl font-extrabold tracking-tight text-neutral-950">
+      <div className="flex items-baseline gap-3 rounded-2xl border border-neutral-200/80 dark:border-neutral-800 bg-neutral-50/70 dark:bg-neutral-900/60 p-4">
+        <span className="text-3xl sm:text-4xl font-extrabold tracking-tight text-neutral-950 dark:text-white">
           Rs {product.price.toLocaleString()}
         </span>
 
         {product.oldPrice && (
-          <span className="text-base sm:text-lg text-neutral-400 line-through">
+          <span className="text-base sm:text-lg text-neutral-400 dark:text-neutral-500 line-through">
             Rs {product.oldPrice.toLocaleString()}
           </span>
         )}
 
-        <span className="ml-auto text-xs font-mono font-semibold uppercase tracking-wider text-amber-700 bg-amber-100/60 px-2.5 py-1 rounded-md">
+        <span className="ml-auto text-xs font-mono font-semibold uppercase tracking-wider text-amber-700 dark:text-amber-300 bg-amber-100/60 dark:bg-amber-950/40 px-2.5 py-1 rounded-md">
           PKR · Dispatch on Payment Slip Verification
         </span>
       </div>
 
       {/* Description */}
       <div className="space-y-2">
-        <h3 className="text-xs font-mono font-bold uppercase tracking-wider text-neutral-500">
+        <h3 className="text-xs font-mono font-bold uppercase tracking-wider text-neutral-500 dark:text-neutral-400">
           Technical Overview & Features
         </h3>
 
-        <p className="text-sm leading-relaxed text-neutral-700">
+        <p className="text-sm leading-relaxed text-neutral-700 dark:text-neutral-300">
           {product.description}
         </p>
       </div>
@@ -130,12 +130,12 @@ export default function ProductInfo({ product }: ProductInfoProps) {
             variant="outline"
             size="icon"
             onClick={() => setLiked(!liked)}
-            className="h-12 w-12 rounded-xl border-neutral-300 transition-all hover:border-neutral-900 active:scale-95"
+            className="h-12 w-12 rounded-xl border-neutral-300 dark:border-neutral-700 transition-all hover:border-neutral-900 dark:hover:border-neutral-300 active:scale-95"
             aria-label="Wishlist"
           >
             <Heart
               className={`h-5 w-5 transition-colors ${
-                liked ? "fill-red-500 text-red-500" : "text-neutral-700"
+                liked ? "fill-red-500 text-red-500" : "text-neutral-700 dark:text-neutral-300"
               }`}
             />
           </Button>
@@ -146,7 +146,7 @@ export default function ProductInfo({ product }: ProductInfoProps) {
             )}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex h-12 flex-1 items-center justify-center gap-2 rounded-xl border border-neutral-300 bg-white px-4 text-xs sm:text-sm font-semibold text-neutral-800 transition-all hover:border-[#d4af37] hover:bg-neutral-50 active:scale-95"
+            className="flex h-12 flex-1 items-center justify-center gap-2 rounded-xl border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 px-4 text-xs sm:text-sm font-semibold text-neutral-800 dark:text-neutral-200 transition-all hover:border-[#d4af37] hover:bg-neutral-50 dark:hover:bg-neutral-800 active:scale-95"
           >
             <MessageCircle className="w-4 h-4 text-emerald-600" />
             <span>Inquire on WhatsApp</span>
@@ -165,7 +165,7 @@ export default function ProductInfo({ product }: ProductInfoProps) {
       </div>
 
       {/* Industrial Engineering Assurances */}
-      <div className="grid gap-3 pt-6 border-t border-neutral-200 sm:grid-cols-3">
+      <div className="grid gap-3 pt-6 border-t border-neutral-200 dark:border-neutral-800 sm:grid-cols-3">
         <Feature
           icon={<ShieldCheck className="w-5 h-5 text-[#d4af37]" />}
           title="Certified Hardware"
@@ -198,13 +198,13 @@ function Feature({
   text: string;
 }) {
   return (
-    <div className="flex flex-col gap-2 rounded-xl border border-neutral-200/80 bg-neutral-50/50 p-3.5 transition-all duration-200 hover:border-[#d4af37]/40 hover:bg-neutral-50">
-      <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-neutral-950 text-white">
+    <div className="flex flex-col gap-2 rounded-xl border border-neutral-200/80 dark:border-neutral-800 bg-neutral-50/50 dark:bg-neutral-900/40 p-3.5 transition-all duration-200 hover:border-[#d4af37]/40 hover:bg-neutral-50 dark:hover:bg-neutral-900">
+      <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-neutral-950 dark:bg-neutral-800 text-white">
         {icon}
       </div>
       <div>
-        <h4 className="text-xs font-bold text-neutral-900">{title}</h4>
-        <p className="mt-0.5 text-[11px] leading-relaxed text-neutral-500">
+        <h4 className="text-xs font-bold text-neutral-900 dark:text-white">{title}</h4>
+        <p className="mt-0.5 text-[11px] leading-relaxed text-neutral-500 dark:text-neutral-400">
           {text}
         </p>
       </div>

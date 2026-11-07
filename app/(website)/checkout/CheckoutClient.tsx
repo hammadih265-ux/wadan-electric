@@ -247,7 +247,7 @@ Thank you for your order!`;
 
   if (isSubmitted && orderDetails) {
     return (
-      <main className="bg-[#fafafa] min-h-[85vh] py-8 sm:py-12 flex items-center justify-center">
+      <main className="bg-neutral-50 dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100 min-h-[85vh] py-8 sm:py-12 flex items-center justify-center">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 w-full text-center space-y-6 sm:space-y-8">
           <motion.div
             initial={{ scale: 0.9, opacity: 0 }}
@@ -255,26 +255,26 @@ Thank you for your order!`;
             transition={{ duration: 0.4 }}
             className="space-y-4"
           >
-            <div className="w-14 h-14 sm:w-16 sm:h-16 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mx-auto shadow-sm border border-amber-200">
+            <div className="w-14 h-14 sm:w-16 sm:h-16 bg-amber-100 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 rounded-full flex items-center justify-center mx-auto shadow-sm border border-amber-200 dark:border-amber-800">
               <FileCheck2 className="w-7 h-7 sm:w-8 sm:h-8" />
             </div>
 
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-900 dark:text-white tracking-tight">
               Order Registered! Please Send Payment Slip
             </h1>
 
             {/* Instruction Callout */}
-            <div className="bg-amber-50 border-2 border-amber-300/80 rounded-2xl p-4 sm:p-5 max-w-xl mx-auto text-left shadow-sm">
+            <div className="bg-amber-50 dark:bg-amber-950/30 border-2 border-amber-300/80 dark:border-amber-500/30 rounded-2xl p-4 sm:p-5 max-w-xl mx-auto text-left shadow-sm">
               <div className="flex items-start gap-3">
-                <Truck className="w-5 h-5 text-amber-700 shrink-0 mt-0.5" />
-                <div className="text-xs sm:text-sm text-amber-950 space-y-1">
-                  <p className="font-bold text-amber-900">
+                <Truck className="w-5 h-5 text-amber-700 dark:text-amber-400 shrink-0 mt-0.5" />
+                <div className="text-xs sm:text-sm text-amber-950 dark:text-amber-200 space-y-1">
+                  <p className="font-bold text-amber-900 dark:text-amber-300">
                     Next Step for Dispatch:
                   </p>
                   <p className="leading-relaxed">
                     Please send your <strong>payment slip / screenshot</strong> on WhatsApp to finalize your order. Once received, we will immediately dispatch your product to:
                   </p>
-                  <p className="font-semibold text-neutral-900 bg-white/70 px-2 py-1 rounded inline-block">
+                  <p className="font-semibold text-neutral-900 dark:text-neutral-100 bg-white/70 dark:bg-neutral-900/70 px-2 py-1 rounded inline-block">
                     📍 {orderDetails.customer.address}, {orderDetails.customer.city}, {orderDetails.customer.state}
                   </p>
                 </div>
@@ -282,48 +282,48 @@ Thank you for your order!`;
             </div>
 
             {/* Order Summary */}
-            <div className="bg-white rounded-2xl border border-gray-200/80 p-4 sm:p-6 max-w-md mx-auto text-left space-y-3 sm:space-y-3.5 shadow-sm">
-              <div className="flex justify-between items-center border-b pb-2">
-                <span className="text-[11px] sm:text-xs text-gray-500 uppercase tracking-wide font-medium">
+            <div className="bg-white dark:bg-neutral-900 rounded-2xl border border-gray-200/80 dark:border-neutral-800 p-4 sm:p-6 max-w-md mx-auto text-left space-y-3 sm:space-y-3.5 shadow-sm">
+              <div className="flex justify-between items-center border-b border-gray-100 dark:border-neutral-800 pb-2">
+                <span className="text-[11px] sm:text-xs text-gray-500 dark:text-neutral-400 uppercase tracking-wide font-medium">
                   Order Number
                 </span>
-                <span className="font-mono font-bold text-sm sm:text-base text-gray-900">
+                <span className="font-mono font-bold text-sm sm:text-base text-gray-900 dark:text-white">
                   #{orderDetails.orderId}
                 </span>
               </div>
 
-              <div className="flex justify-between items-center border-b pb-2">
-                <span className="text-[11px] sm:text-xs text-gray-500 uppercase tracking-wide font-medium">
+              <div className="flex justify-between items-center border-b border-gray-100 dark:border-neutral-800 pb-2">
+                <span className="text-[11px] sm:text-xs text-gray-500 dark:text-neutral-400 uppercase tracking-wide font-medium">
                   Payment Method
                 </span>
-                <span className="font-semibold text-xs sm:text-sm text-amber-700 bg-amber-50 px-2 py-0.5 rounded">
+                <span className="font-semibold text-xs sm:text-sm text-amber-700 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/40 px-2 py-0.5 rounded">
                   Send Slip via WhatsApp
                 </span>
               </div>
 
-              <div className="flex justify-between items-center border-b pb-2">
-                <span className="text-[11px] sm:text-xs text-gray-500 uppercase tracking-wide font-medium">
+              <div className="flex justify-between items-center border-b border-gray-100 dark:border-neutral-800 pb-2">
+                <span className="text-[11px] sm:text-xs text-gray-500 dark:text-neutral-400 uppercase tracking-wide font-medium">
                   Dispatch Status
                 </span>
-                <span className="font-semibold text-xs sm:text-sm text-gray-900">
+                <span className="font-semibold text-xs sm:text-sm text-gray-900 dark:text-white">
                   Pending Payment Slip
                 </span>
               </div>
 
-              <div className="flex justify-between items-center border-b pb-2">
-                <span className="text-[11px] sm:text-xs text-gray-500 uppercase tracking-wide font-medium">
+              <div className="flex justify-between items-center border-b border-gray-100 dark:border-neutral-800 pb-2">
+                <span className="text-[11px] sm:text-xs text-gray-500 dark:text-neutral-400 uppercase tracking-wide font-medium">
                   Customer
                 </span>
-                <span className="font-semibold text-xs sm:text-sm text-gray-900">
+                <span className="font-semibold text-xs sm:text-sm text-gray-900 dark:text-white">
                   {orderDetails.customer.firstName} {orderDetails.customer.lastName}
                 </span>
               </div>
 
               <div className="flex justify-between items-center">
-                <span className="text-[11px] sm:text-xs text-gray-500 uppercase tracking-wide font-medium">
+                <span className="text-[11px] sm:text-xs text-gray-500 dark:text-neutral-400 uppercase tracking-wide font-medium">
                   Customer Phone
                 </span>
-                <span className="font-semibold text-xs sm:text-sm text-gray-900">
+                <span className="font-semibold text-xs sm:text-sm text-gray-900 dark:text-white">
                   {orderDetails.customer.phone}
                 </span>
               </div>
@@ -344,7 +344,7 @@ Thank you for your order!`;
               {user && (
                 <Link
                   href="/account/orders"
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-900 font-semibold px-5 py-3 rounded-xl transition text-xs sm:text-sm"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-gray-100 dark:bg-neutral-800 hover:bg-gray-200 dark:hover:bg-neutral-700 text-gray-900 dark:text-white font-semibold px-5 py-3 rounded-xl transition text-xs sm:text-sm"
                 >
                   View My Orders
                 </Link>
@@ -352,7 +352,7 @@ Thank you for your order!`;
 
               <Link
                 href="/collection"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-black hover:bg-neutral-800 text-white font-semibold px-5 py-3 rounded-xl transition text-xs sm:text-sm"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-black dark:bg-white hover:bg-neutral-800 dark:hover:bg-neutral-200 text-white dark:text-black font-semibold px-5 py-3 rounded-xl transition text-xs sm:text-sm"
               >
                 <ShoppingBag className="w-4 h-4" />
                 Continue Shopping
@@ -395,7 +395,7 @@ Thank you for your order!`;
   }
 
   return (
-    <main className="bg-[#fafafa] min-h-screen py-6 sm:py-10 md:py-12">
+    <main className="bg-neutral-50 dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100 min-h-screen py-6 sm:py-10 md:py-12">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -405,44 +405,44 @@ Thank you for your order!`;
         >
           <Link
             href="/collection"
-            className="inline-flex items-center gap-2 text-xs sm:text-sm text-gray-500 hover:text-black mb-3 sm:mb-4 transition"
+            className="inline-flex items-center gap-2 text-xs sm:text-sm text-gray-500 dark:text-neutral-400 hover:text-black dark:hover:text-white mb-3 sm:mb-4 transition"
           >
             <ArrowLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> Back to
             Collection
           </Link>
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
             <div>
-              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 tracking-tight">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 dark:text-white tracking-tight">
                 Checkout
               </h1>
-              <p className="mt-1 text-xs sm:text-sm text-gray-500">
+              <p className="mt-1 text-xs sm:text-sm text-gray-500 dark:text-neutral-400">
                 Complete your delivery details. Send your payment slip on WhatsApp to finalize dispatch.
               </p>
             </div>
 
             {/* Quick store info badge */}
-            <div className="flex items-center gap-2 text-xs text-neutral-600 bg-white border border-gray-200 rounded-xl px-3.5 py-2 w-fit">
+            <div className="flex items-center gap-2 text-xs text-neutral-600 dark:text-neutral-300 bg-white dark:bg-neutral-900 border border-gray-200 dark:border-neutral-800 rounded-xl px-3.5 py-2 w-fit">
               <MapPin className="w-3.5 h-3.5 text-[#d4af37]" />
               <span className="font-medium">{STORE_CONTACT.address}</span>
-              <span className="text-gray-300">|</span>
-              <Phone className="w-3.5 h-3.5 text-emerald-600" />
+              <span className="text-gray-300 dark:text-neutral-700">|</span>
+              <Phone className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
               <span className="font-mono">{STORE_CONTACT.phone}</span>
             </div>
           </div>
         </motion.div>
 
         {items.length === 0 ? (
-          <div className="bg-white rounded-2xl sm:rounded-3xl p-8 sm:p-12 text-center border shadow-sm max-w-lg mx-auto space-y-4">
-            <ShoppingBag className="w-12 h-12 sm:w-16 sm:h-16 text-gray-300 mx-auto" />
-            <h2 className="text-xl sm:text-2xl font-bold text-gray-800">
+          <div className="bg-white dark:bg-neutral-900 rounded-2xl sm:rounded-3xl p-8 sm:p-12 text-center border border-gray-200 dark:border-neutral-800 shadow-sm max-w-lg mx-auto space-y-4">
+            <ShoppingBag className="w-12 h-12 sm:w-16 sm:h-16 text-gray-300 dark:text-neutral-600 mx-auto" />
+            <h2 className="text-xl sm:text-2xl font-bold text-gray-800 dark:text-white">
               Your Cart is Empty
             </h2>
-            <p className="text-gray-500 text-xs sm:text-sm">
+            <p className="text-gray-500 dark:text-neutral-400 text-xs sm:text-sm">
               Add items to your cart before proceeding to checkout.
             </p>
             <Link
               href="/collection"
-              className="inline-block bg-black text-white px-6 sm:px-8 py-3 sm:py-3.5 rounded-xl text-xs sm:text-sm font-medium hover:bg-gray-800 transition"
+              className="inline-block bg-black dark:bg-white text-white dark:text-black px-6 sm:px-8 py-3 sm:py-3.5 rounded-xl text-xs sm:text-sm font-medium hover:bg-gray-800 dark:hover:bg-neutral-200 transition"
             >
               Explore Collection
             </Link>
@@ -459,23 +459,23 @@ Thank you for your order!`;
               transition={{ duration: 0.4 }}
               className="lg:sticky lg:top-24 h-fit space-y-6 order-1 lg:order-2"
             >
-              <div className="rounded-2xl sm:rounded-3xl bg-white border border-gray-200/80 shadow-sm overflow-hidden">
-                <div className="border-b px-4 sm:px-6 py-4 sm:py-5 bg-gray-50/50 flex items-center justify-between">
-                  <h2 className="font-semibold text-lg sm:text-xl text-gray-900">
+              <div className="rounded-2xl sm:rounded-3xl bg-white dark:bg-neutral-900 border border-gray-200/80 dark:border-neutral-800 shadow-sm overflow-hidden">
+                <div className="border-b border-gray-100 dark:border-neutral-800 px-4 sm:px-6 py-4 sm:py-5 bg-gray-50/50 dark:bg-neutral-800/40 flex items-center justify-between">
+                  <h2 className="font-semibold text-lg sm:text-xl text-gray-900 dark:text-white">
                     Order Summary
                   </h2>
-                  <span className="text-xs sm:text-sm text-gray-500 font-medium">
+                  <span className="text-xs sm:text-sm text-gray-500 dark:text-neutral-400 font-medium">
                     {items.length} {items.length === 1 ? "item" : "items"}
                   </span>
                 </div>
 
-                <div className="max-h-[280px] sm:max-h-[380px] overflow-y-auto divide-y">
+                <div className="max-h-[280px] sm:max-h-[380px] overflow-y-auto divide-y divide-gray-100 dark:divide-neutral-800">
                   {items.map((item) => (
                     <div
                       key={item.id}
                       className="flex gap-3 sm:gap-4 px-4 sm:px-6 py-3.5 sm:py-4 items-center"
                     >
-                      <div className="h-14 w-14 sm:h-16 sm:w-16 rounded-xl overflow-hidden bg-gray-100 relative shrink-0 border border-gray-200">
+                      <div className="h-14 w-14 sm:h-16 sm:w-16 rounded-xl overflow-hidden bg-gray-100 dark:bg-neutral-800 relative shrink-0 border border-gray-200 dark:border-neutral-700">
                         {item.image && (
                           <Image
                             src={item.image}
@@ -489,34 +489,34 @@ Thank you for your order!`;
                       </div>
 
                       <div className="flex-1 min-w-0">
-                        <h3 className="font-medium text-xs sm:text-sm text-gray-900 truncate">
+                        <h3 className="font-medium text-xs sm:text-sm text-gray-900 dark:text-white truncate">
                           {item.name}
                         </h3>
-                        <p className="text-[11px] sm:text-xs text-gray-500 mt-0.5">
+                        <p className="text-[11px] sm:text-xs text-gray-500 dark:text-neutral-400 mt-0.5">
                           Qty: {item.quantity}
                         </p>
                       </div>
 
-                      <div className="font-semibold text-xs sm:text-sm text-gray-900 whitespace-nowrap">
+                      <div className="font-semibold text-xs sm:text-sm text-gray-900 dark:text-white whitespace-nowrap">
                         Rs {(item.price * item.quantity).toLocaleString()}
                       </div>
                     </div>
                   ))}
                 </div>
 
-                <div className="p-4 sm:p-6 space-y-4 border-t bg-gray-50/30">
+                <div className="p-4 sm:p-6 space-y-4 border-t border-gray-100 dark:border-neutral-800 bg-gray-50/30 dark:bg-neutral-900/60">
                   <div className="flex justify-between text-xs sm:text-sm">
-                    <span className="text-gray-500">Subtotal</span>
-                    <span className="font-medium text-gray-900">
+                    <span className="text-gray-500 dark:text-neutral-400">Subtotal</span>
+                    <span className="font-medium text-gray-900 dark:text-white">
                       Rs {subtotal.toLocaleString()}
                     </span>
                   </div>
 
                   <div className="flex justify-between text-xs sm:text-sm">
-                    <span className="text-gray-500">Shipping</span>
-                    <span className="font-medium text-gray-900">
+                    <span className="text-gray-500 dark:text-neutral-400">Shipping</span>
+                    <span className="font-medium text-gray-900 dark:text-white">
                       {shipping === 0 ? (
-                        <span className="text-green-600 font-semibold">
+                        <span className="text-green-600 dark:text-green-400 font-semibold">
                           FREE
                         </span>
                       ) : (
@@ -525,36 +525,36 @@ Thank you for your order!`;
                     </span>
                   </div>
 
-                  <div className="border-t pt-3.5 flex justify-between text-sm sm:text-base font-bold text-gray-900">
+                  <div className="border-t border-gray-100 dark:border-neutral-800 pt-3.5 flex justify-between text-sm sm:text-base font-bold text-gray-900 dark:text-white">
                     <span>Total</span>
                     <span>Rs {total.toLocaleString()}</span>
                   </div>
 
                   {submitError && (
-                    <p className="text-xs sm:text-sm text-red-500 text-center bg-red-50 p-2.5 rounded-lg border border-red-100">
+                    <p className="text-xs sm:text-sm text-red-500 text-center bg-red-50 dark:bg-red-950/30 p-2.5 rounded-lg border border-red-100 dark:border-red-900/40">
                       {submitError}
                     </p>
                   )}
 
                   {/* Payment Method & Slip Verification Notice */}
                   <div className="space-y-3 pt-2">
-                    <div className="p-3.5 sm:p-4 rounded-xl border border-amber-300 bg-amber-50/90 text-left space-y-2">
-                      <div className="flex items-center gap-2 text-amber-900 font-bold text-xs sm:text-sm">
-                        <FileCheck2 className="w-4 h-4 text-amber-700 shrink-0" />
+                    <div className="p-3.5 sm:p-4 rounded-xl border border-amber-300 dark:border-amber-500/30 bg-amber-50/90 dark:bg-amber-950/30 text-left space-y-2">
+                      <div className="flex items-center gap-2 text-amber-900 dark:text-amber-300 font-bold text-xs sm:text-sm">
+                        <FileCheck2 className="w-4 h-4 text-amber-700 dark:text-amber-400 shrink-0" />
                         <span>Payment Slip Verification</span>
                       </div>
-                      <p className="text-[11px] sm:text-xs text-amber-900/90 leading-relaxed">
+                      <p className="text-[11px] sm:text-xs text-amber-900/90 dark:text-amber-200/90 leading-relaxed">
                         Please send your <strong>payment slip</strong> on WhatsApp after finalizing the order. We will dispatch your product to your address immediately after verification.
                       </p>
-                      <div className="text-[11px] font-mono text-amber-800 bg-amber-100/70 px-2 py-1 rounded inline-flex items-center gap-1">
-                        <Phone className="w-3 h-3 text-amber-700" />
+                      <div className="text-[11px] font-mono text-amber-800 dark:text-amber-300 bg-amber-100/70 dark:bg-amber-900/40 px-2 py-1 rounded inline-flex items-center gap-1">
+                        <Phone className="w-3 h-3 text-amber-700 dark:text-amber-400" />
                         <span>WhatsApp Helpline: {STORE_CONTACT.phoneFormatted}</span>
                       </div>
                     </div>
 
                     {/* Official Social Links in Checkout */}
-                    <div className="flex flex-wrap items-center justify-between gap-2 p-2.5 rounded-xl bg-gray-100/80 border border-gray-200 text-xs">
-                      <span className="text-gray-600 font-medium text-xs">Follow Us:</span>
+                    <div className="flex flex-wrap items-center justify-between gap-2 p-2.5 rounded-xl bg-gray-100/80 dark:bg-neutral-800/60 border border-gray-200 dark:border-neutral-700 text-xs">
+                      <span className="text-gray-600 dark:text-neutral-300 font-medium text-xs">Follow Us:</span>
                       <div className="flex items-center gap-2">
                         <GlowingSocialButton platform="tiktok" variant="pill" size="sm" label="TikTok" />
                         <GlowingSocialButton platform="facebook" variant="pill" size="sm" label="Facebook" />
@@ -573,7 +573,7 @@ Thank you for your order!`;
                     />
                     <label
                       htmlFor="confirm-info"
-                      className="text-xs sm:text-sm text-gray-600 cursor-pointer select-none leading-tight"
+                      className="text-xs sm:text-sm text-gray-600 dark:text-neutral-400 cursor-pointer select-none leading-tight"
                     >
                       I confirm my delivery details and agree to submit the payment slip on WhatsApp.
                     </label>
@@ -609,18 +609,18 @@ Thank you for your order!`;
               transition={{ duration: 0.4 }}
               className="lg:col-span-2 order-2 lg:order-1"
             >
-              <div className="rounded-2xl sm:rounded-3xl bg-white shadow-sm border border-gray-200/80 p-4 sm:p-6 md:p-8">
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6 pb-4 border-b border-gray-100">
+              <div className="rounded-2xl sm:rounded-3xl bg-white dark:bg-neutral-900 shadow-sm border border-gray-200/80 dark:border-neutral-800 p-4 sm:p-6 md:p-8">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6 pb-4 border-b border-gray-100 dark:border-neutral-800">
                   <div>
-                    <h2 className="text-xl sm:text-2xl font-semibold text-gray-900">
+                    <h2 className="text-xl sm:text-2xl font-semibold text-gray-900 dark:text-white">
                       Billing & Delivery Details
                     </h2>
-                    <p className="text-xs text-gray-500 mt-0.5">
+                    <p className="text-xs text-gray-500 dark:text-neutral-400 mt-0.5">
                       Enter your address where your products will be dispatched after payment slip confirmation.
                     </p>
                   </div>
 
-                  <div className="flex items-center gap-1.5 text-xs text-neutral-500 bg-neutral-50 px-3 py-1.5 rounded-lg border border-neutral-200 self-start sm:self-auto">
+                  <div className="flex items-center gap-1.5 text-xs text-neutral-500 dark:text-neutral-400 bg-neutral-50 dark:bg-neutral-800 px-3 py-1.5 rounded-lg border border-neutral-200 dark:border-neutral-700 self-start sm:auto">
                     <ShieldCheck className="w-4 h-4 text-[#d4af37]" />
                     <span>Safe Packaging & Direct Dispatch</span>
                   </div>

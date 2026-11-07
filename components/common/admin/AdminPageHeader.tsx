@@ -23,8 +23,8 @@ export function AdminPageHeader({
   return (
     <div className="flex items-center justify-between">
       <div>
-        <h1 className="text-white text-2xl font-semibold">{title}</h1>
-        <p className="text-[#555] text-sm mt-1">{subtitle}</p>
+        <h1 className="text-neutral-900 dark:text-white text-2xl font-semibold tracking-tight">{title}</h1>
+        <p className="text-neutral-500 dark:text-neutral-400 text-sm mt-1">{subtitle}</p>
       </div>
       <button
         id={addButtonId}

@@ -44,38 +44,33 @@ function StatCard({
 }) {
   return (
     <div
-      className="rounded-2xl p-6 relative overflow-hidden"
-      style={{
-        background: accent
-          ? "linear-gradient(135deg,rgba(212,175,55,0.15),rgba(184,148,31,0.08))"
-          : "rgba(255,255,255,0.03)",
-        border: accent
-          ? "1px solid rgba(212,175,55,0.25)"
-          : "1px solid rgba(255,255,255,0.07)",
-      }}
+      className={`rounded-2xl p-6 relative overflow-hidden transition-all shadow-sm ${
+        accent
+          ? "bg-gradient-to-br from-[#d4af37]/20 to-[#b8941f]/10 border border-[#d4af37]/30"
+          : "bg-white dark:bg-white/[0.03] border border-neutral-200 dark:border-white/10"
+      }`}
     >
       <div className="flex items-start justify-between">
         <div>
-          <p className="text-[#666] text-xs uppercase tracking-widest mb-2">{label}</p>
+          <p className="text-neutral-500 dark:text-neutral-400 text-xs uppercase tracking-widest mb-2 font-medium">{label}</p>
           <p
-            className="text-3xl font-semibold"
-            style={{ color: accent ? "#d4af37" : "#fff" }}
+            className={`text-3xl font-semibold ${
+              accent ? "text-[#b8941f] dark:text-[#d4af37]" : "text-neutral-900 dark:text-white"
+            }`}
           >
             {value}
           </p>
-          {sub && <p className="text-[#555] text-xs mt-1">{sub}</p>}
+          {sub && <p className="text-neutral-400 dark:text-neutral-500 text-xs mt-1">{sub}</p>}
         </div>
         <div
-          className="p-2.5 rounded-xl"
-          style={{
-            background: accent
-              ? "rgba(212,175,55,0.15)"
-              : "rgba(255,255,255,0.05)",
-          }}
+          className={`p-2.5 rounded-xl ${
+            accent
+              ? "bg-[#d4af37]/20 text-[#b8941f] dark:text-[#d4af37]"
+              : "bg-neutral-100 dark:bg-white/5 text-neutral-600 dark:text-neutral-400"
+          }`}
         >
           <Icon
             size={18}
-            style={{ color: accent ? "#d4af37" : "#666" }}
           />
         </div>
       </div>
@@ -109,14 +104,10 @@ function ChartTooltip({ active, payload, label }: { active?: boolean; payload?: 
   if (!active || !payload?.length) return null;
   return (
     <div
-      className="rounded-xl px-4 py-3 text-sm shadow-xl"
-      style={{
-        background: "#1a1a1a",
-        border: "1px solid rgba(255,255,255,0.1)",
-      }}
+      className="rounded-xl px-4 py-3 text-sm shadow-xl bg-white dark:bg-[#1a1a1a] border border-neutral-200 dark:border-white/10"
     >
-      <p className="text-[#888] text-xs mb-1">{label}</p>
-      <p className="text-[#d4af37] font-semibold">
+      <p className="text-neutral-500 dark:text-[#888] text-xs mb-1">{label}</p>
+      <p className="text-[#b8941f] dark:text-[#d4af37] font-semibold">
         PKR {payload[0].value.toLocaleString()}
       </p>
     </div>
@@ -173,29 +164,19 @@ function ChangePasswordSection() {
     }
   }
 
-  const inputStyle = {
-    background: "rgba(255,255,255,0.05)",
-    border: "1px solid rgba(255,255,255,0.08)",
-  };
-
   return (
     <div
-      className="rounded-2xl p-6"
-      style={{
-        background: "rgba(255,255,255,0.03)",
-        border: "1px solid rgba(255,255,255,0.07)",
-      }}
+      className="rounded-2xl p-6 bg-white dark:bg-white/[0.03] border border-neutral-200 dark:border-white/10 shadow-sm"
     >
       <div className="flex items-center gap-3 mb-5">
         <div
-          className="p-2 rounded-xl"
-          style={{ background: "rgba(212,175,55,0.1)" }}
+          className="p-2 rounded-xl bg-[#d4af37]/15 dark:bg-[#d4af37]/10"
         >
-          <KeyRound size={16} style={{ color: "#d4af37" }} />
+          <KeyRound size={16} className="text-[#b8941f] dark:text-[#d4af37]" />
         </div>
         <div>
-          <p className="text-white text-sm font-medium">Change Password</p>
-          <p className="text-[#555] text-xs mt-0.5">
+          <p className="text-neutral-900 dark:text-white text-sm font-medium">Change Password</p>
+          <p className="text-neutral-500 dark:text-neutral-400 text-xs mt-0.5">
             Update your admin account password
           </p>
         </div>
@@ -204,7 +185,7 @@ function ChangePasswordSection() {
       <form onSubmit={handleChangePassword} className="space-y-4 max-w-sm">
         {/* Current password */}
         <div>
-          <label className="block text-xs font-medium text-[#888] uppercase tracking-widest mb-1.5">
+          <label className="block text-xs font-medium text-neutral-600 dark:text-neutral-400 uppercase tracking-widest mb-1.5">
             Current Password
           </label>
           <input
@@ -213,20 +194,13 @@ function ChangePasswordSection() {
             value={currentPassword}
             onChange={(e) => setCurrentPassword(e.target.value)}
             placeholder="••••••••"
-            className="w-full rounded-xl px-4 py-2.5 text-sm text-white placeholder-[#444] outline-none transition-all"
-            style={inputStyle}
-            onFocus={(e) =>
-              (e.currentTarget.style.borderColor = "rgba(212,175,55,0.5)")
-            }
-            onBlur={(e) =>
-              (e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)")
-            }
+            className="admin-input"
           />
         </div>
 
         {/* New password */}
         <div>
-          <label className="block text-xs font-medium text-[#888] uppercase tracking-widest mb-1.5">
+          <label className="block text-xs font-medium text-neutral-600 dark:text-neutral-400 uppercase tracking-widest mb-1.5">
             New Password
           </label>
           <input
@@ -235,20 +209,13 @@ function ChangePasswordSection() {
             value={newPassword}
             onChange={(e) => setNewPassword(e.target.value)}
             placeholder="••••••••"
-            className="w-full rounded-xl px-4 py-2.5 text-sm text-white placeholder-[#444] outline-none transition-all"
-            style={inputStyle}
-            onFocus={(e) =>
-              (e.currentTarget.style.borderColor = "rgba(212,175,55,0.5)")
-            }
-            onBlur={(e) =>
-              (e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)")
-            }
+            className="admin-input"
           />
         </div>
 
         {/* Confirm new password */}
         <div>
-          <label className="block text-xs font-medium text-[#888] uppercase tracking-widest mb-1.5">
+          <label className="block text-xs font-medium text-neutral-600 dark:text-neutral-400 uppercase tracking-widest mb-1.5">
             Confirm New Password
           </label>
           <input
@@ -257,21 +224,14 @@ function ChangePasswordSection() {
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             placeholder="••••••••"
-            className="w-full rounded-xl px-4 py-2.5 text-sm text-white placeholder-[#444] outline-none transition-all"
-            style={inputStyle}
-            onFocus={(e) =>
-              (e.currentTarget.style.borderColor = "rgba(212,175,55,0.5)")
-            }
-            onBlur={(e) =>
-              (e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)")
-            }
+            className="admin-input"
           />
         </div>
 
         <button
           type="submit"
           disabled={loading}
-          className="py-2.5 px-6 rounded-xl text-sm font-medium text-black disabled:opacity-50 transition-all"
+          className="py-2.5 px-6 rounded-xl text-sm font-medium text-black disabled:opacity-50 transition-all cursor-pointer"
           style={{
             background: "linear-gradient(135deg,#d4af37,#b8941f)",
             boxShadow: "0 4px 16px rgba(212,175,55,0.3)",
@@ -343,8 +303,8 @@ export default function AdminDashboardPage() {
     <div className="space-y-8">
       {/* Page title */}
       <div>
-        <h1 className="text-white text-2xl font-semibold">Dashboard</h1>
-        <p className="text-[#555] text-sm mt-1">
+        <h1 className="text-neutral-900 dark:text-white text-2xl font-semibold tracking-tight">Dashboard</h1>
+        <p className="text-neutral-500 dark:text-neutral-400 text-sm mt-1">
           Welcome back — here&apos;s what&apos;s happening today
         </p>
       </div>
@@ -406,14 +366,10 @@ export default function AdminDashboardPage() {
       <div className="grid grid-cols-1 xl:grid-cols-5 gap-6">
         {/* Revenue chart */}
         <div
-          className="xl:col-span-3 rounded-2xl p-6"
-          style={{
-            background: "rgba(255,255,255,0.03)",
-            border: "1px solid rgba(255,255,255,0.07)",
-          }}
+          className="xl:col-span-3 rounded-2xl p-6 bg-white dark:bg-white/[0.03] border border-neutral-200 dark:border-white/10 shadow-sm"
         >
-          <p className="text-white text-sm font-medium mb-1">Revenue (7 days)</p>
-          <p className="text-[#555] text-xs mb-6">Daily order revenue excluding cancelled</p>
+          <p className="text-neutral-900 dark:text-white text-sm font-semibold mb-1">Revenue (7 days)</p>
+          <p className="text-neutral-500 dark:text-neutral-400 text-xs mb-6">Daily order revenue excluding cancelled</p>
           <ResponsiveContainer width="100%" height={220}>
             <AreaChart data={chartData}>
               <defs>
@@ -422,15 +378,17 @@ export default function AdminDashboardPage() {
                   <stop offset="100%" stopColor="#d4af37" stopOpacity={0} />
                 </linearGradient>
               </defs>
-              <CartesianGrid stroke="rgba(255,255,255,0.04)" strokeDasharray="3 3" />
+              <CartesianGrid stroke="currentColor" className="text-neutral-200 dark:text-white/[0.06]" strokeDasharray="3 3" />
               <XAxis
                 dataKey="date"
-                tick={{ fill: "#555", fontSize: 11 }}
+                tick={{ fontSize: 11, fill: "currentColor" }}
+                className="text-neutral-400 dark:text-neutral-500"
                 axisLine={false}
                 tickLine={false}
               />
               <YAxis
-                tick={{ fill: "#555", fontSize: 11 }}
+                tick={{ fontSize: 11, fill: "currentColor" }}
+                className="text-neutral-400 dark:text-neutral-500"
                 axisLine={false}
                 tickLine={false}
                 tickFormatter={(v) => `${(v / 1000).toFixed(0)}k`}
@@ -449,16 +407,12 @@ export default function AdminDashboardPage() {
 
         {/* Recent orders */}
         <div
-          className="xl:col-span-2 rounded-2xl p-6"
-          style={{
-            background: "rgba(255,255,255,0.03)",
-            border: "1px solid rgba(255,255,255,0.07)",
-          }}
+          className="xl:col-span-2 rounded-2xl p-6 bg-white dark:bg-white/[0.03] border border-neutral-200 dark:border-white/10 shadow-sm"
         >
-          <p className="text-white text-sm font-medium mb-5">Recent Orders</p>
+          <p className="text-neutral-900 dark:text-white text-sm font-semibold mb-5">Recent Orders</p>
           <div className="space-y-3">
             {recentOrders.length === 0 && (
-              <p className="text-[#555] text-sm">No orders yet.</p>
+              <p className="text-neutral-400 dark:text-neutral-500 text-sm">No orders yet.</p>
             )}
             {recentOrders.map((order) => (
               <div
@@ -466,15 +420,15 @@ export default function AdminDashboardPage() {
                 className="flex items-center justify-between"
               >
                 <div className="min-w-0">
-                  <p className="text-white text-xs font-mono truncate">
+                  <p className="text-neutral-900 dark:text-white text-xs font-mono truncate">
                     #{order.id.slice(0, 8)}
                   </p>
-                  <p className="text-[#555] text-[11px]">
+                  <p className="text-neutral-500 dark:text-neutral-400 text-[11px]">
                     {format(new Date(order.created_at), "MMM d, h:mm a")}
                   </p>
                 </div>
                 <div className="text-right shrink-0 ml-3">
-                  <p className="text-[#d4af37] text-xs font-medium">
+                  <p className="text-[#b8941f] dark:text-[#d4af37] text-xs font-semibold">
                     PKR {Number(order.total).toLocaleString()}
                   </p>
                   <StatusBadge status={order.status} />

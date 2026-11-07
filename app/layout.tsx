@@ -3,6 +3,7 @@ import { Plus_Jakarta_Sans, Outfit } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import QueryProvider from "@/providers/query-provider";
+import { ThemeProvider } from "@/providers/theme-provider";
 import ToasterClient from "@/components/common/ToasterClient";
 
 // Heading font: Outfit — modern, geometric, authoritative high-tech feel
@@ -24,7 +25,10 @@ const plusJakartaSans = Plus_Jakarta_Sans({
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#0a0a0a",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#0a0a0a" },
+  ],
 };
 
 export const metadata: Metadata = {
@@ -155,9 +159,16 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body suppressHydrationWarning className="min-h-full flex flex-col font-sans">
-        <QueryProvider>{children}</QueryProvider>
-        <ToasterClient />
+      <body suppressHydrationWarning className="min-h-full flex flex-col font-sans bg-background text-foreground transition-colors">
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <QueryProvider>{children}</QueryProvider>
+          <ToasterClient />
+        </ThemeProvider>
       </body>
     </html>
   );

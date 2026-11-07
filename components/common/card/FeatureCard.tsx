@@ -19,7 +19,7 @@ export default function FeatureCard({ feature, index }: Props) {
       viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.5, delay: index * 0.12 }}
       whileHover={{ y: -6 }}
-      className="group relative overflow-hidden rounded-3xl border border-neutral-200/80 bg-white p-7 text-center shadow-sm transition-all duration-300 hover:border-[#d4af37]/50 hover:shadow-xl"
+      className="group relative overflow-hidden rounded-3xl border border-neutral-200/80 dark:border-neutral-800 bg-white dark:bg-neutral-900 p-7 text-center shadow-sm transition-all duration-300 hover:border-[#d4af37]/50 hover:shadow-xl"
     >
       {/* Subtle Gold Aura Glow on hover */}
       <div className="absolute inset-0 bg-gradient-to-br from-[#d4af37]/8 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100 pointer-events-none" />
@@ -35,11 +35,11 @@ export default function FeatureCard({ feature, index }: Props) {
 
       {/* Content */}
       <div className="relative z-10">
-        <h3 className="mb-2 text-base font-bold text-neutral-900 group-hover:text-neutral-950 transition-colors">
+        <h3 className="mb-2 text-base font-bold text-neutral-900 dark:text-white group-hover:text-neutral-950 dark:group-hover:text-[#d4af37] transition-colors">
           {feature.title}
         </h3>
 
-        <p className="text-xs leading-relaxed text-neutral-500">
+        <p className="text-xs leading-relaxed text-neutral-500 dark:text-neutral-400">
           {feature.description}
         </p>
       </div>

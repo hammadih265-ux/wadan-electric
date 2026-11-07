@@ -86,12 +86,7 @@ function StatusDropdown({
             onClick={() => setOpen(false)}
           />
           <div
-            className="absolute top-full mt-1.5 left-0 z-20 rounded-xl py-1 min-w-[140px]"
-            style={{
-              background: "#1a1a1a",
-              border: "1px solid rgba(255,255,255,0.1)",
-              boxShadow: "0 16px 40px rgba(0,0,0,0.5)",
-            }}
+            className="absolute top-full mt-1.5 left-0 z-20 rounded-xl py-1 min-w-[140px] bg-white dark:bg-[#1a1a1a] border border-neutral-200 dark:border-white/10 shadow-xl"
           >
             {STATUS_OPTIONS.map((s) => {
               const sc = statusColors[s];
@@ -100,7 +95,7 @@ function StatusDropdown({
                   key={s}
                   onClick={() => mutation.mutate(s)}
                   disabled={s === current || mutation.isPending}
-                  className="flex items-center gap-2 w-full px-3 py-2 text-xs capitalize hover:bg-white/5 disabled:opacity-40 transition-colors"
+                  className="flex items-center gap-2 w-full px-3 py-2 text-xs capitalize hover:bg-neutral-100 dark:hover:bg-white/5 disabled:opacity-40 transition-colors"
                   style={{ color: sc.text }}
                 >
                   <span
@@ -152,33 +147,32 @@ function OrderRow({ order }: { order: Order }) {
   return (
     <>
       <tr
-        className="hover:bg-white/[0.02] transition-colors cursor-pointer"
+        className="hover:bg-neutral-50 dark:hover:bg-white/[0.02] transition-colors cursor-pointer border-t border-neutral-100 dark:border-white/[0.04]"
         onClick={() => setExpanded((v) => !v)}
-        style={{ borderTop: "1px solid rgba(255,255,255,0.04)" }}
       >
         <td className="px-5 py-4">
-          <p className="text-white text-xs font-mono">#{(order as unknown as { order_number?: string })?.order_number || order.id.slice(0, 8)}</p>
-          <p className="text-[#555] text-[11px] mt-0.5">
+          <p className="text-neutral-900 dark:text-white text-xs font-mono">#{(order as unknown as { order_number?: string })?.order_number || order.id.slice(0, 8)}</p>
+          <p className="text-neutral-500 dark:text-neutral-400 text-[11px] mt-0.5">
             {format(new Date(order.created_at), "MMM d, yyyy")}
           </p>
         </td>
-        <td className="px-5 py-4 text-[#888] text-xs font-mono">
+        <td className="px-5 py-4 text-neutral-600 dark:text-neutral-400 text-xs font-mono">
           {order.user_id ? `${order.user_id.slice(0, 8)}…` : "Guest"}
         </td>
         <td className="px-5 py-4">
-          <p className="text-[#d4af37] font-medium text-sm">
+          <p className="text-[#b8941f] dark:text-[#d4af37] font-medium text-sm">
             PKR {Number(order.total).toLocaleString()}
           </p>
         </td>
         <td className="px-5 py-4">
-          <span className="text-[#888] text-xs">{items.length} item{items.length !== 1 ? "s" : ""}</span>
+          <span className="text-neutral-600 dark:text-neutral-400 text-xs">{items.length} item{items.length !== 1 ? "s" : ""}</span>
         </td>
         <td className="px-5 py-4">
           <StatusDropdown orderId={order.id} current={order.status as OrderStatus} />
         </td>
         <td className="px-5 py-4">
           <button
-            className="text-[#555] hover:text-white transition-colors"
+            className="text-neutral-400 hover:text-neutral-700 dark:text-neutral-500 dark:hover:text-white transition-colors"
             onClick={(e) => {
               e.stopPropagation();
               setExpanded((v) => !v);
@@ -191,21 +185,13 @@ function OrderRow({ order }: { order: Order }) {
 
       {/* Expanded order items */}
       {expanded && (
-        <tr style={{ borderTop: "none" }}>
+        <tr className="border-t-0">
           <td
             colSpan={6}
-            className="px-5 pb-4 pt-0"
-            style={{
-              background: "rgba(212,175,55,0.03)",
-              borderBottom: "1px solid rgba(255,255,255,0.04)",
-            }}
+            className="px-5 pb-4 pt-0 bg-neutral-50/50 dark:bg-[#d4af37]/[0.02] border-b border-neutral-100 dark:border-white/[0.04]"
           >
             <div
-              className="rounded-xl p-4 mt-2"
-              style={{
-                background: "rgba(255,255,255,0.03)",
-                border: "1px solid rgba(255,255,255,0.06)",
-              }}
+              className="rounded-xl p-4 mt-2 bg-white dark:bg-white/[0.03] border border-neutral-200 dark:border-white/10"
             >
               <div className="grid grid-cols-2 gap-6">
                 {/* Items */}
@@ -287,16 +273,15 @@ export default function AdminOrdersPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-white text-2xl font-semibold">Orders</h1>
-        <p className="text-[#555] text-sm mt-1">
+        <h1 className="text-neutral-900 dark:text-white text-2xl font-semibold tracking-tight">Orders</h1>
+        <p className="text-neutral-500 dark:text-neutral-400 text-sm mt-1">
           {allOrders.length} total orders
         </p>
       </div>
 
       {/* Status tabs */}
       <div
-        className="flex gap-1 p-1 rounded-xl overflow-x-auto max-w-full"
-        style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)" }}
+        className="flex gap-1 p-1 rounded-xl overflow-x-auto max-w-full bg-white dark:bg-white/[0.04] border border-neutral-200 dark:border-white/10 shadow-sm"
       >
         {TABS.map((t) => {
           const active = tab === t.value;
@@ -308,25 +293,27 @@ export default function AdminOrdersPage() {
                 setTab(t.value);
                 setCurrentPage(1);
               }}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all shrink-0"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all shrink-0 cursor-pointer"
               style={{
                 background: active
                   ? sc
                     ? sc.bg
-                    : "rgba(255,255,255,0.08)"
+                    : "rgba(212,175,55,0.15)"
                   : "transparent",
-                color: active ? (sc ? sc.text : "#fff") : "#666",
+                color: active ? (sc ? sc.text : "#b8941f") : undefined,
                 border: active && sc
                   ? `1px solid ${sc.border}`
                   : "1px solid transparent",
               }}
             >
-              {t.label}
+              <span className={active ? "" : "text-neutral-600 dark:text-neutral-400"}>
+                {t.label}
+              </span>
               <span
                 className="text-[10px] px-1.5 rounded-full"
                 style={{
-                  background: active ? "rgba(0,0,0,0.2)" : "rgba(255,255,255,0.06)",
-                  color: active ? "inherit" : "#555",
+                  background: active ? "rgba(0,0,0,0.1)" : "rgba(0,0,0,0.05)",
+                  color: "inherit",
                 }}
               >
                 {counts[t.value] ?? 0}
@@ -338,15 +325,11 @@ export default function AdminOrdersPage() {
 
       {/* Search */}
       <div
-        className="flex items-center gap-3 rounded-xl px-4 py-3"
-        style={{
-          background: "rgba(255,255,255,0.04)",
-          border: "1px solid rgba(255,255,255,0.08)",
-        }}
+        className="flex items-center gap-3 rounded-xl px-4 py-3 bg-white dark:bg-white/[0.04] border border-neutral-200 dark:border-white/10 shadow-sm"
       >
-        <Search size={15} className="text-[#555]" />
+        <Search size={15} className="text-neutral-400 dark:text-neutral-500" />
         <input
-          className="flex-1 bg-transparent text-white text-sm outline-none placeholder-[#444]"
+          className="flex-1 bg-transparent text-neutral-900 dark:text-white text-sm outline-none placeholder:text-neutral-400 dark:placeholder:text-neutral-500"
           placeholder="Search by order ID…"
           value={search}
           onChange={(e) => {
@@ -359,24 +342,23 @@ export default function AdminOrdersPage() {
             setSearch("");
             setCurrentPage(1);
           }}>
-            <X size={14} className="text-[#555]" />
+            <X size={14} className="text-neutral-400 hover:text-neutral-700 dark:text-neutral-500 dark:hover:text-white" />
           </button>
         )}
       </div>
 
       {/* Table */}
       <div
-        className="rounded-2xl overflow-x-auto"
-        style={{ border: "1px solid rgba(255,255,255,0.07)" }}
+        className="rounded-2xl overflow-x-auto bg-white dark:bg-[#111] border border-neutral-200 dark:border-white/10 shadow-sm"
       >
         <table className="w-full min-w-[600px] text-sm">
           <thead>
-            <tr style={{ background: "rgba(255,255,255,0.03)" }}>
+            <tr className="bg-neutral-50 dark:bg-white/[0.03] border-b border-neutral-200 dark:border-white/10">
               {["Order ID", "Customer", "Total", "Items", "Status", ""].map(
                 (h) => (
                   <th
                     key={h}
-                    className="text-left px-5 py-3.5 text-[#555] text-xs uppercase tracking-widest font-medium"
+                    className="text-left px-5 py-3.5 text-neutral-500 dark:text-neutral-400 text-xs uppercase tracking-widest font-medium"
                   >
                     {h}
                   </th>
@@ -387,7 +369,7 @@ export default function AdminOrdersPage() {
           <tbody>
             {isLoading && (
               <tr>
-                <td colSpan={6} className="text-center text-[#555] py-16 text-sm">
+                <td colSpan={6} className="text-center text-neutral-400 dark:text-neutral-500 py-16 text-sm">
                   Loading…
                 </td>
               </tr>
@@ -395,8 +377,8 @@ export default function AdminOrdersPage() {
             {!isLoading && paginated.length === 0 && (
               <tr>
                 <td colSpan={6} className="text-center py-16">
-                  <ShoppingBag size={32} className="text-[#333] mx-auto mb-3" />
-                  <p className="text-[#555] text-sm">No orders found</p>
+                  <ShoppingBag size={32} className="text-neutral-300 dark:text-neutral-700 mx-auto mb-3" />
+                  <p className="text-neutral-500 dark:text-neutral-400 text-sm">No orders found</p>
                 </td>
               </tr>
             )}
