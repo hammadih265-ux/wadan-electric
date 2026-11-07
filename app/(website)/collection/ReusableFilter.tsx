@@ -1,15 +1,8 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import {
-  useCallback,
-  useMemo,
-  useRef,
-  useState,
-  useTransition,
-} from "react";
+import { useCallback, useMemo, useRef, useState, useTransition } from "react";
 import { useCategories } from "@/hooks/useCategories";
-import { getCategorySlug } from "@/lib/utils";
 
 // ─── Debounce helper ──────────────────────────────────────────────────────────
 function useDebounce(fn: (value: string) => void, delay: number) {
@@ -35,11 +28,7 @@ function Chevron({ open }: { open: boolean }) {
       stroke="currentColor"
       strokeWidth={2}
     >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M19 9l-7 7-7-7"
-      />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
     </svg>
   );
 }
@@ -180,7 +169,7 @@ export default function CollectionFilters() {
           "lg:mt-0 lg:block lg:rounded-none lg:border-0 lg:bg-transparent lg:shadow-none",
         ].join(" ")}
       >
-        <div className="space-y-5 p-4 lg:p-0">
+        <div className="space-y-5 p-4 ">
           {/* ── Header row (desktop only) + clear button ─────────────── */}
           <div className="flex items-center justify-between">
             <h2 className="hidden items-center gap-2 text-xs font-semibold uppercase tracking-widest text-neutral-400 lg:flex">
@@ -324,7 +313,10 @@ function CategoryFilter({ onUpdate, currentParams }: CategoryFilterProps) {
       {isLoading && (
         <div className="space-y-2 animate-pulse">
           {[1, 2, 3].map((i) => (
-            <div key={i} className="h-9 rounded-xl bg-neutral-100 dark:bg-neutral-800" />
+            <div
+              key={i}
+              className="h-9 rounded-xl bg-neutral-100 dark:bg-neutral-800"
+            />
           ))}
         </div>
       )}
