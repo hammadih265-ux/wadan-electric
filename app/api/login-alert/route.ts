@@ -27,8 +27,8 @@ export async function POST(req: Request) {
     // 1. Send security alert email to our Gmail
     await sendEmail({
       to: adminEmail,
-      subject: `🚨 Security Alert: 3 Failed Admin Login Attempts Detected`,
-      html: AdminLoginFailedAlertTemplate(email, time, clientIp),
+      subject: `🚨 Security Alert: ${attempts} Failed Admin Login Attempts Detected`,
+      html: AdminLoginFailedAlertTemplate(email, time, clientIp, attempts),
     });
 
     // 2. Log in Supabase if URL and key exist

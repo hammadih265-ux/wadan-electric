@@ -5,9 +5,9 @@ import { useRouter } from "next/navigation";
 import { signInAdmin } from "@/services/auth";
 import Image from "next/image";
 import { toast } from "sonner";
-import { ShieldAlert, Lock, AlertTriangle } from "lucide-react";
+import { ShieldAlert, Lock, AlertTriangle, CheckCircle2, ArrowLeft, Mail } from "lucide-react";
 
-const MAX_ATTEMPTS = 3;
+const MAX_ATTEMPTS = 5;
 const LOCKOUT_DURATION_MS = 15 * 60 * 1000; // 15 minutes
 const STORAGE_ATTEMPTS_KEY = "wadan_admin_login_attempts";
 const STORAGE_LOCKOUT_KEY = "wadan_admin_login_lockout_until";
@@ -66,6 +66,12 @@ export default function AdminLoginPage() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
+  // Forgot password mode
+  const [isResetMode, setIsResetMode] = useState(false);
+  const [resetEmail, setResetEmail] = useState("");
+  const [resetLoading, setResetLoading] = useState(false);
+  const [resetSent, setResetSent] = useState(false);
+
   const [initialState] = useState(getInitialLockoutState);
   const [failedAttempts, setFailedAttempts] = useState(initialState.failedAttempts);
   const [isLocked, setIsLocked] = useState(initialState.isLocked);
@@ -123,7 +129,7 @@ export default function AdminLoginPage() {
     updateRemainingTime(lockoutUntil);
 
     const lockoutMsg =
-      "Maximum 3 attempts exceeded. Login locked for 15 minutes. A security alert email has been sent to our Gmail.";
+      "Maximum 5 attempts exceeded. Login locked for 15 minutes. A security alert email has been sent to our Gmail.";
     setError(lockoutMsg);
     toast.error("Account locked! Security alert sent to Gmail.");
 
@@ -196,6 +202,38 @@ export default function AdminLoginPage() {
     }
   }
 
+  async function handleSendResetLink(e: React.FormEvent) {
+    e.preventDefault();
+    const targetEmail = resetEmail.trim() || email.trim();
+    if (!targetEmail) {
+      toast.error("Please enter your admin email address.");
+      return;
+    }
+
+    setResetLoading(true);
+    try {
+      const res = await fetch("/api/auth/reset-password", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: targetEmail }),
+      });
+
+      const data = await res.json();
+      if (!res.ok || !data.success) {
+        throw new Error(data.error || "Failed to send reset link.");
+      }
+
+      setResetSent(true);
+      toast.success("Password reset link sent to your email!");
+    } catch (err: unknown) {
+      const msg =
+        err instanceof Error ? err.message : "Failed to send reset link.";
+      toast.error(msg);
+    } finally {
+      setResetLoading(false);
+    }
+  }
+
   return (
     <div className="min-h-screen bg-neutral-100 dark:bg-[#0a0a0a] flex items-center justify-center p-4 relative overflow-hidden transition-colors">
       {/* Ambient glow */}
@@ -243,150 +281,313 @@ export default function AdminLoginPage() {
               : "border-neutral-200 dark:border-white/10"
           }`}
         >
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-neutral-900 dark:text-white font-medium text-lg">Sign in</h2>
-            {/* Attempt badge indicator */}
-            <div
-              className={`text-[11px] font-mono px-2.5 py-1 rounded-full border ${
-                isLocked
-                  ? "bg-red-500/10 text-red-600 dark:text-red-400 border-red-500/20"
-                  : failedAttempts > 0
-                  ? "bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20"
-                  : "bg-neutral-100 dark:bg-white/5 text-neutral-600 dark:text-[#888] border-neutral-200 dark:border-white/10"
-              }`}
-            >
-              {isLocked
-                ? "Locked (0/3)"
-                : `${MAX_ATTEMPTS - failedAttempts}/${MAX_ATTEMPTS} attempts left`}
-            </div>
-          </div>
-
-          {/* Lockout Warning Banner */}
-          {isLocked && (
-            <div className="mb-5 rounded-xl p-3.5 bg-red-500/10 border border-red-500/20 text-red-600 dark:text-red-400 text-xs flex items-start gap-2.5">
-              <ShieldAlert className="w-5 h-5 shrink-0 text-red-500 dark:text-red-400 mt-0.5" />
-              <div>
-                <p className="font-semibold text-red-700 dark:text-red-300">
-                  Account Temporarily Locked
-                </p>
-                <p className="mt-1 text-red-600/90 dark:text-red-400/90 leading-relaxed">
-                  3 failed attempts exceeded. A security alert email has been sent
-                  to our Gmail. Try again in:{" "}
-                  <span className="font-mono font-bold text-neutral-900 dark:text-white">
-                    {lockoutRemaining}
-                  </span>
-                </p>
-              </div>
-            </div>
-          )}
-
-          {/* Active Error (when not locked) */}
-          {error && !isLocked && (
-            <div className="mb-4 rounded-xl p-3 bg-amber-500/10 border border-amber-500/20 text-amber-700 dark:text-amber-300 text-xs flex items-center gap-2">
-              <AlertTriangle className="w-4 h-4 shrink-0 text-amber-500 dark:text-amber-400" />
-              <span>{error}</span>
-            </div>
-          )}
-
-          <form onSubmit={handleSubmit} className="space-y-4">
-            {/* Email */}
+          {isResetMode ? (
+            /* Reset Password Mode */
             <div>
-              <label
-                htmlFor="admin-email"
-                className="block text-xs font-medium text-neutral-600 dark:text-[#888] uppercase tracking-widest mb-2"
-              >
-                Email
-              </label>
-              <input
-                id="admin-email"
-                type="email"
-                required
-                disabled={isLocked || loading}
-                autoComplete="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="user@gmail.com"
-                className="admin-input disabled:opacity-40 disabled:cursor-not-allowed"
-              />
-            </div>
-
-            {/* Password */}
-            <div>
-              <label
-                htmlFor="admin-password"
-                className="block text-xs font-medium text-neutral-600 dark:text-[#888] uppercase tracking-widest mb-2"
-              >
-                Password
-              </label>
-              <input
-                id="admin-password"
-                type="password"
-                required
-                disabled={isLocked || loading}
-                autoComplete="current-password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
-                className="admin-input disabled:opacity-40 disabled:cursor-not-allowed"
-              />
-            </div>
-
-            {/* Submit */}
-            <button
-              id="admin-login-submit"
-              type="submit"
-              disabled={loading || isLocked}
-              className="w-full py-3 rounded-xl font-medium text-sm text-black transition-all duration-200 mt-2 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-              style={{
-                background: isLocked
-                  ? "rgba(239,68,68,0.2)"
-                  : loading
-                  ? "rgba(212,175,55,0.6)"
-                  : "linear-gradient(135deg,#d4af37,#b8941f)",
-                color: isLocked ? "#ef4444" : "#000",
-                boxShadow:
-                  loading || isLocked
-                    ? "none"
-                    : "0 8px 24px rgba(212,175,55,0.25)",
-              }}
-            >
-              {loading ? (
-                <span className="flex items-center justify-center gap-2">
-                  <svg
-                    className="animate-spin h-4 w-4"
-                    viewBox="0 0 24 24"
-                    fill="none"
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setIsResetMode(false);
+                      setResetSent(false);
+                    }}
+                    className="text-neutral-500 hover:text-neutral-900 dark:hover:text-white transition-colors"
                   >
-                    <circle
-                      className="opacity-25"
-                      cx="12"
-                      cy="12"
-                      r="10"
-                      stroke="currentColor"
-                      strokeWidth="4"
-                    />
-                    <path
-                      className="opacity-75"
-                      fill="currentColor"
-                      d="M4 12a8 8 0 018-8v8z"
-                    />
-                  </svg>
-                  Signing in…
-                </span>
-              ) : isLocked ? (
-                <span className="flex items-center justify-center gap-2">
-                  <Lock className="w-4 h-4" />
-                  Locked ({lockoutRemaining})
-                </span>
+                    <ArrowLeft className="w-4 h-4" />
+                  </button>
+                  <h2 className="text-neutral-900 dark:text-white font-medium text-lg">
+                    Reset Password
+                  </h2>
+                </div>
+              </div>
+
+              {resetSent ? (
+                <div className="space-y-4 py-2">
+                  <div className="rounded-xl p-4 bg-emerald-500/10 border border-emerald-500/20 text-emerald-700 dark:text-emerald-300 text-xs flex items-start gap-3">
+                    <CheckCircle2 className="w-5 h-5 shrink-0 text-emerald-500 dark:text-emerald-400 mt-0.5" />
+                    <div>
+                      <p className="font-semibold text-emerald-800 dark:text-emerald-200">
+                        Reset Link Dispatched!
+                      </p>
+                      <p className="mt-1 text-emerald-700/90 dark:text-emerald-300/90 leading-relaxed">
+                        A recovery link has been sent to{" "}
+                        <strong className="font-semibold text-neutral-900 dark:text-white">
+                          {resetEmail || email}
+                        </strong>{" "}
+                        using the mailer. Please check your inbox and spam folder.
+                      </p>
+                    </div>
+                  </div>
+                  <p className="text-xs text-neutral-500 dark:text-neutral-400 text-center">
+                    Didn&apos;t receive it? Please verify your SMTP settings or wait a moment.
+                  </p>
+                  <div className="flex gap-2 pt-2">
+                    <button
+                      type="button"
+                      onClick={() => setResetSent(false)}
+                      className="w-1/2 py-2.5 rounded-xl border border-neutral-300 dark:border-white/15 text-neutral-700 dark:text-neutral-200 text-xs font-medium hover:bg-neutral-100 dark:hover:bg-white/5 transition-colors"
+                    >
+                      Send Again
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setIsResetMode(false);
+                        setResetSent(false);
+                      }}
+                      className="w-1/2 py-2.5 rounded-xl bg-gradient-to-r from-[#d4af37] to-[#b8941f] text-black text-xs font-semibold hover:opacity-90 transition-opacity"
+                    >
+                      Back to Sign In
+                    </button>
+                  </div>
+                </div>
               ) : (
-                "Sign In"
+                <form onSubmit={handleSendResetLink} className="space-y-4">
+                  <p className="text-xs text-neutral-600 dark:text-[#aaa] leading-relaxed">
+                    Enter your admin email below. A secure one-time password reset link will be generated and emailed directly to your inbox.
+                  </p>
+
+                  <div>
+                    <label
+                      htmlFor="reset-email"
+                      className="block text-xs font-medium text-neutral-600 dark:text-[#888] uppercase tracking-widest mb-2"
+                    >
+                      Admin Email
+                    </label>
+                    <input
+                      id="reset-email"
+                      type="email"
+                      required
+                      disabled={resetLoading}
+                      autoComplete="email"
+                      value={resetEmail || email}
+                      onChange={(e) => {
+                        setResetEmail(e.target.value);
+                        setEmail(e.target.value);
+                      }}
+                      placeholder="admin@gmail.com"
+                      className="admin-input disabled:opacity-40 disabled:cursor-not-allowed"
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={resetLoading}
+                    className="w-full py-3 rounded-xl font-medium text-sm text-black transition-all duration-200 mt-2 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                    style={{
+                      background: resetLoading
+                        ? "rgba(212,175,55,0.6)"
+                        : "linear-gradient(135deg,#d4af37,#b8941f)",
+                      boxShadow: resetLoading
+                        ? "none"
+                        : "0 8px 24px rgba(212,175,55,0.25)",
+                    }}
+                  >
+                    {resetLoading ? (
+                      <span className="flex items-center justify-center gap-2">
+                        <svg
+                          className="animate-spin h-4 w-4"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                        >
+                          <circle
+                            className="opacity-25"
+                            cx="12"
+                            cy="12"
+                            r="10"
+                            stroke="currentColor"
+                            strokeWidth="4"
+                          />
+                          <path
+                            className="opacity-75"
+                            fill="currentColor"
+                            d="M4 12a8 8 0 018-8v8z"
+                          />
+                        </svg>
+                        Generating Link & Sending Email…
+                      </span>
+                    ) : (
+                      <span className="flex items-center justify-center gap-2">
+                        <Mail className="w-4 h-4" />
+                        Send Reset Link
+                      </span>
+                    )}
+                  </button>
+
+                  <div className="text-center pt-2">
+                    <button
+                      type="button"
+                      onClick={() => setIsResetMode(false)}
+                      className="text-xs text-neutral-500 hover:text-neutral-900 dark:hover:text-white transition-colors"
+                    >
+                      ← Back to sign in
+                    </button>
+                  </div>
+                </form>
               )}
-            </button>
-          </form>
+            </div>
+          ) : (
+            /* Standard Login Form */
+            <div>
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-neutral-900 dark:text-white font-medium text-lg">Sign in</h2>
+                {/* Attempt badge indicator */}
+                <div
+                  className={`text-[11px] font-mono px-2.5 py-1 rounded-full border ${
+                    isLocked
+                      ? "bg-red-500/10 text-red-600 dark:text-red-400 border-red-500/20"
+                      : failedAttempts > 0
+                      ? "bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20"
+                      : "bg-neutral-100 dark:bg-white/5 text-neutral-600 dark:text-[#888] border-neutral-200 dark:border-white/10"
+                  }`}
+                >
+                  {isLocked
+                    ? "Locked (0/5)"
+                    : `${MAX_ATTEMPTS - failedAttempts}/${MAX_ATTEMPTS} attempts left`}
+                </div>
+              </div>
+
+              {/* Lockout Warning Banner */}
+              {isLocked && (
+                <div className="mb-5 rounded-xl p-3.5 bg-red-500/10 border border-red-500/20 text-red-600 dark:text-red-400 text-xs flex items-start gap-2.5">
+                  <ShieldAlert className="w-5 h-5 shrink-0 text-red-500 dark:text-red-400 mt-0.5" />
+                  <div>
+                    <p className="font-semibold text-red-700 dark:text-red-300">
+                      Account Temporarily Locked
+                    </p>
+                    <p className="mt-1 text-red-600/90 dark:text-red-400/90 leading-relaxed">
+                      5 failed attempts exceeded. A security alert email has been sent
+                      to our Gmail. Try again in:{" "}
+                      <span className="font-mono font-bold text-neutral-900 dark:text-white">
+                        {lockoutRemaining}
+                      </span>
+                    </p>
+                  </div>
+                </div>
+              )}
+
+              {/* Active Error (when not locked) */}
+              {error && !isLocked && (
+                <div className="mb-4 rounded-xl p-3 bg-amber-500/10 border border-amber-500/20 text-amber-700 dark:text-amber-300 text-xs flex items-center gap-2">
+                  <AlertTriangle className="w-4 h-4 shrink-0 text-amber-500 dark:text-amber-400" />
+                  <span>{error}</span>
+                </div>
+              )}
+
+              <form onSubmit={handleSubmit} className="space-y-4">
+                {/* Email */}
+                <div>
+                  <label
+                    htmlFor="admin-email"
+                    className="block text-xs font-medium text-neutral-600 dark:text-[#888] uppercase tracking-widest mb-2"
+                  >
+                    Email
+                  </label>
+                  <input
+                    id="admin-email"
+                    type="email"
+                    required
+                    disabled={isLocked || loading}
+                    autoComplete="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="user@gmail.com"
+                    className="admin-input disabled:opacity-40 disabled:cursor-not-allowed"
+                  />
+                </div>
+
+                {/* Password */}
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <label
+                      htmlFor="admin-password"
+                      className="block text-xs font-medium text-neutral-600 dark:text-[#888] uppercase tracking-widest"
+                    >
+                      Password
+                    </label>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setResetEmail(email);
+                        setIsResetMode(true);
+                      }}
+                      className="text-xs text-[#d4af37] hover:underline transition-colors"
+                    >
+                      Forgot password?
+                    </button>
+                  </div>
+                  <input
+                    id="admin-password"
+                    type="password"
+                    required
+                    disabled={isLocked || loading}
+                    autoComplete="current-password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="••••••••"
+                    className="admin-input disabled:opacity-40 disabled:cursor-not-allowed"
+                  />
+                </div>
+
+                {/* Submit */}
+                <button
+                  id="admin-login-submit"
+                  type="submit"
+                  disabled={loading || isLocked}
+                  className="w-full py-3 rounded-xl font-medium text-sm text-black transition-all duration-200 mt-2 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                  style={{
+                    background: isLocked
+                      ? "rgba(239,68,68,0.2)"
+                      : loading
+                      ? "rgba(212,175,55,0.6)"
+                      : "linear-gradient(135deg,#d4af37,#b8941f)",
+                    color: isLocked ? "#ef4444" : "#000",
+                    boxShadow:
+                      loading || isLocked
+                        ? "none"
+                        : "0 8px 24px rgba(212,175,55,0.25)",
+                  }}
+                >
+                  {loading ? (
+                    <span className="flex items-center justify-center gap-2">
+                      <svg
+                        className="animate-spin h-4 w-4"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                      >
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                        />
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8v8z"
+                        />
+                      </svg>
+                      Signing in…
+                    </span>
+                  ) : isLocked ? (
+                    <span className="flex items-center justify-center gap-2">
+                      <Lock className="w-4 h-4" />
+                      Locked ({lockoutRemaining})
+                    </span>
+                  ) : (
+                    "Sign In"
+                  )}
+                </button>
+              </form>
+            </div>
+          )}
         </div>
 
         <p className="text-center text-neutral-500 dark:text-[#555] text-xs mt-6">
-          © {new Date().getFullYear()} Wadan Electronics · Admin Portal (Strict 3 Attempts Protection)
+          © {new Date().getFullYear()} Wadan Electronics · Admin Portal (Strict 5 Attempts Protection)
         </p>
       </div>
     </div>
